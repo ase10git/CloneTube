@@ -1,0 +1,97 @@
+<!-- 비디오 목록 -->
+<template id="content-template">
+    <div class="content">
+        <!-- 썸네일 부분 -->
+        <div class="thumbnail-box">
+            <div class="thumbnail">
+                <a class="thumbnail-link">
+                    <div class="thumbnail-img-box">
+                        <img src="" alt="thumbnail" id="thumbnail-img" class="thumbnail-img">
+                    </div>
+                    <div class="hover-overlay-wrap">
+                        <div class="hover-overlay-box">
+                            <img src="" alt="" class="hover-icon"></img>
+                        </div>
+                        <div class="hover-overlay-box">
+                            <img src="" alt="" class="hover-icon"></img>
+                        </div>
+                    </div>
+                    <div class="overlay-wrap">
+                        <div class="overlay-box">
+                            <img class="overlay-icon"></img>
+                        </div>
+                        <div class="overlay-box">
+                            <span class="running-time"></span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <!-- 영상 정보 부분 -->
+            <div class="details">
+                <div class="avatar-container">
+                    <a class="avatar-link">
+                        <div class="avatar-img-box">
+                            <img src="" alt="" class="avatar-img">
+                        </div>
+                    </a>
+                </div>
+                <div class="meta">
+                    <h3 class="video-header">
+                        <a id="video-title" class="info-link">영상 제목</a>
+                    </h3>
+                    <div class="metadata">
+                        <div class="channel">
+                            <div class="channel-box">
+                                <span id="channel-name" class="channel-name">채널명</span>
+                            </div>
+                            <div class="channel-box">
+                                <span class="badge-icon">✔</span>
+                            </div>
+                        </div>
+                        <div class="spectator">
+                            <div class="spectator-box">
+                                <span id="spectator-number" class="spectator-number">조회수 1.2만회</span>
+                                <span class="spectator-line">•</span>
+                                <span id="upload-time" class="upload-time">10시간 전</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 비디오 메뉴 부분 -->
+                <div class="menu">
+                    <div class="menu-btn-wrap">
+                        <button class="menu-btn">
+                            <div class="btn-icon-box">
+                                <!-- 점 3개 아이콘 박스 -->
+                                <img src="" alt="" class="btn-icon">
+                            </div>
+                        </button>
+                    </div>
+                    <div id="menu-list" class="menu-list">
+                        <ul id="menu-items" class="menu-items">
+                            <!-- 
+                            "비디오 메뉴 목록" 여러 개 배치
+                            template 태그를 사용힌
+                            li class="menu-item" 가 들어갈 자리 
+                            -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<!-- 비디오 메뉴 목록 -->
+<template id="menu-template">
+    <li id="menu-item" class="menu-item">
+        <button class="menu-btn">
+            <span class="menu-item-line">
+                <div class="menu-icon-box">
+                    <img src="" alt="" id="menu-icon-img" class="menu-icon-img">
+                </div>
+            </span>
+            <span id="menu-title" class="menu-item-line"></span>
+        </button>
+    </li>
+</template>
