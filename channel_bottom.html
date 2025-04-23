@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>YouTube UI Clone</title>
+  <link rel="stylesheet" href="./css/channel_bottom.css">
 
 </head>
 <body>
@@ -59,9 +60,10 @@
     <div class="section">
       <div class="section-header">
         <div class="section-title">Search On ‘21</div>
-        <div class="play-all">
-          <span class="play-icon">▶️</span> PLAY ALL
-        </div>
+        <button class="play-all">
+          <img class="play-icon" src="./images/Group.svg" alt="플레이아이콘">
+          PLAY ALL
+        </button>
       </div>
       <div class="video-row" id="section1"></div>
     </div>
@@ -73,9 +75,10 @@
     <div class="section">
       <div class="section-header">
         <div class="section-title">Search On ‘22</div>
-        <div class="play-all">
-          <span class="play-icon">▶️</span> PLAY ALL
-        </div>
+        <button class="play-all">
+          <img class="play-icon" src="./images/Group.svg" alt="플레이아이콘">
+          PLAY ALL
+        </button>
       </div>
       <div class="video-row" id="section2"></div>
     </div>
@@ -112,6 +115,34 @@
         uploadDate: "3 months ago",
         description: "Facebook update"
       },
+      {
+        thumbnail: "https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg",
+        duration: "45:00",
+        title: "Netflix",
+        channelName: "Netflix Inc",
+        views: "4.2M views",
+        uploadDate: "5 months ago",
+        description: "Netflix new series"
+      },
+      {
+        thumbnail: "https://upload.wikimedia.org/wikipedia/en/6/60/Twitter_Logo_as_of_2021.svg",
+        duration: "10:30",
+        title: "Twitter",
+        channelName: "X",
+        views: "740K views",
+        uploadDate: "1 week ago",
+        description: "Twitter changes"
+      },
+      {
+        thumbnail: "https://upload.wikimedia.org/wikipedia/en/6/60/Twitter_Logo_as_of_2021.svg",
+        duration: "10:30",
+        title: "Twitter",
+        channelName: "X",
+        views: "740K views",
+        uploadDate: "1 week ago",
+        description: "Twitter changes"
+      }
+      ,
       {
         thumbnail: "https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg",
         duration: "45:00",
@@ -167,5 +198,6 @@ function renderVideos(sectionId) {
     renderVideos('section2');
   </script>
 
+  <script src="./js/channel.js"></script>
 </body>
 </html>
