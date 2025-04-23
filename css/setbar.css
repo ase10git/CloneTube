@@ -1,62 +1,194 @@
+/* ------------------------------
+   전체 테마 색상 변수 설정
+   (다크 모드 스타일 기반)
+------------------------------ */
+:root {
+    --bg: #0f0f0f;              /* 전체 배경색 (기본 다크 배경) */
+    --bg-bar: #1f1f1f;          /* 상단바 및 사이드바 배경색 */
+    --font: #ffffff;            /* 일반 텍스트 색상 */
+    --font-gr: #aaaaaa;         /* 흐릿한 텍스트 색상 (보조 텍스트 등) */
+    --search: #303030;          /* 검색창 배경 색상 */
+    --bt-border: #3f3f3f;       /* 버튼 테두리 색상 */
+    --bt-highlight: #4d4d4d;    /* 버튼 hover 시 배경 색상 */
+    --bg-highlight: #606060;   /* 버튼 기본 배경 색상 */
+    --subscribes: #cc0000;      /* 구독 버튼 배경 색상 */
+    --ch-profile: #222222;      /* 채널 프로필 섹션 배경 색상 */
+}
+
+/* ------------------------------
+   기본 문서 스타일
+------------------------------ */
 body {
-    background-color: var(--bg); /* 기본 검정 배경색 */
+    background-color: var(--bg);  /* 배경색 적용 */
+    color: var(--font);           /* 텍스트 색상 적용 */
+    margin: 0;
+    font-family: Arial, sans-serif;
 }
 
-/* 상단바 스타일 */
+img {
+    vertical-align: middle;  /* 이미지 정렬 */
+}
+
+/* ------------------------------
+   상단 헤더바 스타일
+------------------------------ */
 header {
-    background-color: var(--bg-bar); /* 상단바 배경색 */
-    padding: 10px;
-    color: var(--font); /* 글자 색 */
+    background-color: var(--bg-bar);  /* 헤더 배경색 */
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
-/* 네비게이션바 스타일 */
-.side-bar {
-    background-color: var(--bg-bar);
-    color: var(--font);
-    padding: 10px;
-}
-
-/* 검색창 스타일 */
-.search-bar {
-    background-color: var(--search); /* 검색창 배경 */
-    padding: 10px;
-    border-radius: 5px;
-    color: var(--font);
-}
-
-/* 버튼 스타일 */
-button {
-    background-color: var(--bg-highlight);
-    border: 1px solid var(--bt-border);
-    color: var(--font);
-    padding: 10px 15px;
+/* 햄버거 메뉴 버튼 */
+.side-button {
     cursor: pointer;
 }
 
-button:hover {
-    background-color: var(--bt-highlight); 
+/* ------------------------------
+   검색창 영역 스타일
+------------------------------ */
+.search-bar {
+    display: flex;
+    align-items: center;
+    background-color: var(--search);  /* 검색창 배경 */
+    padding: 6px 12px;
+    border-radius: 24px;
+    flex: 1;
+    max-width: 500px;
 }
 
-/* 구독 버튼 색상 */
+/* 검색창 텍스트 입력 필드 */
+.search-bar input {
+    background: none;
+    border: none;
+    outline: none;
+    color: var(--font);
+    width: 100%;
+}
+
+/* 음성 인식 버튼 스타일 */
+.voice-btn {
+    margin-left: 8px;
+    cursor: pointer;
+}
+
+/* ------------------------------
+   사이드바 네비게이션 영역
+------------------------------ */
+.side-bar {
+    width: 240px;
+    background-color: var(--bg-bar);  /* 사이드바 배경 */
+    height: 100vh;
+    overflow-y: auto;
+    padding-top: 12px;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+/* 사이드바 안의 각 섹션 간격 */
+.side-bar section {
+    margin-bottom: 12px;
+}
+
+/* 사이드바 구분선 */
+.side-bar hr {
+    border: none;
+    border-top: 1px solid #333;
+    margin: 12px 0;
+}
+
+/* 사이드바 리스트 기본 스타일 */
+.side-bar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* 사이드바 각 항목 스타일 */
+.side-bar li {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 10px 16px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+/* 마우스 오버 시 배경 강조 */
+.side-bar li:hover {
+    background-color: var(--bt-highlight);
+}
+
+/* 사이드바 내부 링크 스타일 */
+.side-bar a {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    text-decoration: none;
+    color: var(--font);
+    width: 100%;
+    font-size: 14px;
+}
+
+/* 섹션 타이틀 스타일 (SUBSCRIPTIONS 등) */
+caption {
+    display: block;
+    padding: 8px 16px;
+    color: var(--font-gr);
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+/* ------------------------------
+   버튼 공통 스타일
+------------------------------ */
+button {
+    background-color: var(--bg-highlight);  /* 기본 배경 */
+    border: 1px solid var(--bt-border);     /* 테두리 색 */
+    color: var(--font);                     /* 텍스트 색 */
+    padding: 10px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+/* 버튼 hover 시 배경 강조 */
+button:hover {
+    background-color: var(--bt-highlight);
+}
+
+/* 구독 버튼 스타일 */
 .subscribed {
-    background-color: var(--subscribes); 
+    background-color: var(--subscribes);  /* 빨간 배경 */
     color: var(--font);
 }
 
-/* 선택된 아이템이나 버튼 */
+/* ------------------------------
+   기타 스타일
+------------------------------ */
+
+/* 선택된 항목 강조 스타일 */
 .selected {
-    background-color: var(--bt-highlight); /
-    color: var(--bg); 
+    background-color: var(--bt-highlight);
+    color: var(--bg);
 }
 
-/* 프로필 스타일 */
+/* 채널 프로필 영역 스타일 */
 .profile {
-    background-color: var(--ch-profile); 
+    background-color: var(--ch-profile);
     padding: 20px;
     color: var(--font);
 }
 
-/* 흐린 글씨 */
+/* 흐릿한 글자 스타일 (보조 텍스트용) */
 .text-muted {
     color: var(--font-gr);
 }
+
+
