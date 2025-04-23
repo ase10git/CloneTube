@@ -1,0 +1,79 @@
+:root{
+    --bg : #000000;   /* 기본 검정 배경색 */
+    --bg-bar : #212121;     /* 상단바,  네비게이션바 등 기본 배경색 */
+    --bg-highlight : #303030;  /* 검색버튼, 선택, 아이템, 구분선 등 기본 배경 위에 구분이 가능하도록 보여야 하는 색들*/
+    --bt-border : #AAAAAA;  /* 버튼 테두리 등 밝은 회색으로 쓰이는 부분들 */
+    --bt-highlight : #FFFFFF; /* 아이템 버튼 등의 클릭한 버튼 색 */
+    --search : #121212; /* 검색창 색상 */
+    --ch-profile : #181818; /* 채널 프로필 배경 색 */
+    --font : #FFFFFF; /* 기본 폰트 색상 */
+    --font-gr : #AAAAAA; /* 흐린(회색) 폰트 색상 (대분류나 작은설명 등) */
+    --subscribes : #CC0000; /* 구독 버튼 색 */
+}
+
+*{box-sizing: border-box; margin:0; padding:0;}
+a{text-decoration: none; color: black;}
+ul, li, ol{list-style-type: none;}
+
+body {
+    background-color: var(--bg); /* 기본 검정 배경색 */
+}
+
+/* 상단바 스타일 */
+header {
+    background-color: var(--bg-bar); /* 상단바 배경색 */
+    padding: 10px;
+    color: var(--font); /* 글자 색 */
+}
+
+/* 네비게이션바 스타일 */
+.side-bar {
+    background-color: var(--bg-bar);
+    color: var(--font);
+    padding: 10px;
+}
+
+/* 검색창 스타일 */
+.search-bar {
+    background-color: var(--search); /* 검색창 배경 */
+    padding: 10px;
+    border-radius: 5px;
+    color: var(--font);
+}
+
+/* 버튼 스타일 */
+button {
+    background-color: var(--bg-highlight); /* 기본 버튼 배경색 */
+    border: 1px solid var(--bt-border); /* 버튼 테두리 색 */
+    color: var(--font);
+    padding: 10px 15px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: var(--bt-highlight); /* 버튼 클릭 시 색상 */
+}
+
+/* 구독 버튼 색상 */
+.subscribed {
+    background-color: var(--subscribes); /* 구독 버튼 색 */
+    color: var(--font);
+}
+
+/* 선택된 아이템이나 버튼 */
+.selected {
+    background-color: var(--bt-highlight); /* 클릭된 버튼의 배경색 */
+    color: var(--bg); /* 선택된 아이템 텍스트 색상 */
+}
+
+/* 프로필 스타일 */
+.profile {
+    background-color: var(--ch-profile); /* 프로필 배경색 */
+    padding: 20px;
+    color: var(--font);
+}
+
+/* 흐린 글씨 */
+.text-muted {
+    color: var(--font-gr); /* 흐린 글씨 색상 */
+}
