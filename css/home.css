@@ -1,0 +1,79 @@
+/* 메인 영역 */
+main{
+    margin-top: 56px;
+    background-color: var(--bg);
+    position:relative;
+    color: var(--font); 
+}
+
+/* 버튼 UI 영역 */
+#btn-header{
+    position: fixed;
+    width: 100%;
+    border-top: 1px solid var(--bg-highlight);
+    border-bottom: 1px solid var(--bg-highlight);
+    background-color: var(--bg-bar);
+}
+
+#header-wrap{
+    height: 100%;
+    padding: 0 24px;
+    display: flex; justify-content: space-between; align-items: center;
+    position: relative;
+}
+
+#left-btn-wrap, #right-btn-wrap{
+    width: 56px; height: 100%;
+    display: flex; justify-content: center; align-items: center;
+    position: absolute;
+    background-color: var(--bg-highlight);
+}
+
+#left-btn-wrap{top:0; left:0;}
+
+#right-btn-wrap{top:0; right:0;}
+
+.header-btn{
+    width: 40px; height: 40px;
+    display: flex; justify-content: center; align-items: center;
+    border-radius: 100%;
+    position:relative;
+}
+
+.header-btn::after{
+    position:absolute;
+    content:'';
+    background-color: var(--bg-highlight);
+}
+
+.header-btn svg{ width: 16px; height: 16px; }
+
+#btn-tab{
+    width: 100%;
+    display: flex; justify-content: flex-start; align-items: center;
+}
+
+#btn-list{
+    width: 100%; height: 100%;
+    display: flex; justify-content: flex-start; align-items: center;
+    overflow: hidden;
+}
+
+#btn-list li{
+    margin: 12px 12px 12px 0;
+    padding: 0 12px;
+    border: 1px solid var(--bt-border);
+    background-color: var(--bg-highlight);
+    border-radius: 8px;
+    font-size: 14px;
+    line-height: 2rem;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+#btn-list li.selected{
+    background-color: var(--bg-highlight);
+    color: var(--bg)
+}
+
+/* 비디오 컨텐츠 영역 */
