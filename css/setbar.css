@@ -1,0 +1,62 @@
+body {
+    background-color: var(--bg); /* 기본 검정 배경색 */
+}
+
+/* 상단바 스타일 */
+header {
+    background-color: var(--bg-bar); /* 상단바 배경색 */
+    padding: 10px;
+    color: var(--font); /* 글자 색 */
+}
+
+/* 네비게이션바 스타일 */
+.side-bar {
+    background-color: var(--bg-bar);
+    color: var(--font);
+    padding: 10px;
+}
+
+/* 검색창 스타일 */
+.search-bar {
+    background-color: var(--search); /* 검색창 배경 */
+    padding: 10px;
+    border-radius: 5px;
+    color: var(--font);
+}
+
+/* 버튼 스타일 */
+button {
+    background-color: var(--bg-highlight);
+    border: 1px solid var(--bt-border);
+    color: var(--font);
+    padding: 10px 15px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: var(--bt-highlight); 
+}
+
+/* 구독 버튼 색상 */
+.subscribed {
+    background-color: var(--subscribes); 
+    color: var(--font);
+}
+
+/* 선택된 아이템이나 버튼 */
+.selected {
+    background-color: var(--bt-highlight); /
+    color: var(--bg); 
+}
+
+/* 프로필 스타일 */
+.profile {
+    background-color: var(--ch-profile); 
+    padding: 20px;
+    color: var(--font);
+}
+
+/* 흐린 글씨 */
+.text-muted {
+    color: var(--font-gr);
+}
