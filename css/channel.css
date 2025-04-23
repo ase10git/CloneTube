@@ -8,10 +8,12 @@ main {
 
 #channel-header {
     display: flex;
-    flex-direction: column;
+    flex-direction: column; 
     z-index: 10px;
     background-color: var(--ch-profile);
 }
+
+#channel-cover-img{width: 100%; height: 100%;}
 
 #channel-profile {
     display: flex;
@@ -22,14 +24,18 @@ main {
     padding: 16px 65px 4px 65px;
 }
 
+#channel-profile-box{overflow: hidden;}
+#channel-profile-img{width: 80px; height: 80px;}
+
 #channel-id {
     display: flex;
-    gap: 10px;
+    gap: 24px;
 }
 
 #channel-name {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
 }
 
@@ -47,15 +53,38 @@ main {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 48px;
-    padding: 0px 65px 0px 65px;
+    padding: 0px 65px;
+    position: relative;
+}
+
+.channel-nav-btn-wrap {
+    width: 56px; height: 100%;
+    display: flex; justify-content: center; align-items: center;
+    position: absolute;
+    background-color: var(--ch-profile);
+    z-index: 1;
+}
+
+#left-btn-wrap{top:0; left:65px; bottom:0;}
+
+#right-btn-wrap{top:0; right:65px; bottom:0;}
+
+#channel-nav button {
+    width: 40px; height: 40px;
+    border: none;
+    display: flex; justify-content: center; align-items: center;
+    background-color: transparent;
+}
+
+#channel-nav button svg{
+    color: var(--font-gr);
 }
 
 #channel-nav-list {
     display: flex;
     list-style: none;
     align-items: center;
-    gap: 10px;
+    /* gap: 10px; */
 }
 
 #channel-nav-list a {
@@ -64,14 +93,20 @@ main {
     font-size: 14px;
 }
 
-#channel-nav button {
-    border: none;
-    background-color: transparent;
-    color: var(--font-gr);
+#channel-nav-list li{
+    padding: 16px 32px 15px 32px;
+    position: relative;
+    white-space: nowrap;
 }
 
-#left, #right {
-    display: none;
+/* 선택된 요소는 밑줄로 표시 */
+/* after 가상 요소로 구현하도록 수정 필요 */
+#channel-nav-list li:hover{
+    border-bottom: 2px solid var(--bt-border);
+}
+
+#channel-nav-list li.select{
+    border-bottom: 2px solid var(--bt-highlight);
 }
 
 /* @media (max-width: 768px) {
@@ -100,4 +135,56 @@ main {
     height: 20px;
     background-color: transparent;
     border: none;
+    box-shadow: none;
+}
+
+#channel-search input:focus-visible{
+    outline: none;
+    border-bottom : 1px solid var(--font-gr);
+    caret-color : var(--font-gr);
+}
+
+/* 비디오 영역 */
+section{
+    padding: 0 65px;
+}
+
+/* 메인 비디오 */
+#main-video {
+    padding: 24px 0;
+    display: flex;
+    justify-content: flex-start;
+    gap: 24px;
+    border-bottom: 1px solid var(--bt-border);
+}
+
+.video-player{
+    width: 448px; height: 238px;
+}
+
+#video-info-box{
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+#video-title{
+    color: var(--font);
+    font-weight: bold;
+    font-size: 16px;
+}
+
+#video-meta{
+    color: var(--font-gr);
+}
+
+#spectators{
+    margin-right: 5px;
+    font-size: 13px;
+}
+
+#video-description{
+    color: var(--font);
+    font-size: 14px;
 }

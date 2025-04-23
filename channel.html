@@ -16,11 +16,13 @@
     <main>
         <!-- 상단 -->
         <header id="channel-header">
-            <img src="#" alt="채널페이지 이미지">
+            <img src="./images/Channel-Cover.svg" alt="채널페이지 이미지" id="channel-cover-img">
             <!--채널 프로필-->
             <div id="channel-profile">
                 <div id="channel-id">
-                    <img src="#" alt="프로필 이미지">
+                    <div id="channel-profile-box">
+                        <img src="./images/marcus.svg" alt="프로필 이미지" id="channel-profile-img">
+                    </div>
                     <div id="channel-name"> <!--채널 이름과 구독자 수를 받는 방식으로 나중에 바꿔야 함-->
                         <div style="font-size: 24px;">Marcus Levin</div>
                         <div style="font-size: 14px; color: var(--font-gr);">1.2M subscribers</div>
@@ -30,10 +32,16 @@
             </div>
             <!--채널 네비게이션-->
             <nav id="channel-nav">
-                <button id="left">&lt;</button> <!-- 왼쪽 화살표 --> <!--반응형 처리 필요-->
+                <div id="left-btn-wrap" class="channel-nav-btn-wrap">
+                    <button id="left">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0"/>
+                        </svg>
+                    </button> <!-- 왼쪽 화살표 --> <!--반응형 처리 필요-->
+                </div>
                 <div id="channel-nav-str">
                     <ul id="channel-nav-list">
-                        <li><a href="">HOME</a></li>
+                        <li class="select"><a href="">HOME</a></li>
                         <li><a href="">VIDEOS</a></li>
                         <li><a href="">PLAYLISTS</a></li>
                         <li><a href="">COMMUNITY</a></li>
@@ -41,26 +49,37 @@
                         <li><a href="">ABOUT</a></li>
                     </ul>
                     <form id="channel-search" action="#" method="GET">  <!--검색 데이터 전송-->
-                        <button type="submit"><img src="./images/search.png" alt="검색돋보기이미지"></button>
+                        <button type="submit"><img src="./images/search.svg" alt="검색돋보기이미지"></button>
                         <input type="search" name="query" placeholder="SEARCH">
                     </form>
                 </div>
-                <button id="right">&gt;</button> <!-- 오른쪽 화살표 -->
+                <div id="right-btn-wrap" class="channel-nav-btn-wrap">
+                    <button id="right">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708"/>
+                        </svg>
+                    </button> <!-- 오른쪽 화살표 -->
+                </div>
             </nav>
         </header>
         <!-- 하단 -->
         <section>
             <!-- 메인영상 -->
-            <div>
-                <video autoplay muted controls poster="#">
+            <div id="main-video">
+                <video autoplay muted controls poster="#" class="video-player">
                     <source src="#">
                 </video>
-                <div>
-                    <div>Blinc Woodturner: Turning passion info fine art</div>
-                    <div>576.969 views. 3 weeks ago</div>
-                    <div>Chris Fisher, also known as the Blind Woodturner,
+                <div id="video-info-box">
+                    <p id="video-title">Blinc Woodturner: Turning passion info fine art</p>
+                    <div id="video-meta">
+                        <span id="spectators">576.969 views.</span>
+                        <span id="uploaded-time">3 weeks ago</span>
+                    </div>
+                    <p id="video-description">
+                        Chris Fisher, also known as the Blind Woodturner,
                         learned his craft by listening to hundreds of hours of YouTube videos and experimenting in his workshop.
-                        Now he’s a YouTube creator himself, sells his products worldwide, and does demonstrations all around the country.</div>
+                        Now he’s a YouTube creator himself, sells his products worldwide, and does demonstrations all around the country.
+                    </p>
                 </div>
             </div>
             <!-- 영상리스트 -->
