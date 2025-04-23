@@ -23,9 +23,9 @@
                     <div id="channel-profile-box">
                         <img src="./images/marcus.svg" alt="프로필 이미지" id="channel-profile-img">
                     </div>
-                    <div id="channel-name"> <!--채널 이름과 구독자 수를 받는 방식으로 나중에 바꿔야 함-->
-                        <div style="font-size: 24px;">Marcus Levin</div>
-                        <div style="font-size: 14px; color: var(--font-gr);">1.2M subscribers</div>
+                    <div id="channel-name-box"> <!--채널 이름과 구독자 수를 받는 방식으로 나중에 바꿔야 함-->
+                        <div id="channel-name" style="font-size: 24px;">Marcus Levin</div>
+                        <div id="subscribers" style="font-size: 14px; color: var(--font-gr);">1.2M subscribers</div>
                     </div>
                 </div>
                 <button id="button-subscribe">SUBSCRIBES</button>
@@ -49,8 +49,13 @@
                         <li><a href="">ABOUT</a></li>
                     </ul>
                     <form id="channel-search" action="#" method="GET">  <!--검색 데이터 전송-->
-                        <button type="submit"><img src="./images/search.svg" alt="검색돋보기이미지"></button>
-                        <input type="search" name="query" placeholder="SEARCH">
+                        <button type="submit" id="search-submit-btn">
+                            <img src="./images/search.svg" alt="검색돋보기이미지">
+                        </button>
+                        <div>
+                            <input type="search" name="query" placeholder="SEARCH">
+                            <div class="search-underbar"></div>
+                        </div>
                     </form>
                 </div>
                 <div id="right-btn-wrap" class="channel-nav-btn-wrap">
