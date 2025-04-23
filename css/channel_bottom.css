@@ -1,0 +1,185 @@
+    /* 페이지 전체 기본 레이아웃 설정 */
+    body {
+      margin: 0; /* 기본 마진 제거 */
+      font-family: Arial, sans-serif; /* 글꼴 설정 */
+      background-color: #000; /* 배경색 검정 */
+      color: white; /* 텍스트 기본 색상 흰색 */
+      display: flex; /* 플렉스 컨테이너로 설정 */
+      flex-direction: column; /* 수직 방향 정렬 */
+      height: 100vh; /* 전체 뷰포트 높이 채움 */
+    }
+  
+    /* 상단 네비게이션 바 스타일(삭제 예정) */
+    .top-bar {
+      width: 100%; /* 전체 너비 */
+      height: 56px; /* 고정 높이 */
+      background-color: #111; /* 어두운 배경 */
+      display: flex; /* 내부 요소 정렬을 위한 flex */
+      align-items: center; /* 수직 가운데 정렬 */
+      justify-content: space-between; /* 양 끝 정렬 */
+      padding: 0 16px; /* 좌우 패딩 */
+      position: fixed; /* 스크롤해도 고정 */
+      top: 0; /* 상단에 붙이기 */
+      left: 0;
+      z-index: 10; /* 다른 요소 위에 배치 */
+    }
+
+    /* 왼쪽 사이드바 스타일(삭제 예정) */
+    .sidebar {
+      width: 240px;
+      background-color: #111;
+      height: 100vh;
+      position: fixed;
+      top: 56px; /* top-bar 아래에 위치 */
+    }
+
+  
+    /* 메인 콘텐츠 영역 */
+    .main-content {
+      margin-left: 240px; /* 사이드바 공간 확보 */
+      width: calc(100% - 240px); /* 나머지 전체 너비 */
+      padding: 20px;
+      margin-top: 56px; /* top-bar 공간 확보 */
+    }
+  
+    /* 비디오 및 설명 컨테이너 */
+    .container {
+      display: flex;
+      align-items: flex-start;
+      max-width: 1000px;
+      margin-top: 24px;
+    }
+  
+    /* 비디오 플레이어 영역 */
+    .video-player {
+      width: 400px;
+      margin-right: 24px;
+    }
+  
+    /* 비디오 태그 자체 */
+    video {
+      width: 100%;
+      border-radius: 8px; /* 모서리 둥글게 */
+    }
+  
+    /* 비디오 설명 컨테이너 */
+    .video-description {
+      width: 100%;
+      max-width: 400px;
+      text-align: left;
+    }
+  
+    /* 큰 비디오 제목 */
+    .video-title {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+  
+    /* 메타 정보 (업로더, 날짜 등) */
+    .video-meta {
+      font-size: 14px;
+      color: #bbb;
+    }
+  
+    /* 섹션 전체 스타일 */
+    .section {
+      padding: 24px;
+      max-width: 960px;
+    }
+  
+    /* 섹션 상단 제목 영역 */
+    .section-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+  
+    /* 섹션 제목 */
+    .section-title {
+      font-size: 18px;
+      font-weight: bold;
+      margin-right: 8px;
+    }
+  
+    /* '전체 재생' 버튼 스타일 */
+    .play-all {
+      font-size: 12px;
+      color: #bbb;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+    }
+  
+    /* 비디오 썸네일 그리드 레이아웃 */
+    .video-row {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr); /* 5열 그리드 */
+      gap: 16px;
+      padding-bottom: 8px;
+    }
+  
+    /* 개별 비디오 카드 */
+    .video-card {
+      width: 100%;
+      cursor: pointer;
+    }
+  
+    /* 썸네일 이미지 컨테이너 */
+    .video-thumbnail {
+      position: relative;
+      width: 100%;
+      height: 0;
+      padding-bottom: 66.66%; /* 3:2 비율 유지 */
+      border-radius: 8px;
+      overflow: hidden;
+    }
+  
+    /* 썸네일 이미지 */
+    .video-thumbnail img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* 이미지 비율 유지하며 채움 */
+      display: block;
+    }
+  
+    /* 비디오 길이 표시 (우측 하단) */
+    .video-duration {
+      position: absolute;
+      bottom: 4px;
+      right: 4px;
+      background-color: rgba(0, 0, 0, 0.7);
+      font-size: 12px;
+      padding: 2px 4px;
+      border-radius: 4px;
+    }
+  
+    /* 카드 아래 정보 영역 */
+    .video-info {
+      margin-top: 6px;
+    }
+  
+    /* 썸네일 아래 제목 (한 줄로 자름) */
+    .video-title {
+      font-size: 14px;
+      font-weight: bold;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  
+    /* 썸네일 아래 메타 정보 */
+    .video-meta {
+      font-size: 12px;
+      color: #aaa;
+    }
+  
+    /* 섹션 구분선 */
+    .divider {
+      width: 100%;
+      border-top: 1px solid #333;
+      margin: 20px 0;
+    }
