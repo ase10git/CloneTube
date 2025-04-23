@@ -1,3 +1,6 @@
+body {
+    background-color: var(--bg);
+}
 main {
     display: flex;
     flex-direction: column;
@@ -7,12 +10,12 @@ main {
     display: flex;
     flex-direction: column;
     z-index: 10px;
-    background-color: #181818;
+    background-color: var(--ch-profile);
 }
 
 #channel-profile {
     display: flex;
-    color: white;
+    color: var(--font);
     justify-content: space-between;
     align-items: center;
     height: 100px;
@@ -33,10 +36,10 @@ main {
 #button-subscribe {
     height: 36px;
     width: 116px;
-    background-color: #CC0000;
+    background-color: var(--subscribes);
     border: none;
     border-radius: 2px;
-    color: #FFFFFF;
+    color: var(--font);
     font-size: 14px;
 }
 
@@ -57,23 +60,35 @@ main {
 
 #channel-nav-list a {
     text-decoration: none;
-    color: #AAAAAA;
+    color: var(--font-gr);
     font-size: 14px;
 }
 
 #channel-nav button {
     border: none;
     background-color: transparent;
-    color: #AAAAAA;
+    color: var(--font-gr);
 }
 
-#channel-nav #left {
+#left, #right {
     display: none;
 }
+
+/* @media (max-width: 768px) {
+    #channel-nav #left {
+        display: flex;
+    }
+} */
 
 #channel-nav-str {
     display: flex;
     gap: 10px;
+    scroll-behavior: smooth;
+    overflow-x: auto;
+}
+
+#channel-nav-str::-webkit-scrollbar {
+    display: none;
 }
 
 #channel-search {
