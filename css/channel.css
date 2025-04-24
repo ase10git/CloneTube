@@ -214,7 +214,7 @@ main {
 }
 
 /* 비디오 영역 */
-section {
+#channel-section {
     padding: 0 65px;
 }
 

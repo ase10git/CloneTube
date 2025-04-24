@@ -2,54 +2,22 @@
     body {
       margin: 0; /* 기본 마진 제거 */
       font-family: Arial, sans-serif; /* 글꼴 설정 */
-      background-color: #000; /* 배경색 검정 */
-      color: white; /* 텍스트 기본 색상 흰색 */
+      background-color: var(--bg); /* 배경색 검정 */
+      color: var(--font); /* 텍스트 기본 색상 흰색 */
       display: flex; /* 플렉스 컨테이너로 설정 */
       flex-direction: column; /* 수직 방향 정렬 */
       height: 100vh; /* 전체 뷰포트 높이 채움 */
     }
   
-    /* 상단 네비게이션 바 스타일(삭제 예정) */
-    .top-bar {
-      width: 100%; /* 전체 너비 */
-      height: 56px; /* 고정 높이 */
-      background-color: #111; /* 어두운 배경 */
-      display: flex; /* 내부 요소 정렬을 위한 flex */
-      align-items: center; /* 수직 가운데 정렬 */
-      justify-content: space-between; /* 양 끝 정렬 */
-      padding: 0 16px; /* 좌우 패딩 */
-      position: fixed; /* 스크롤해도 고정 */
-      top: 0; /* 상단에 붙이기 */
-      left: 0;
-      z-index: 10; /* 다른 요소 위에 배치 */
-    }
-
-    /* 왼쪽 사이드바 스타일(삭제 예정) */
-    .sidebar {
-      width: 240px;
-      background-color: #111;
-      height: 100vh;
-      position: fixed;
-      top: 56px; /* top-bar 아래에 위치 */
-    }
-
-  
     /* 메인 콘텐츠 영역 */
+    /* !!!!!!!사이드바 반응형으로 바뀌면 여기 바꿔야 함!!!!!!!! */
     .main-content {
-      margin-left: 240px; /* 사이드바 공간 확보 */
-      width: calc(100% - 240px); /* 나머지 전체 너비 */
-      padding: 20px;
-      margin-top: 56px; /* top-bar 공간 확보 */
+      margin: 20px 0px 20px 175px; /*175px 사이드바 영역 주기(main 패딩 65제외)*/
+      width: 100wh;
+      padding: 0px 0px 0px 27.5px;
       display: flex;
       flex-direction: column;
-    }
-  
-    /* 비디오 및 설명 컨테이너 */
-    .container {
-      display: flex;
-      align-items: flex-start;
-      max-width: 1000px;
-      margin-top: 24px;
+      align-items: center;
     }
   
     /* 비디오 플레이어 영역 */
@@ -85,50 +53,14 @@
     }
   
     /* 섹션 전체 스타일 */
-    .section {
-      padding: 24px;
-      max-width: 100%;
-    }
-  
-    /* 섹션 상단 제목 영역 */
-    .section-header {
-      display: flex;
-      align-items: center;
-      margin-bottom: 12px;
-      gap: 10px;
-    }
-  
-    /* 섹션 제목 */
-    .section-title {
-      font-family: Roboto;
-      font-weight: 700;
-      font-size: 16px;
-      line-height: 100%;
-    }
-  
-    /* '전체 재생' 버튼 스타일 */
-    .play-all {
-      font-size: 12px;
-      color: var(--font);
-      background-color: transparent;
-      border: none;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-family: Roboto;
-      font-weight: 700;
-      font-size: 16px;
-      line-height: 100%;
-    }
-
-    /* 비디오 재생목록 플렉스 레이아웃 */
-    .video-playlist {
-      display: flex;
-      align-items: center;
+    .playlist-section {
+      width: 100%;
       container-name: scroll-wrapper;
       container-type: inline-size;
-      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
     }
 
     /* 비디오 스크롤 크기 설정(재생목록에 최대 6개까지만 표출되게) */
@@ -162,13 +94,79 @@
         max-width: calc(210px * 2 + 16px * 1);
       }
     }
-    @container scroll-wrapper (max-width: calc(210px * 2 + 16px * 1 - 1px))
-    {
-      .video-scroll-wrapper {
-        max-width: calc(210px * 1);
+
+    /* 792이하되면 메뉴사이드바 없애기 */
+    @media (max-width: 792px) {
+      #menu-nav {
+        display: none;
+      }
+      .main-content {
+        margin-left: 0px;
+        width: 100%;
+        padding: 0px;
+      }
+      #channel-section {        /* 메뉴바 작아졌을 경우도 추가해서 나중에 다시 전체적으로 패딩 손봐야 함 */
+        padding: 0px;
       }
     }
+  
+    /* 섹션 상단 제목 영역 */
+    .section-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 12px;
+      gap: 10px;
+    }
+  
+    /* 섹션 제목 */
+    .section-title {
+      font-family: Roboto;
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 100%;
+    }
+  
+    /* '전체 재생' 버튼 스타일 */
+    .play-all {
+      font-size: 12px;
+      color: var(--font);
+      background-color: transparent;
+      border: none;
+      border-radius: 18px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: Roboto;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 36px;
+      height: 36px;
+      width: 100.969px;
+      box-sizing: border-box;
+      padding: 0px;
+    }
 
+    .play-all:hover {
+      background-color: var(--bg-highlight);
+    }
+
+    .play-icon {
+      height: 24px;
+      width: 24px;
+      object-fit: none;
+      margin: 0 6px 0 0;
+    }
+
+    /* 비디오 재생목록 플렉스 레이아웃 */
+    .video-playlist {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      position: relative;
+    }
+    
     /* 비디오 재생목록 옮기기 버튼 */
     .video-button-left, .video-button-right {
       position: absolute;
@@ -187,7 +185,7 @@
 
     /* 비디오 재생목록 옮기기 버튼 위치 설정 */
     .video-button-left {
-      display: none;
+      /* display: none; */
       left: -18px;
     }
 
