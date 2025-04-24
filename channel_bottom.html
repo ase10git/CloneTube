@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>YouTube UI Clone</title>
   <link rel="stylesheet" href="./css/channel_bottom.css">
+  <link rel="stylesheet" href="./css/style.css">
 
 </head>
 <body>
@@ -65,7 +66,13 @@
           PLAY ALL
         </button>
       </div>
-      <div class="video-row" id="section1"></div>
+      <div class="video-playlist">
+        <div class="video-scroll-wrapper">
+          <button class="video-button-left">&lt;</button>
+          <div class="video-row" id="section1"></div>
+          <button class="video-button-right">&gt;</button>
+        </div>
+      </div>
     </div>
 
     <!-- 구분선 -->
@@ -80,7 +87,13 @@
           PLAY ALL
         </button>
       </div>
-      <div class="video-row" id="section2"></div>
+      <div class="video-playlist">
+        <div class="video-scroll-wrapper">
+          <button class="video-button-left">&lt;</button>
+          <div class="video-row" id="section2"></div>
+          <button class="video-button-right">&gt;</button>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -125,24 +138,23 @@
         description: "Netflix new series"
       },
       {
-        thumbnail: "https://upload.wikimedia.org/wikipedia/en/6/60/Twitter_Logo_as_of_2021.svg",
-        duration: "10:30",
-        title: "Twitter",
-        channelName: "X",
-        views: "740K views",
-        uploadDate: "1 week ago",
-        description: "Twitter changes"
+        thumbnail: "https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png",
+        duration: "15:20",
+        title: "Instagram",
+        channelName: "Meta",
+        views: "980K views",
+        uploadDate: "1 month ago",
+        description: "Instagram launch"
       },
       {
-        thumbnail: "https://upload.wikimedia.org/wikipedia/en/6/60/Twitter_Logo_as_of_2021.svg",
-        duration: "10:30",
-        title: "Twitter",
-        channelName: "X",
-        views: "740K views",
-        uploadDate: "1 week ago",
-        description: "Twitter changes"
-      }
-      ,
+        thumbnail: "https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png",
+        duration: "15:20",
+        title: "Instagram",
+        channelName: "Meta",
+        views: "980K views",
+        uploadDate: "1 month ago",
+        description: "Instagram launch"
+      },
       {
         thumbnail: "https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg",
         duration: "45:00",
@@ -183,7 +195,7 @@ function renderVideos(sectionId) {
       </div>
       <div class="video-info">
         <div class="video-title">${video.title}</div> <!-- 영상 제목 -->
-        <div class="video-meta">${video.channelName} · ${video.views} · ${video.uploadDate}</div> <!-- 채널명, 조회수, 업로드 날짜 -->
+        <div class="video-meta">${video.channelName}<br>${video.views} · ${video.uploadDate}</div> <!-- 채널명, 조회수, 업로드 날짜 -->
       </div>
     `;
 
