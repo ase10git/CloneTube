@@ -14,8 +14,8 @@
     <header id="top-header"></header>
     <!-- 사이드바 자리 -->
     <nav id="menu-nav"></nav>
-    <nav></nav>
-    <main>
+    
+    <main id="channel-main">
         <!-- 상단 -->
         <header id="channel-header">
             <img src="../images/Channel-Cover.svg" alt="채널페이지 이미지" id="channel-cover-img">
@@ -35,7 +35,7 @@
             <!--채널 네비게이션-->
             <nav id="channel-nav">
                 <div id="left-btn-wrap" class="channel-nav-btn-wrap">
-                    <button id="left">
+                    <button id="ch-nav-left-btn">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
                             <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0"/>
                         </svg>
@@ -61,7 +61,7 @@
                     </form>
                 </div>
                 <div id="right-btn-wrap" class="channel-nav-btn-wrap">
-                    <button id="right">
+                    <button id="ch-nav-right-btn">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
                             <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708"/>
                         </svg>
@@ -70,7 +70,7 @@
             </nav>
         </header>
         <!-- 하단 -->
-        <section>
+        <section id="channel-section">
             <!-- 메인영상 -->
             <div id="main-video">
                 <video autoplay muted controls poster="#" class="video-player">
@@ -82,10 +82,11 @@
                         <span id="spectators">576.969 views.</span>
                         <span id="uploaded-time">3 weeks ago</span>
                     </div>
-                    <div id="video-description">
-                        Chris Fisher, also known as the Blind Woodturner,
-                        learned his craft by listening to hundreds of hours of YouTube videos and experimenting in his workshop.
-                        Now he’s a YouTube creator himself, sells his products worldwide, and does demonstrations all around the country.
+                    <div id="video-desc-box">
+                        <p id="video-description">
+                            Morbi sollicitudin cursus consequat. Maecenas commodo nunc ligula, et accumsan augue lobortis in. Sed sapien arcu, vehicula non euismod eu, suscipit sed sapien. Morbi maximus maximus sapien, nec pellentesque augue elementum eu. Curabitur arcu odio, facilisis vestibulum rhoncus sit amet, laoreet non enim. Nulla egestas euismod dui. Suspendisse quis orci neque.
+                        </p>
+                        <a href="#" id="video-show-more">자세히 알아보기</a>
                     </div>
                 </div>
             </div>
@@ -137,5 +138,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="../js/includeHtml.js"></script>
     <script src="../js/channel.js"></script>
+    <script src="../js/channel/channeltopStyle.js"></script>
 </body>
 </html>
