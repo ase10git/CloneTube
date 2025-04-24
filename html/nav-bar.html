@@ -4,87 +4,123 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/setbar.css">
 </head>
 <body>
+
+    <!-- 상단 헤더바 -->
     <header>
-        <span class="side-button" id="SideButton">
-            <!-- 사이드바 버튼 (햄버거 메뉴 아이콘 SVG) -->
-            <img src="../images/hamburger.svg" alt="Sidebar Button" width="24" height="24">
-        </span> <!--사이드바 버튼-->
-        <span class="logo">
-            <!-- YouTube 로고 SVG -->
-            <img src="../images/Youtube-Logo.svg" alt="Logo" width="90" height="20">
-        </span>
-        <span class="search-bar">
-            <input type="text" placeholder="Search">
-            <span class="search-btn">
-                <!-- 검색 버튼 (검색 아이콘 SVG) -->
-                <img src="../images/search.svg" alt="Search Icon" width="24" height="24">
+
+        <!-- 좌측: 햄버거 + 로고 -->
+        <div class="left-section">
+            <span class="side-button" id="SideButton">
+                <img src="../images/hamburger.svg" alt="Sidebar Button" width="24" height="24">
             </span>
-        </span>
-        <span class="voice-btn" id="voiceBtn">
-            <!-- 음성 인식 버튼 (SVG 이미지로 버튼 스타일링) -->
-            <img src="../images/voice.svg" alt="Voice Recognition Icon" width="24" height="24">
-        </span>
+            <span class="logo">
+                <img src="../images/Youtube-Logo.svg" alt="Logo" width="90" height="20">
+            </span>
+            </div>
+        
+            <!-- 중앙: 검색창 + 음성 버튼 -->
+            <div class="center-section">
+            <span class="search-bar">
+                <input type="text" placeholder="Search">
+                <span class="search-btn">
+                <img src="../images/search.svg" alt="Search Icon" width="24" height="24">
+                </span>
+            </span>
+            <span class="voice-btn" id="voiceBtn">
+                <img src="../images/voice.svg" alt="음성 검색 버튼" width="40" height="40">
+            </span>
+            </div>
+        
+        <!-- 우측: 동영상 업로드, 더보기, 알림, 프로필 -->
+        <div class="right-section">
+            <span class="plus-video" id="plusVideo">
+                <a href="#"><img src="../images/icon1.svg" alt="Plus Video" width="40" height="40"></a>
+            </span>
+            <span class="more_view" id="moreView">
+                <a href="#"><img src="../images/icon2.svg" alt="More View" width="40" height="40"></a>
+            </span>
+            <span class="bell" id="bell">
+                <a href="#"><img src="../images/icon3.svg" alt="Bell" width="40" height="40"></a>
+            </span>
+            <span class="profile" id="profile">
+                <a href="#"><img src="../images/icon4.svg" alt="Profile" width="40" height="40"></a>
+            </span>
+        </div>
+
     </header>
 
+    <!-- 사이드바 메뉴 -->
     <nav class="side-bar">
+
+        <!-- 섹션: 메인 메뉴 -->
         <section>
             <ul class="">
-                <!-- 각 리스트 항목에 SVG 아이콘 추가 -->
                 <li><a href="#"><img src="../images/home.svg" alt="Home Icon" width="24" height="24">Home</a></li>
                 <li><a href="#"><img src="../images/explore.svg" alt="Explore Icon" width="24" height="24">Explore</a></li>
                 <li><a href="#"><img src="../images/subscription.svg" alt="Subscriptions Icon" width="24" height="24">Subscriptions</a></li>
             </ul>
         </section>
+
         <hr>
+        <!-- 섹션: 라이브러리 및 기록 -->
         <section>
             <ul>
                 <li><a href="#"><img src="../images/library.svg" alt="Library Icon" width="24" height="24">Library</a></li>
                 <li><a href="#"><img src="../images/history.svg" alt="History Icon" width="24" height="24">History</a></li>
-                <li><a href="#"><img src="../images/videos.svg" alt="Your Videos Icon" width="24" height="24">Your Videos</a></li>
+                <li><a href="#"><img src="../images/your-videos.svg" alt="Your Videos Icon" width="24" height="24">Your Videos</a></li>
                 <li><a href="#"><img src="../images/watch-later.svg" alt="Watch Later Icon" width="24" height="24">Watch later</a></li>
                 <li><a href="#"><img src="../images/liked-videos.svg" alt="Liked Videos Icon" width="24" height="24">Liked Videos</a></li>
                 <li><a href="#"><img src="../images/show-more.svg" alt="Show More Icon" width="24" height="24">Show More</a></li>
             </ul>
         </section>
         <hr>
-        <section>
-            <ul>
-                <caption>SUBSCRIPTIONS</caption>
-                <li><a href="#"><img src="../images/james.svg" alt="James Gouse Icon" width="24" height="24">James Gouse</a></li>
-                <li><a href="#"><img src="../images/alan.svg" alt="Alan Cooper Icon" width="24" height="24">Alan Cooper</a></li>
-                <li><a href="#"><img src="../images/marcus.svg" alt="Marcus Levin Icon" width="24" height="24">Marcus Levin</a></li>
-                <li><a href="#"><img src="../images/alexis.svg" alt="Alexis Sears Icon" width="24" height="24">Alexis Sears</a></li>
-                <li><a href="#"><img src="../images/jesica.svg" alt="Jesicz Lambert Icon" width="24" height="24">Jesica Lambert</a></li>
-                <li><a href="#"><img src="../images/anna.svg" alt="Anna White Icon" width="24" height="24">Anna White</a></li>
-                <li><a href="#"><img src="../images/skylar.svg" alt="Skylar Dias Icon" width="24" height="24">Skylar Dias</a></li>
-                <li><a href="#"><img src="../images/show-more.svg" alt="Show More Icon" width="24" height="24">Show 13 More</a></li>
-            </ul>
-        </section>
-        <hr>
-        <section>
-            <ul>
-                <caption>MORE FROM YOUTUBE</caption>
-                <li><a href="#"><img src="../images/youtube-premium.svg" alt="YouTube Premium Icon" width="24" height="24">YouTube Premium</a></li>
-                <li><a href="#"><img src="../images/gaming.svg" alt="Gaming Icon" width="24" height="24">Gaming</a></li>
-                <li><a href="#"><img src="../images/live.svg" alt="Live Icon" width="24" height="24">Live</a></li>
-                <li><a href="#"><img src="../images/sports.svg" alt="Sports Icon" width="24" height="24">Sports</a></li>
-            </ul>
-        </section>
-        <hr>
+
+        <!-- 섹션: 구독 목록 -->
+            <section>
+                <ul>
+                    <li class="section-title">SUBSCRIPTIONS</li>
+                    <li><a href="#"><img src="../images/james.svg" alt="James Gouse Icon" width="24" height="24">James Gouse</a></li>
+                    <li><a href="#"><img src="../images/alan.svg" alt="Alan Cooper Icon" width="24" height="24">Alan Cooper</a></li>
+                    <li><a href="#"><img src="../images/marcus.svg" alt="Marcus Levin Icon" width="24" height="24">Marcus Levin</a></li>
+                    <li><a href="#"><img src="../images/alexis.svg" alt="Alexis Sears Icon" width="24" height="24">Alexis Sears</a></li>
+                    <li><a href="#"><img src="../images/jesica.svg" alt="Jesicz Lambert Icon" width="24" height="24">Jesica Lambert</a></li>
+                    <li><a href="#"><img src="../images/anna.svg" alt="Anna White Icon" width="24" height="24">Anna White</a></li>
+                    <li><a href="#"><img src="../images/skylar.svg" alt="Skylar Dias Icon" width="24" height="24">Skylar Dias</a></li>
+                    <li><a href="#"><img src="../images/show-more.svg" alt="Show More Icon" width="24" height="24">Show 13 More</a></li>
+                </ul>
+            </section>
+
+            <hr>
+
+            <!-- 섹션: 유튜브 관련 서비스 -->
+            <section>
+                <ul>
+                    <li class="section-title">MORE FROM YOUTUBE</li>
+                    <li><a href="#"><img src="../images/youtube-premium.svg" alt="YouTube Premium Icon" width="24" height="24">YouTube Premium</a></li>
+                    <li><a href="#"><img src="../images/gaming.svg" alt="Gaming Icon" width="24" height="24">Gaming</a></li>
+                    <li><a href="#"><img src="../images/live.svg" alt="Live Icon" width="24" height="24">Live</a></li>
+                    <li><a href="#"><img src="../images/sports.svg" alt="Sports Icon" width="24" height="24">Sports</a></li>
+                </ul>
+            </section>
+            <hr>
+
+
+        <!-- 섹션: 설정 및 피드백 -->
         <section>
             <ul>
                 <li><a href="#"><img src="../images/settings.svg" alt="Settings Icon" width="24" height="24">Settings</a></li>
-                <li><a href="#"><img src="../images/report=history.svg" alt="Report History Icon" width="24" height="24">Report history</a></li>
+                <li><a href="#"><img src="../images/report-history.svg" alt="Report History Icon" width="24" height="24">Report history</a></li>
                 <li><a href="#"><img src="../images/help.svg" alt="Help Icon" width="24" height="24">Help</a></li>
                 <li><a href="#"><img src="../images/send-feedback.svg" alt="Send Feedback Icon" width="24" height="24">Send feedback</a></li>
             </ul>
         </section>
+
     </nav>
 
+    <!-- 사이드바 동작을 위한 JS -->
     <script src="side-bar.js"></script>
 </body>
 </html>
