@@ -1,4 +1,109 @@
-const container = document.getElementById('channel-nav-str');
-const left_btn = document.getElementById('left');
-const right_btn = document.getElementById('right');
+// 임시 썸네일 카드에 표시될 영상 정보 배열
+const sampleVideos = [
+    {
+        thumbnail: "https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg",
+        duration: "23:45",
+        title: "YouTube",
+        channelName: "Google",
+        views: "1.2M views",
+        uploadDate: "2 months ago",
+        description: "YouTube official video"
+    },
+    {
+        thumbnail: "https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png",
+        duration: "15:20",
+        title: "Instagram",
+        channelName: "Meta",
+        views: "980K views",
+        uploadDate: "1 month ago",
+        description: "Instagram launch"
+    },
+    {
+        thumbnail: "https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg",
+        duration: "19:55",
+        title: "Facebook",
+        channelName: "Meta",
+        views: "2.3M views",
+        uploadDate: "3 months ago",
+        description: "Facebook update"
+    },
+    {
+        thumbnail: "https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg",
+        duration: "45:00",
+        title: "Netflix",
+        channelName: "Netflix Inc",
+        views: "4.2M views",
+        uploadDate: "5 months ago",
+        description: "Netflix new series"
+    },
+    {
+        thumbnail: "https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png",
+        duration: "15:20",
+        title: "Instagram",
+        channelName: "Meta",
+        views: "980K views",
+        uploadDate: "1 month ago",
+        description: "Instagram launch"
+    },
+    {
+        thumbnail: "https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png",
+        duration: "15:20",
+        title: "Instagram",
+        channelName: "Meta",
+        views: "980K views",
+        uploadDate: "1 month ago",
+        description: "Instagram launch"
+    },
+    {
+        thumbnail: "https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg",
+        duration: "45:00",
+        title: "Netflix",
+        channelName: "Netflix Inc",
+        views: "4.2M views",
+        uploadDate: "5 months ago",
+        description: "Netflix new series"
+    },
+    {
+        thumbnail: "https://upload.wikimedia.org/wikipedia/en/6/60/Twitter_Logo_as_of_2021.svg",
+        duration: "10:30",
+        title: "Twitter",
+        channelName: "X",
+        views: "740K views",
+        uploadDate: "1 week ago",
+        description: "Twitter changes"
+    }
+    ];
 
+// 카드 생성 함수 - 특정 섹션에 영상 카드들을 동적으로 렌더링하는 함수
+function renderVideos(sectionId) {
+// HTML에서 전달받은 섹션 ID에 해당하는 요소를 찾음
+const container = document.getElementById(sectionId);
+
+// sampleVideos 배열의 각 비디오 데이터를 순회하면서 카드 생성
+sampleVideos.forEach((video) => {
+    // 새로운 div 요소 생성 (비디오 카드 하나)
+    const videoCard = document.createElement("div");
+    // 비디오 카드에 클래스 추가 (스타일 적용을 위해)
+    videoCard.classList.add("video-card");
+
+    // 카드의 내부 HTML 구조를 템플릿 리터럴을 이용해 작성
+    videoCard.innerHTML = `
+    <div class="video-thumbnail">
+        <img src="${video.thumbnail}" alt="Video Thumbnail" /> <!-- 썸네일 이미지 -->
+        <div class="video-duration">${video.duration}</div> <!-- 영상 재생 시간 -->
+    </div>
+    <div class="video-info">
+        <div class="video-title">${video.title}</div> <!-- 영상 제목 -->
+        <div class="video-meta">${video.channelName}<br>${video.views} · ${video.uploadDate}</div> <!-- 채널명, 조회수, 업로드 날짜 -->
+    </div>
+    `;
+
+    // 완성된 비디오 카드를 컨테이너에 추가
+    container.appendChild(videoCard);
+});
+}
+
+
+// 두 섹션에 영상 표시
+renderVideos('section1');
+renderVideos('section2');
