@@ -1,16 +1,23 @@
 body {
     background-color: var(--bg);
 }
+
 main {
     display: flex;
     flex-direction: column;
 }
 
+/* 채널 헤더 */
 #channel-header {
     display: flex;
-    flex-direction: column;
+    flex-direction: column; 
     z-index: 10px;
     background-color: var(--ch-profile);
+}
+
+#channel-cover-img{
+    width: 100%; height: 100%;
+    object-fit: cover;
 }
 
 #channel-profile {
@@ -18,20 +25,43 @@ main {
     color: var(--font);
     justify-content: space-between;
     align-items: center;
-    height: 100px;
     padding: 16px 65px 4px 65px;
+}
+
+@media (width < 840px) {
+    #channel-profile {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+}
+
+#channel-profile-box{
+    width: 80px; height: 80px;
+    display: flex;
+    justify-content: center; align-items: center;
+    overflow: hidden;
+}
+
+#channel-profile-img{
+    width: 100%; height: 100%;
+    object-fit: fill;
 }
 
 #channel-id {
     display: flex;
-    gap: 10px;
+    gap: 24px;
 }
 
-#channel-name {
+#channel-name-box {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    justify-content: center;
+    align-items: flex-start;
 }
+
+#channel-name { font-size: 24px; }
+#subscribers { font-size: 14px; color: var(--font-gr); }
 
 #button-subscribe {
     height: 36px;
@@ -43,35 +73,84 @@ main {
     font-size: 14px;
 }
 
+@media (width < 840px) {
+    #button-subscribe { width: 100%; }
+}
+
+/* 채널 메뉴 탭 */
 #channel-nav {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 48px;
-    padding: 0px 65px 0px 65px;
+    padding: 0px 65px;
+    position: relative;
+}
+
+.channel-nav-btn-wrap {
+    width: 56px; height: 100%;
+    display: flex; justify-content: center; align-items: center;
+    position: absolute; bottom:0;
+    background-color: var(--ch-profile);
+    z-index: 1;
+}
+
+#left-btn-wrap{top:0; left:65px; bottom:0;}
+
+#right-btn-wrap{top:0; right:65px; bottom:0;}
+
+#channel-nav .channel-nav-btn-wrap button {
+    width: 40px; height: 40px;
+    border: none;
+    display: flex; justify-content: center; align-items: center;
+    background-color: transparent;
+}
+
+#channel-nav button svg{
+    color: var(--font-gr);
 }
 
 #channel-nav-list {
     display: flex;
     list-style: none;
     align-items: center;
-    gap: 10px;
+    /* gap: 10px; */
 }
 
 #channel-nav-list a {
     text-decoration: none;
     color: var(--font-gr);
     font-size: 14px;
+    font-weight: 700;
 }
 
-#channel-nav button {
-    border: none;
-    background-color: transparent;
-    color: var(--font-gr);
+#channel-nav-list li{
+    padding: 16px 32px 15px 32px;
+    position: relative;
+    white-space: nowrap;
+    transition: padding, margin 0.1s ease;
 }
 
-#left, #right {
-    display: none;
+@media (width <= 876px) {
+    #channel-nav-list li{
+        margin-right: 32px;
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
+
+#channel-nav-list li::after{
+    width: 100%; height: 2px;
+    content: '';
+    position: absolute;
+    bottom:0; left:0;
+}
+
+#channel-nav-list li:hover::after{
+    background-color: var(--bt-border);
+}
+
+#channel-nav-list li.select::after{
+    background-color: var(--bt-highlight);
 }
 
 /* @media (max-width: 768px) {
@@ -96,8 +175,108 @@ main {
     align-items: center;
 }
 
+#search-submit-btn{
+    width: 40px; height: 40px;
+    background-color: transparent;
+    border: none;
+    border-radius: 100%;
+}
+
+/* fix - javascript로 버튼 한 번 누를 때, 누른 상태일 때 색상 변화 */
+#search-submit-btn.clicked{
+    background-color: var(--bg);
+    border: 1px solid var(--bg);
+}
+
 #channel-search input {
     height: 20px;
     background-color: transparent;
     border: none;
+    box-shadow: none;
+    font-size: 14px;
+    font-weight: 500;
+    /* display: none; 버튼 누르면 뜨도록 설정 */
+}
+
+#channel-search input:focus-visible{
+    outline: none;
+    caret-color : var(--font-gr);
+}
+
+/* fix - javascript로 검색 입력창을 누를 때 언더바 표시 */
+.search-underbar{
+    transition: background-color 0.2s ease;
+}
+
+.search-underbar.visible{
+    width: 100%; height: 2px;
+    background-color: var(--font);
+}
+
+/* 비디오 영역 */
+section {
+    padding: 0 65px;
+}
+
+/* 메인 비디오 */
+#main-video {
+    padding: 24px 0;
+    display: flex;
+    justify-content: flex-start;
+    gap: 24px;
+    border-bottom: 1px solid var(--bt-border);
+}
+
+@media (width < 472px) {
+    #main-video { 
+        overflow-x: scroll;
+        scroll-behavior: smooth;
+        scrollbar-color: var(--bt-border) transparent;
+        scroll-padding: 1px;
+    }
+}
+
+.video-player { width: 448px; height: 238px; }
+
+#video-info-box {
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    gap: 20px;
+}
+
+#video-title {
+    display: block;
+    margin-bottom: 20px;
+    color: var(--font);
+    font-weight: 700;
+    font-size: 14px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+#video-meta{
+    color: var(--font-gr);
+    font-size: 13px;
+    font-weight: 700;
+}
+
+#spectators { margin-right: 5px; }
+
+#video-description {
+    color: var(--font);
+    font-size: 14px;
+    font-weight: 400;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* white-space : pre-wrap; 공백 포함 입력 내용 그대로 출력 */
+}
+
+@media (width <= 876px) {
+    #main-video { flex-direction: column; gap:0;}
+    #video-meta { margin-top : 16px;}
+    #video-description { display: none; }
+    #video-title { margin-bottom : 0;}
 }
