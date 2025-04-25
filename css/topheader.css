@@ -1,27 +1,30 @@
 /* 전체 테마 색상 변수 설정 (다크 모드 스타일 기반) */
-:root {
-    --bg: #0f0f0f;
-    --bg-bar: #1f1f1f;
-    --font: #ffffff;
-    --font-gr: #aaaaaa;
-    --search: #303030;
-    --bt-border: #3f3f3f;
-    --bt-highlight: #4d4d4d;
-    --bg-highlight: #606060;
-    --subscribes: #cc0000;
-    --ch-profile: #222222;
-    --bg-color: #0f0f0f; /* 누락된 변수 보완 */
-}
+
+@scope (#header-nav-container) {
+    :scope {
+        --bg: #0f0f0f;
+        --bg-bar: #1f1f1f;
+        --font: #ffffff;
+        --font-gr: #aaaaaa;
+        --search: #303030;
+        --bt-border: #3f3f3f;
+        --bt-highlight: #4d4d4d;
+        --bg-highlight: #606060;
+        --subscribes: #cc0000;
+        --ch-profile: #222222;
+        --bg-color: #0f0f0f; /* 누락된 변수 보완 */
+    }
+
 
 /* 기본 문서 스타일 */
-body {
+#nav-container {
     background-color: var(--bg);
     color: var(--font);
     margin: 0;
     font-family: Arial, sans-serif;
 }
 
-img {
+#header-nav-container img {
     vertical-align: middle;
 }
 
@@ -107,6 +110,7 @@ header {
     left: 0;
     width: 240px;
     margin-top: 56px; /* 헤더 높이만큼 밀어냄 */
+    z-index: 1000;
     height: calc(100vh - 56px); /* 헤더 제외한 높이로 설정 */
     background-color: var(--bg-color);
     overflow-y: auto;
@@ -175,7 +179,7 @@ header {
 }
 
 /* 섹션 타이틀 (SUBSCRIPTIONS 등) */
-caption {
+#header-nav-container caption {
     display: block;
     padding: 8px 16px;
     color: var(--font-gr);
@@ -185,7 +189,7 @@ caption {
 }
 
 /* 버튼 공통 스타일 */
-button {
+#header-nav-container button {
     background-color: var(--bg-highlight);
     border: 1px solid var(--bt-border);
     color: var(--font);
@@ -194,7 +198,7 @@ button {
     cursor: pointer;
 }
 
-button:hover {
+#header-nav-container button:hover {
     background-color: var(--bt-highlight);
 }
 
@@ -205,19 +209,21 @@ button:hover {
 }
 
 /* 선택된 항목 */
-.selected {
+#header-nav-container .selected {
     background-color: var(--bt-highlight);
     color: var(--bg);
 }
 
 /* 채널 프로필 영역 */
-.profile {
+#header-nav-container .profile {
     background-color: var(--ch-profile);
     padding: 20px;
     color: var(--font);
 }
 
 /* 흐릿한 글자 */
-.text-muted {
+#header-nav-container .text-muted {
     color: var(--font-gr);
+}
+
 }

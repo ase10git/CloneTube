@@ -1,3 +1,7 @@
+@scope (#channel-main) {
+    font-family: Arial, sans-serif; /* 글꼴 설정 */
+}
+
 body {
     background-color: var(--bg);
 }

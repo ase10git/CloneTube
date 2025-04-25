@@ -1,17 +1,12 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>topheader</title>
-    <link rel="stylesheet" href="../css/topheader.css">
-</head>
-<body>
+<!-- top-header와 side-nav 스타일 -->
+<link rel="stylesheet" href="../css/topheader.css">
+
+<div id="header-nav-container">
     <!-- 상단 헤더 바 코드 (topheader.html) -->
     <header>
         <!-- 좌측: 햄버거 + 로고 -->
         <div class="left-section">
-            <span class="side-button" id="SideButton">
+            <span class="side-button" id="side-button">
                 <img src="../images/hamburger.svg" alt="Sidebar Button" width="24" height="24">
             </span>
             <span class="logo">
@@ -50,7 +45,7 @@
     </header>
 
     <!-- 사이드바 메뉴 (처음엔 숨겨짐) -->
-    <nav class="side-bar">
+    <nav class="side-bar" id="side-bar">
         <section>
             <ul>
                 <li><a href="#"><img src="../images/home.svg" alt="Home Icon" width="24" height="24">Home</a></li>
@@ -70,8 +65,8 @@
         </section>
         <hr>
 
-         <!-- 섹션: 구독 목록 -->
-         <section>
+        <!-- 섹션: 구독 목록 -->
+        <section>
             <ul>
                 <li class="section-title">SUBSCRIPTIONS</li>
                 <li><a href="#"><img src="../images/james.svg" alt="James Gouse Icon" width="24" height="24">James Gouse</a></li>
@@ -109,8 +104,4 @@
         </ul>
     </section>
     </nav>
-
-    <!-- JS 파일을 body 끝에 배치 -->
-    <script src="../js/topheader.js" defer></script>
-</body>
-</html>
+</div>
