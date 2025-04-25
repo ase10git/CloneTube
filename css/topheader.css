@@ -1,39 +1,43 @@
-/* 전체 테마 색상 변수 설정
-   (다크 모드 스타일 기반)*/
+/* 전체 테마 색상 변수 설정 (다크 모드 스타일 기반) */
 :root {
-    --bg: #0f0f0f;             
-    --bg-bar: #1f1f1f;          
-    --font: #ffffff;           
-    --font-gr: #aaaaaa;         
-    --search: #303030;          
-    --bt-border: #3f3f3f;     
-    --bt-highlight: #4d4d4d;    
-    --bg-highlight: #606060;   
-    --subscribes: #cc0000;      
-    --ch-profile: #222222;      
+    --bg: #0f0f0f;
+    --bg-bar: #1f1f1f;
+    --font: #ffffff;
+    --font-gr: #aaaaaa;
+    --search: #303030;
+    --bt-border: #3f3f3f;
+    --bt-highlight: #4d4d4d;
+    --bg-highlight: #606060;
+    --subscribes: #cc0000;
+    --ch-profile: #222222;
+    --bg-color: #0f0f0f; /* 누락된 변수 보완 */
 }
 
-/* 기본 문서 스타일*/
+/* 기본 문서 스타일 */
 body {
-    background-color: var(--bg);  /* 배경색 적용 */
-    color: var(--font);           /* 텍스트 색상 적용 */
+    background-color: var(--bg);
+    color: var(--font);
     margin: 0;
     font-family: Arial, sans-serif;
 }
 
 img {
-    vertical-align: middle;  /* 이미지 정렬 */
+    vertical-align: middle;
 }
 
 /* 상단 헤더바 스타일 */
 header {
-    background-color: var(--bg-bar);  /* 헤더 배경색 */
+    background-color: var(--bg-bar);
     padding: 1px 16px;
     display: flex;
     align-items: center;
-    justify-content: space-between;   /* 좌우 배치 */
-    position: sticky;
-    z-index: 1;
+    justify-content: space-between;
+    position: fixed; /* 수정: 헤더를 상단에 고정 */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 56px; /* 고정된 높이 설정 */
+    z-index: 1002; /* 사이드바보다 위에 배치 */
 }
 
 /* 좌측: 햄버거 + 로고 */
@@ -68,7 +72,7 @@ header {
 .search-bar {
     display: flex;
     align-items: center;
-    background-color: var(--search);  /* 검색창 배경 */
+    background-color: var(--search);
     padding: 6px 12px;
     border-radius: 24px;
     max-width: 400px;
@@ -98,15 +102,19 @@ header {
 
 /* 사이드바 네비게이션 영역 */
 .side-bar {
-    width: 240px;
-    background-color: var(--bg-bar);
-    height: 100vh;
-    overflow-y: auto;
-    padding-top: 90px;
     position: fixed;
     top: 0;
     left: 0;
-    
+    width: 240px;
+    margin-top: 56px; /* 헤더 높이만큼 밀어냄 */
+    height: calc(100vh - 56px); /* 헤더 제외한 높이로 설정 */
+    background-color: var(--bg-color);
+    overflow-y: auto;
+}
+
+/* 사이드바가 active일 때 */
+.side-bar.active {
+    transform: translateX(-250px);
 }
 
 /* 사이드바 안의 각 섹션 간격 */
@@ -138,19 +146,21 @@ header {
     cursor: pointer;
     transition: background-color 0.2s ease;
 }
-/* 사이드바 각 섹션의 제목 */
-.side-bar .section-title {
-    font-size: 10px;               
-    font-weight: 500;              
-    color: #909090;                  
-    padding: 6px 24px;               
-    text-transform: uppercase;      
-    letter-spacing: 0.4px;          
-    cursor: default;       /* 마우스 올렸을 때 포인터 변경 안 되게 */
-  }
+
 /* hover 시 강조 */
 .side-bar li:hover {
     background-color: var(--bt-highlight);
+}
+
+/* 사이드바 각 섹션의 제목 */
+.side-bar .section-title {
+    font-size: 10px;
+    font-weight: 500;
+    color: #909090;
+    padding: 6px 24px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    cursor: default;
 }
 
 /* 링크 스타일 */
@@ -174,7 +184,7 @@ caption {
     text-transform: uppercase;
 }
 
-/* 버튼 공통 스타일*/
+/* 버튼 공통 스타일 */
 button {
     background-color: var(--bg-highlight);
     border: 1px solid var(--bt-border);
