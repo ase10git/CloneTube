@@ -8,12 +8,14 @@ main {
 
 /* 상단 버튼 */
 #btn-header {
-    position: fixed;
+    position: sticky;
+    top:0;
+    z-index: 10;
     width: 100%;
     border-top: 1px solid var(--bg-highlight);
     border-bottom: 1px solid var(--bg-highlight);
     background-color: var(--bg-bar);
-    z-index: 1000;
+
 }
 
 #header-wrap {
@@ -80,9 +82,12 @@ main {
     justify-content: flex-start; 
     align-items: center;
     overflow: hidden;
+    overflow-x: auto; /* 가로 스크롤 가능하게 설정 */
+    scroll-behavior: smooth; /* 스크롤을 부드럽게 */
 }
 
 #btn-list li {
+    cursor: pointer;
     margin: 12px 12px 12px 0;
     padding: 0 12px;
     border: 1px solid var(--bt-border);
@@ -92,6 +97,10 @@ main {
     line-height: 2rem;
     font-weight: 500;
     white-space: nowrap;
+}
+
+#btn-list li:hover {
+    background-color: #444;
 }
 
 #btn-list li.selected {
