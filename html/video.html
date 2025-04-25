@@ -4,22 +4,160 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Video</title>
-    <link rel="stylesheet" href="../css/topheader.css">
+    <style href="../css/video.css" rel="stylesheet"></style>
 </head>
 <body>
     <!-- 상단 메뉴바 자리 -->
     <header id="top-header"></header>
     <!-- 사이드바 자리 -->
-    <nav id="menu-nav"></nav>
-    <nav></nav>
-    <main>
-        <!-- 메인영상 -->
-        <section></section>
+    <!-- <nav id="menu-nav"></nav> -->
+
+    <main id="video-main">
+        <!-- 동영상, 댓글 등 -->
+        <section id="primary">
+            <!-- 동영상 플레이어 -->
+            <div class="primary-top">
+                <div id="video-container">
+                    <video id="video-player">
+                        <source>
+                    </video>
+                </div>
+            </div>
+            <!-- 비디오 정보 -->
+            <div class="primary-bottom">
+                <div id="video-meta">
+                    <div class="video-title-box">
+                        <h2 id="video-title">Blind Woodturner: Turning passion into fine art</h2>
+                    </div>
+                    <div class="top-row">
+                        <div class="video-info-box">
+                            <div id="video-info">
+                                <span id="viewerships">조회수 10101010회</span>
+                                <span id="upload-date">2024.01.22</span>
+                                <!-- hash tags : <a> -->
+                            </div>
+                        </div>
+                        <!-- videoComponents\js\insertVideoFeedbackMenu 에서 메뉴 추가 -->
+                        <div id="video-menu"></div>
+                    </div>
+                    <div class="bottom-row">
+                        <div class="channel-metadata">
+                            <div class="channel-metadata-box">
+                                <div class="channel-profile-box">
+                                    <img src="" alt="채널이미지" id="channel-img">
+                                </div>
+                                <div id="channel-info">
+                                    <div class="channel-name-box">
+                                        <p id="channel-name">Test</p>
+                                        <div id="badge" class="badge">
+                                            <img class="badge" src="../images/check-lg.svg" alt="checkmark">
+                                        </div>
+                                    </div>
+                                    <div class="subscribers-box">
+                                        <p id="subscribers">구독자 122.2만명</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <button class="subscribe-btn">Subscribe</button>
+                            </div>
+                        </div>
+                        <div id="video-desc">
+                            <div></div>
+                            <p id="description">
+                                Chris Fisher, also known as the Blind Woodturner, learned his craft by listening to hundreds of hours of YouTube videos and experimenting in his workshop. Now he’s a YouTube creator himself, sells his products worldwide, and does demonstrations all around the country.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="comments-container">
+                    <div id="comment-header">
+                        <div id="comment-top">
+                            <div id="comments-option">
+                                <span id="comments-number">294</span>
+                                <span class="comments">Comments</span>
+                            </div>
+                            <div class="sort-menu">
+                                <button>
+                                    <div class="comment-sort-img-box">
+                                        <img src="../images/filter-left.svg" alt="filter-left">
+                                    </div>
+                                    <div>SORT BY</div>
+                                </button>
+                                <div class="sort-options">
+                                    <button>Top comments</button>
+                                    <button>Newest first</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="comments-input-box">
+                            <div class="profile-box">
+                                <img src="" alt="my-profile-img" id="my-profile">
+                            </div>
+                            <form action="#" method="post" id="comment-form">
+                                <input type="text" id="comment" name="comment" placeholder="Add a public comment...">
+                                <div id="input-underline"></div>
+                                <div id="comment-btn-wrap">
+                                    <button type="reset">Cancel</button>
+                                    <button type="submit">Comment</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- 
+                    videoComponents/js/insertComments
+                    댓글이 들어가는 자리 
+                    -->
+                    <div id="comments-list"></div>
+                </div>
+            </div>
+        </section>
+        
         <!-- 추천영상 목록 -->
-        <aside></aside>
+        <aside id="secondary">
+            <!-- viewport 1050px 미만이면 primary로 이동 예정-->
+            <div id="related-container">
+                <div>
+                    <div id="left-btn-wrap" class="channel-nav-btn-wrap">
+                        <button id="ch-nav-left-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div id="related-nav-box">
+                        <ul id="related-nav-list">
+                            <li class="select"><button class="related-nav-btn">All</a></li>
+                            <li><button class="related-nav-btn">From the series</button></li>
+                            <li><button class="related-nav-btn">From channelOwner</button></li>
+                            <li><button class="related-nav-btn">Related</button></li>
+                            <li><button class="related-nav-btn">For you</button></li>
+                            <li><button class="related-nav-btn">Live</button></li>
+                            <li><button class="related-nav-btn">Recently uploaded</button></li>
+                        </ul>
+                    </div>
+                    <div id="right-btn-wrap" class="channel-nav-btn-wrap">
+                        <button id="ch-nav-right-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                
+    
+                <div id="recommend-box">
+                    <!-- 추천 동영상 목록이 추가되는 자리 -->
+                </div>
+            </div>
+        </aside>
     </main>
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="../js/includeHtml.js"></script>
+    <script src="../videoComponents/js/insertVideoFeedbackMenu.js"></script>
+    <script src="../videoComponents/js/insertComments.js"></script>
+    <script src="../js/topheader/topheader.js"></script>
 </body>
 </html>
