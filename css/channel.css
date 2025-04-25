@@ -2,16 +2,20 @@ body {
     background-color: var(--bg);
 }
 
-main {
+#channel-main {
+    margin-left: 240px;
     display: flex;
     flex-direction: column;
+    justify-content: flex-end;
 }
 
 /* 채널 헤더 */
 #channel-header {
+    width: 100%;
+    padding: 0;
     display: flex;
     flex-direction: column; 
-    z-index: 10px;
+    z-index: 1;
     background-color: var(--ch-profile);
 }
 
@@ -21,6 +25,7 @@ main {
 }
 
 #channel-profile {
+    width: 100%;
     display: flex;
     color: var(--font);
     justify-content: space-between;
@@ -79,6 +84,7 @@ main {
 
 /* 채널 메뉴 탭 */
 #channel-nav {
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -88,6 +94,7 @@ main {
 
 .channel-nav-btn-wrap {
     width: 56px; height: 100%;
+    display: none;
     display: flex; justify-content: center; align-items: center;
     position: absolute; bottom:0;
     background-color: var(--ch-profile);
@@ -102,7 +109,13 @@ main {
     width: 40px; height: 40px;
     border: none;
     display: flex; justify-content: center; align-items: center;
+    border-radius: 100%;
     background-color: transparent;
+    transition: background-color 0.2s ease;
+}
+
+#channel-nav .channel-nav-btn-wrap button:active{
+    background-color: var(--bt-border-d);
 }
 
 #channel-nav button svg{
@@ -265,18 +278,37 @@ main {
 
 #spectators { margin-right: 5px; }
 
+#video-desc-box {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 5px;
+}
+
 #video-description {
     color: var(--font);
     font-size: 14px;
     font-weight: 400;
     overflow: hidden;
     text-overflow: ellipsis;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 7;
+    -webkit-box-orient: vertical;
+    word-wrap: break-word;
     /* white-space : pre-wrap; 공백 포함 입력 내용 그대로 출력 */
+}
+
+#video-show-more {
+    display: inline-block;
+    color: var(--font-gr);
+    font-size: 12px;
 }
 
 @media (width <= 876px) {
     #main-video { flex-direction: column; gap:0;}
     #video-meta { margin-top : 16px;}
-    #video-description { display: none; }
+    #video-desc-box { display: none; }
     #video-title { margin-bottom : 0;}
 }
