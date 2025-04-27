@@ -1,3 +1,108 @@
+// toggle 될 때마다 채널 화면 크기 변화 하는 것 (지금 어느 순간 되면 toggle 활성화 false이랑 true가 바뀜 : 이 문제 해결해야함)
+document.addEventListener("DOMContentLoaded", function () {
+
+    const interval = setInterval(() => {
+        const sidebar = document.getElementById("side-bar");
+        const toggleButton = document.getElementById("side-button")
+
+        if (sidebar && toggleButton) {
+            const contentSection = document.getElementById("channel-main");
+
+            //메뉴바 활성화에 마진 따라 변경
+            function calculateMargin() {
+                const windowWidth = window.innerWidth;
+                if (windowWith <= 792) {
+                    contentSection.style.marginLeft = `0px`;
+                }
+                if (sidebar.classList.contains("active")) {
+                    if (windowWidth < 1312) {
+                        contentSection.style.marginLeft = `72px`;
+                    } else {
+                        contentSection.style.marginLeft = `240px`;
+                    }
+                } else {
+                    contentSection.style.marginLeft = `72px`;
+                }
+            }
+
+            function getSidebarWidth() {
+                const windowWidth = window.innerWidth;
+                console.log(sidebar.classList.contains("active"))
+                if (sidebar.classList.contains("active")) {
+                    if (windowWidth < 1312) {
+                        return 72;
+                    } else {
+                        return 240;
+                    };
+                } else {
+                    return 72;
+                }
+            }
+
+            function calculateSectionWidth() {
+                const windowWidth = window.innerWidth;
+                let sidebarWidth = getSidebarWidth();
+                let availableWidth = windowWidth - sidebarWidth;
+                let sectionWidth;
+
+                // console.log("windowWith:", windowWidth);
+                // console.log("sidebarWidth:", sidebarWidth);
+                // console.log("availableWidth:", availableWidth);
+
+
+                if (windowWidth < 1312) {
+                    sidebarWidth = 72;
+                    availableWidth = windowWidth - sidebarWidth;
+                }
+                if (availableWidth > 1327) {
+                    sectionWidth = 1284;
+                } else if (availableWidth > 1327 - 214) {
+                    sectionWidth = 1284 - 214;
+                } else if (availableWidth > 1327 - 214 * 2) {
+                    sectionWidth = 1284 - 214 * 2;
+                } else if (windowWidth > 685) {
+                    sectionWidth = 1284 - 214 * 3;
+                } else {
+                    sectionWidth = 428;
+                }
+
+                contentSection.style.width = `${sectionWidth}px`;
+            }
+            window.addEventListener("resize", calculateMargin);
+            window.addEventListener("resize", calculateSectionWidth);
+
+            // 새로고침 시 바로 적용
+            calculateMargin();
+            calculateSectionWidth();
+
+            // 토글 버튼 클릭 시 바로 적용
+            toggleButton.addEventListener("click", () => {
+                calculateMargin();
+                calculateSectionWidth();
+            });
+
+            clearInterval(interval);
+        };
+        }, 100);
+    });
+
+//API 가져오기
+// const xhr = new XMLHttpRequest();
+//     xhr.open("GET", "http://techfree-oreumi-api.kro.kr:5000/video/getVideoList", true);
+//     xhr.onload = function () {
+//         if (xhr.status >= 200 && xhr.status < 300) {
+//             console.log(JSON.parse(xhr.response));
+//             const sampleVideos = JSON.parse(xhr.response);
+//         } else {
+//             console.error("Error:", xhr.status);
+//         }
+//     };
+//     xhr.onerror = function () {
+//         console.error('Network Error');
+//     };
+//     xhr.send();
+
+
 // 임시 썸네일 카드에 표시될 영상 정보 배열
 const sampleVideos = [
     {

@@ -6,11 +6,16 @@ body {
     background-color: var(--bg);
 }
 
+#channel-container {
+    display: flex;
+    justify-content: center;
+}
+
 #channel-main {
     margin-left: 240px;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
+    align-items: center;
 }
 
 /* 채널 헤더 */
@@ -232,7 +237,7 @@ body {
 
 /* 비디오 영역 */
 #channel-section {
-    padding: 0 65px;
+    width: 100%;
 }
 
 /* 메인 비디오 */
@@ -257,6 +262,7 @@ body {
 
 #video-info-box {
     max-width: 400px;
+    min-width: 194px;
     display: flex;
     flex-direction: column;
     overflow: hidden;
