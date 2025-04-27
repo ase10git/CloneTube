@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Video</title>
+    <style href="../css/style.css" rel="stylesheet"></style>
     <style href="../css/video.css" rel="stylesheet"></style>
 </head>
 <body>
@@ -71,6 +72,13 @@
                     </div>
                 </div>
 
+                <!-- viewport 1050px 미만이면 표시-->
+                <div class="related-container">
+                    <div class="recommend-box">
+                        <!-- 추천 동영상 목록이 추가되는 자리 -->
+                    </div>
+                </div>
+
                 <div id="comments-container">
                     <div id="comment-header">
                         <div id="comment-top">
@@ -115,9 +123,9 @@
         </section>
         
         <!-- 추천영상 목록 -->
+        <!-- viewport 1050px 미만이면 표시 제거-->
         <aside id="secondary">
-            <!-- viewport 1050px 미만이면 primary로 이동 예정-->
-            <div id="related-container">
+            <div class="related-container">
                 <div>
                     <div id="left-btn-wrap" class="channel-nav-btn-wrap">
                         <button id="ch-nav-left-btn">
@@ -147,7 +155,7 @@
                 </div>
                 
     
-                <div id="recommend-box">
+                <div class="recommend-box">
                     <!-- 추천 동영상 목록이 추가되는 자리 -->
                 </div>
             </div>
@@ -156,8 +164,9 @@
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="../js/includeHtml.js"></script>
+    <script src="../js/topheader/topheader.js"></script>
     <script src="../videoComponents/js/insertVideoFeedbackMenu.js"></script>
     <script src="../videoComponents/js/insertComments.js"></script>
-    <script src="../js/topheader/topheader.js"></script>
+    <script type="module" src="../videoComponents/js/insertRelatedVideoList.js"></script>
 </body>
 </html>
