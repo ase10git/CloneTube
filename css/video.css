@@ -161,12 +161,25 @@ body {
     z-index: 1px;
     cursor: pointer;
 }
-
-@media (min-width: 1050px) {
-    .related-container {
+/* 
+@media (width > 1050px) {
+    .primary .related-container{
         display: none;
     }
+    #secondary .related-container {
+        display: block;
+    }
 }
+
+@media (width <= 1050px) {
+    .primary .related-container{
+        display: block;
+    }
+    #secondary .related-container {
+        display: none;
+    }
+} */
+ 
 /* 댓글 구조 */
 #comments-contaner {
     display: flex;

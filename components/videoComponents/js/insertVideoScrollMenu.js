@@ -43,14 +43,14 @@ fetch("../../components/scrollMenu/html/scrollMenuTemplate.html")
             const item_btn =  document.createElement("button");
             item_btn.textContent = el.name_ko;
             item.classList.add("menu-item-btn");
-            item.appendChild(item_btn);               
-
+            item.appendChild(item_btn);
             menu_list.appendChild(item);
         });
 
         // need fix : 첫 번째에만 들어가는 문제 발생
         target.forEach(el=>{
-            el.prepend(scroll_wrap)});
+            el.prepend(scroll_wrap.cloneNode(true));
+        });
         
         // 스크롤 이벤트 추가
         addScrollEvent();

@@ -57,8 +57,9 @@ function insert_video_list() {
             clone.querySelector(".video-menu").innerHTML = menu.outerHTML;
 
             // need fix : 첫 번째에만 들어가는 문제 발생
-            recommend_box[0].appendChild(clone);
-            recommend_box[1].appendChild(clone);
+            recommend_box.forEach(el=>{
+                el.prepend(clone.cloneNode(true));
+            });
         })
     })
 }
