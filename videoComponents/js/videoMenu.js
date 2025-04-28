@@ -1,4 +1,4 @@
-// ---- 비디오 메뉴 ----
+// ---- 비디오 메뉴 목록 템플릿 ----
 const video_menu = `
     <ul class="menu-items">
 

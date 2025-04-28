@@ -1,5 +1,5 @@
 // ------ 비디오 페이지의 관련 동영상 추천 목록 추가 ------
-import menu_titles from "../../homeComponents/js/videoMenuList.js";
+import menu_titles from "./videoMenuList.js";
 import video_menu_template from "../js/videoMenu.js";
 
 const temp_div = document.createElement("div");

@@ -1,3 +1,4 @@
+// ----- 비디오 메뉴 항목 -------
 const menu_titles = [
     {title: '현재 재생목록에 추가', img_name: 'list-play.svg'},
     {title: '나중에 볼 동영상에 저장', img_name: 'clock.svg'},
