@@ -210,7 +210,7 @@ body {
 }
 /* 이미지 색상 반전 */
 .comment-sort-img-box img {
-    filter:invert();
+    filter: invert();
     width: 32px;
     height: 24px;
     object-fit: cover;
@@ -229,6 +229,7 @@ body {
 #comments-input-box {
     display: flex;
     gap: 16px;
+    width: 100%;
 }
 
 .profile-box img {
@@ -236,10 +237,16 @@ body {
     height: 40px;
 }
 
+#comment-form {
+    flex: 1;
+    margin-right: 24px;
+}
+
 #comment {
     background-color: transparent;
     border-width : 0px 0px 1px 0px;
-    border-color: var(--bt-border-d);
+    border-color: var(--bg-bar);
+    padding-bottom: 4px; 
     width: 100%;
 }
 
@@ -262,6 +269,331 @@ body {
 }
 
 /* 댓글 리스트 */
-#comments-list {
+.comment-box {
+    display: flex;
     margin-bottom: 16px;
+}
+
+.commentor-author-profile-box img {
+    width: 40px;
+    height: 40px;
+    margin-right: 16px;
+}
+
+.comment-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.comment-meta {
+    margin-bottom: 2px;
+    height: 20px;
+}
+
+.comment-author {
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 20px;
+    letter-spacing: 0%;
+    vertical-align: top;
+}
+
+.comment-uploaded {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 20px;
+    letter-spacing: 0%;
+    color: var(--font-gr);
+    vertical-align: top;
+}
+
+.comment-body-box {
+    max-height: 941px;
+}
+
+.comment-body {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0%;
+    vertical-align: top;
+}
+
+.comment-feedback {
+    display: flex;
+    align-items: center;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 18px;
+    letter-spacing: 0%;
+    color: var(--font-gr);
+    margin-top: 4px;
+}
+
+.comment-feedback img {
+    object-fit: none;
+}
+.comment-feedback button {
+    width: 32px;
+    height: 32px;
+    border-radius: 32px;
+    background-color: transparent;
+    cursor: pointer;
+    border: none;
+}
+
+.comment-feedback button:hover {
+    background-color: var(--bt-border-d);
+}
+
+.comment-liked-number {
+    margin-right: 8px;
+}
+
+.reply-btn {
+    width: 53.672px;
+    height: 32px;
+    border-radius: 16px;
+    margin-left: 8px;
+    border: none;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 18px;
+    letter-spacing: 0%;
+    color: var(--font);
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.reply-btn:hover {
+    background-color: var(--bt-border-d);
+}
+
+.comment-icon-box {
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+}
+
+.comment-icon-box img {
+    filter: invert();
+}
+
+.comment-icon-box:hover {
+    background-color: var(--bt-border-d);
+}
+
+.comment-dropdown {
+    display: none;
+    padding: 8px 0 8px 0;
+    width: 133.562px;
+    height: 36px;
+    border-radius: 12px;
+    background-color: var(--bg-highlight);
+    box-sizing: content-box;
+}
+
+.comment-dropdown button {
+    padding : 0 16px 0 12px;
+    width: 105.562px;
+    height: 36px;
+    box-sizing: content-box;
+    background-color: transparent;
+    border: none;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 18px;
+    letter-spacing: 0%;
+    color: var(--font);
+    display: flex;
+    align-items: center;
+}
+
+.comment-dropdown img{
+    width: 24px;
+    height: 24px;
+    object-fit: none;
+    margin-right: 16px;
+}
+
+.comment-dropdown button:hover {
+    background-color: var(--bt-border-d);
+}
+
+/* 추천 동영상 */
+
+.related-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 8px;
+}
+
+.related-video-content img{
+    color: var(--font);
+}
+
+.related-video-content {
+    display: flex;
+}
+
+/* 추천 동영상 - 썸네일 */
+.video-thumbnail {
+    position: relative;
+    width: 168px;
+    height: 94px;
+    min-width: 168px;
+    min-height: 94px;
+    margin-right: 8px;
+}
+
+.video-thumbnail-img {
+    width: 100%;
+    object-fit: cover;
+}
+
+.hover-overlay-wrap {
+    position: absolute;
+    z-index: 100;
+    right: 0px;
+    top: 0px;
+    display: none;
+}
+
+.video-thumbnail:hover .hover-overlay-wrap {
+    display: block;
+}
+
+.hover-overlay-box {
+    width: 28px;
+    height: 28px;
+    background-color: var(--bg);
+    margin: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3px;
+}
+
+.hover-overlay-box img {
+    filter: invert();
+    width: 70%;
+    object-fit: contain;
+}
+
+.overlay-wrap {
+    position: absolute;
+    z-index: 1;
+    bottom: 0px;
+    right: 0px;
+}
+.overlay-box {
+    height: 20px;
+    margin: 4px;
+    padding: 0 4px 0 4px;
+    color: var(--font);
+    font-weight: 500;
+    font-size: 13px;
+    background-color: var(--bg);
+    text-align: center;
+    border-radius: 3px;
+    box-sizing: border-box;
+    opacity: 0.65;
+}
+
+
+/* 추천 동영상 - 비디오 정보 */
+.video-detail-box {
+    display: flex;
+    flex-direction: column;
+}
+
+.video-title {
+    margin-bottom: 4px;
+    font-family: Roboto;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0%;
+    color: var(--font);
+}
+
+.video-meta-box {
+    display: flex;
+    flex-direction: column;
+}
+
+.channel-info-box {
+    display: flex;
+    gap: 4px;
+    font-family: Roboto;
+    font-weight: 400;
+    font-size: 12px;
+    color: var(--font-gr);
+}
+
+.channel-badge-box {
+    width: 15px;
+    height: 15px;
+    background-color: var(--bt-border-d);
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.channel-badge-box img {
+    filter: invert();
+    width: 70%
+}
+
+.video-info {
+    font-family: Roboto;
+    font-weight: 400;
+    font-size: 12px;
+    color: var(--font-gr);
+}
+
+/* 추천 동영상 세개 점 목록 */
+.menu-items {
+    display: none;
+    background-color: var(--bg-highlight);
+    border-radius: 5px;
+    width: 254.078px;
+    height: 288px;
+    padding: 8px 0 8px 0;
+    box-sizing: content-box;
+}
+
+.menu-btn {
+    background-color: transparent;
+    border: none;
+    color: var(--font);
+    width: 226.078px;
+    height: 36px;
+    padding: 0 12px 0 16px;
+    box-sizing: content-box;
+    display: flex;
+    align-items: center;
+}
+
+.invert {
+    filter: invert(1);
+}
+.no-invert {
+    filter: none;
+}
+
+.menu-icon-img {
+    height: 24px;
+    width: 24px;
+    margin-right: 16px;
+}
+
+.menu-btn:hover {
+    background-color: var(--bt-border-d);
 }

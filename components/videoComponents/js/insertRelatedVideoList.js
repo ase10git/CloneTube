@@ -21,7 +21,7 @@ const video = [
     {title: 'Lorem ipsum dolor sit amet, consecte adipiscing elit.', uploader: 'James Gouse', spectators: 123, uploaded_time: '2024-01-02', thumbnail: '../images/thumbnail-8.svg', avatar_img: '../images/james.svg'},
 ]
 
-const public_url = '../../images/';
+const public_url = "../../images/";
 
 const temp_div = document.createElement("div");
 
@@ -48,7 +48,7 @@ function insert_video_list() {
         video.forEach(el => {
             const clone = video_template.cloneNode(true);
 
-            clone.querySelector(".video-thumbnail-img").src = public_url + el.thumbnail;
+            clone.querySelector(".video-thumbnail-img").src = el.thumbnail;
             clone.querySelector(".video-title").textContent = el.title;
             clone.querySelector(".channel-name").textContent = el.uploader;
             clone.querySelector(".spectator-number").textContent = `조회수 ${el.spectators}`;

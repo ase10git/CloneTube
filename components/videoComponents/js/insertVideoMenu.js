@@ -2,14 +2,14 @@
 
 // 비디오 메뉴 정보
 const menu_titles = [
-    {title: '현재 재생목록에 추가', img_name: 'list-play.svg'},
-    {title: '나중에 볼 동영상에 저장', img_name: 'clock.svg'},
-    {title: '재생목록에 저장', img_name: 'bookmark.svg'},
-    {title: '오프라인 저장', img_name: 'download.svg'},
-    {title: '공유', img_name: 'share_arrow.svg'},
-    {title: '관심 없음', img_name: 'ban.svg'},
-    {title: '채널 추천 안함', img_name: 'dash-circle.svg'},
-    {title: '신고', img_name: 'report-history.svg'},
+    {title: '현재 재생목록에 추가', img_name: 'list-play.svg', need_invert: true},
+    {title: '나중에 볼 동영상에 저장', img_name: 'clock.svg', need_invert: true},
+    {title: '재생목록에 저장', img_name: 'bookmark.svg', need_invert: true},
+    {title: '오프라인 저장', img_name: 'download.svg', need_invert: true},
+    {title: '공유', img_name: 'share_arrow.svg', need_invert: false},
+    {title: '관심 없음', img_name: 'ban.svg', need_invert: true},
+    {title: '채널 추천 안함', img_name: 'dash-circle.svg', need_invert: true},
+    {title: '신고', img_name: 'report-history.svg', need_invert: false},
 ];
 
 // 비디오 메뉴 태그
@@ -49,6 +49,12 @@ function build_video_menu(public_url) {
         clone.querySelector(".menu-icon-img").src = public_url + el.img_name;
         clone.querySelector(".menu-icon-img").alt = el.img_name;
         clone.querySelector(".menu-name").textContent = el.title;
+        //이미지 색 반전 주기 위해
+        if (el.need_invert) {
+            clone.querySelector(".menu-icon-img").classList.add('invert');
+        } else {
+            clone.querySelector(".menu-icon-img").classList.add('no-invert');
+        }    
         menu.appendChild(clone);
     });
 
