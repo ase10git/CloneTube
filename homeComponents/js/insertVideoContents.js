@@ -29,7 +29,7 @@ const video_info = video;
 const temp_div = document.createElement("div");
 
 // 템플릿 코드를 사용하여 비디오 컨텐츠 생성
-fetch("../homeComponents/html/videoContent.html")
+fetch("/homeComponents/html/videoContent.html")
     .then(res => {
         if (!res.ok) {
             throw new Error("HTML template 불러오기 실패");
@@ -37,36 +37,50 @@ fetch("../homeComponents/html/videoContent.html")
         return res.text();
     })
     .then(data => {
-        // 문자열로 로드된 HTML을 DOM으로 파싱
         temp_div.innerHTML = data;
-
-        // 메뉴 아이템 태그
+    
+        // 메뉴용 템플릿
         const menu_template = temp_div.querySelector("#menu-template").content;
-        let menu_items = temp_div.querySelector("#content-template").content.querySelector(".menu-items");
-
+    
+        // 비디오용 템플릿
+        const content_template = temp_div.querySelector("#content-template").content;
+    
+        // 실제 메뉴 리스트 UL 찾기
+        const menu_items = content_template.querySelector(".menu-items");
+    
+        const contents = document.querySelector("#contents");
+    
         menu_titles.forEach(el => {
-
             const clone = menu_template.cloneNode(true);
-            // 요소 수정
             clone.querySelector(".menu-icon-img").src = public_url + el.img_name;
             clone.querySelector(".menu-name").textContent = el.title;
             menu_items.appendChild(clone);
         });
-
-        // 비디오 태그
-        const content_template = temp_div.querySelector("#content-template").content;
-        const contents = document.querySelector("#contents");
-
+    
         video_info.forEach(el => {
-
             const clone = content_template.cloneNode(true);
-
+    
             clone.querySelector(".thumbnail-img").src = el.thumbnail;
             clone.querySelector(".video-title").textContent = el.title;
             clone.querySelector(".channel-name").textContent = el.uploader;
             clone.querySelector(".spectator-number").textContent = `조회수 ${el.spectators}`;
             clone.querySelector(".upload-time").textContent = el.uploaded_time;
             clone.querySelector(".avatar-img").src = el.avatar_img;
+    
+            const link = clone.querySelector(".thumbnail-link");
+            const titleLink = clone.querySelector(".video-title-link");
+    
             contents.appendChild(clone);
-        })
+    
+            link?.addEventListener("click", (e) => {
+                e.preventDefault();
+                alert(`썸네일 클릭: ${el.title}`);
+            });
+    
+            titleLink?.addEventListener("click", (e) => {
+                e.preventDefault();
+                alert(`비디오 제목 클릭: ${el.title}`);
+            });
+        });
+    
     })
