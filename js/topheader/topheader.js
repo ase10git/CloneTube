@@ -14,6 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (sidebar && toggleButton) {
             toggleButton.addEventListener("click", function () {
                 sidebar.classList.toggle("active");
+                document.body.classList.toggle("sidebar-close"); 
             });
             clearInterval(interval); // 이벤트 연결 후 멈춤
         }
