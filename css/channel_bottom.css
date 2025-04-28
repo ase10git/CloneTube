@@ -11,11 +11,9 @@
   }
 
   /* 메인 콘텐츠 영역 */
-  /* !!!!!!!사이드바 반응형으로 바뀌면 여기 바꿔야 함!!!!!!!! */
   .main-content {
-    margin: 20px 0px 20px 175px; /*175px 사이드바 영역 주기(main 패딩 65제외)*/
+    margin: 20px 0px 20px 0px;
     width: 100wh;
-    padding: 0px 0px 0px 27.5px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -67,47 +65,45 @@
   /* 비디오 스크롤 크기 설정(재생목록에 최대 6개까지만 표출되게) */
   .video-scroll-wrapper {
     position: relative;
-    max-width: calc(210px * 6 + 16px * 5);
+    max-width: calc(210px * 6 + 4px * 5);
   }
 
   /* 재생목록 화면 크기 마다 카드 하나씩 줄어드는 반응형 */
-  @container scroll-wrapper (max-width: calc(210px * 6 + 16px * 5 - 1px))
+  @container scroll-wrapper (max-width: calc(210px * 6 + 4px * 5 - 1px))
   {
     .video-scroll-wrapper {
-      max-width: calc(210px * 5 + 16px * 4);
+      max-width: calc(210px * 5 + 4px * 4);
     }
   }
-  @container scroll-wrapper (max-width: calc(210px * 5 + 16px * 4 - 1px))
+  @container scroll-wrapper (max-width: calc(210px * 5 + 4px * 4 - 1px))
   {
     .video-scroll-wrapper {
-      max-width: calc(210px * 4 + 16px * 3);
+      max-width: calc(210px * 4 + 4px * 3);
     }
   }
-  @container scroll-wrapper (max-width: calc(210px * 4 + 16px * 3 - 1px))
+  @container scroll-wrapper (max-width: calc(210px * 4 + 4px * 3 - 1px))
   {
     .video-scroll-wrapper {
-      max-width: calc(210px * 3 + 16px * 2);
+      max-width: calc(210px * 3 + 4px * 2);
     }
   }
-  @container scroll-wrapper (max-width: calc(210px * 3 + 16px * 2 - 1px))
+  @container scroll-wrapper (max-width: calc(210px * 3 + 4px * 2 - 1px))
   {
     .video-scroll-wrapper {
-      max-width: calc(210px * 2 + 16px * 1);
+      max-width: calc(210px * 2 + 4px * 1);
     }
   }
 
   /* 792이하되면 메뉴사이드바 없애기 */
   @media (max-width: 792px) {
-    #menu-nav {
+    #side-bar {
       display: none;
     }
     .main-content {
-      margin-left: 0px;
       width: 100%;
-      padding: 0px;
     }
-    #channel-section {        /* 메뉴바 작아졌을 경우도 추가해서 나중에 다시 전체적으로 패딩 손봐야 함 */
-      padding: 0px;
+    #channel-main {
+      margin-left: 0px;
     }
   }
 
@@ -204,7 +200,7 @@
   .video-row {
     display: flex;
     overflow-x: auto;
-    gap: 16px;
+    gap: 4px;
     padding-bottom: 8px;
     scroll-snap-type: x mandatory; /* 카드 간 스냅 느낌 */
   }
