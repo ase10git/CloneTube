@@ -1,8 +1,267 @@
 body {
-    background-color: var(--bg);
+    background-color: var(--ch-profile);
+    color: var(--font);
 }
 
 #video-main {
     display: flex;
+    flex-direction: column;
+    margin: 0 60px 0 60px;
+    align-items: center;
+}
+
+#chnnel-main {
+    display : flex;
+    flex-direction: column;
+}
+
+#primary {
+    /* 비디오 비율 유지 */
+}
+
+.primary-bottom {
+    display: flex;
+    flex-direction: column;
+}
+
+.video-title-box {
+
+}
+/* 비디오 제목 */
+#video-title {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 100%;
+    letter-spacing: 1%;
+    vertical-align: middle;
+    font-variant-numeric-fraction: stacked-fractions;
+}
+/* 비디오 정보, 버튼 메뉴 구조 */
+.top-row {
+    display: flex;
+    justify-content: space-between;
+    height: 40px;
+    align-items: center;
+}
+/* 비디오 정보 */
+#video-info {
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: var(--font-gr);
+}
+/* 비디오 메뉴 구조 */
+#video-menu {
+    display: flex;
+    gap: 8px;
+}
+/* 비디오 메뉴 버튼*/
+#video-menu button{
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    text-transform: uppercase;
+    color: var(--font);
+    border : none;
+    background-color: transparent;
+}
+/* 채널 정보 구조 */
+.botton-row {
+    display: flex;
+    flex-direction: column;
+    padding: 16px 0 16px 0;
+}
+/* 채널 메타데이터 구조 */
+.channel-metadata {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+/* 채널 메타데이터 박스 구조 */
+.channel-metadata-box {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+/* 채널 프로필 이미지 */
+.channel-profile-box img{
+    height: 48px;
+    width: 48px;
+    border: none;
+    border-radius: 48px;
+}
+/* 채널 정보 구조 */
+.channel-info {
+    display: flex;
+    flex-direction: column;
     justify-content: center;
+}
+/* 채널 이름 구조 */
+.channel-name-box {
+    display: flex;
+    gap: 7px;
+    align-items: center;
+}
+/* 채널 이름 */
+#channel-name {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: 0%;
+}
+/* 채널 인증 뱃지 */
+#badge img{
+    background-color: var(--bt-border-d);
+    border-radius: 14px;
+    height: 14px;
+    width: 14px;
+}
+/* 채널 구독자 */
+#subscribers {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: var(--font-gr);
+}
+/* 구독 버튼 */
+.subscribe-btn {
+    height: 36px;
+    width: 116px;
+    background-color: var(--subscribes);
+    border: none;
+    border-radius: 2px;
+    color: var(--font);
+    font-size: 14px;
+}
+/* 비디오 설명 구조 */
+#video-desc {
+    display: flex;
+    flex-direction: column;
+    padding: 12px 0px 0px 64px;
+    height: 104px;
+    overflow: hidden;
+}
+/* 비디오 설명 */
+#description {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: 0%;
+}
+/* 비디오 설명 더보기 버튼 */
+#description-btn {
+    background-color: transparent;
+    border: none;
+    color: var(--font);
+    font-weight: 400;
+    font-size: 14px;
+    z-index: 1px;
+    cursor: pointer;
+}
+
+@media (min-width: 1050px) {
+    .related-container {
+        display: none;
+    }
+}
+/* 댓글 구조 */
+#comments-contaner {
+    display: flex;
+    flex-direction: column;
+}
+/* 댓글 헤더 */
+#comment-header {
+    margin: 24px 0 32px 0;
+}
+/* 댓글 헤더 윗 부분 구조 */
+#comment-top {
+    display: flex;
+    justify-content: left;
+}
+/* 댓글 수 구조*/
+#comments-option {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 22px;
+    letter-spacing: 0%;
+    width: 142px;
+    height: 24px;
+}
+/* 댓글 정렬 */
+.sort-menu {
+    display: flex;
+    flex-direction: column;
+}
+
+.sort-menu button {
+    background-color: transparent;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 24px;
+    letter-spacing: 0%;
+    text-transform: uppercase;
+    border: none;
+    color: var(--font);
+    cursor: pointer;
+    display: flex;
+}
+/* 이미지 색상 반전 */
+.comment-sort-img-box img {
+    filter:invert();
+    width: 32px;
+    height: 24px;
+    object-fit: cover;
+}
+/* 드롭다운 메뉴 */
+.sort-options {
+    display: none;
+    /* display: flex;
+    flex-direction: column;
+    z-index: 1; */
+    width: 128.234px;
+    height: 96px;
+    padding: 8px 0 8px 0;
+}
+/* 댓글 쓰기창 */
+#comments-input-box {
+    display: flex;
+    gap: 16px;
+}
+
+.profile-box img {
+    width: 40px;
+    height: 40px;
+}
+
+#comment {
+    background-color: transparent;
+    border-width : 0px 0px 1px 0px;
+    border-color: var(--bt-border-d);
+    width: 100%;
+}
+
+#comment-form input::placeholder {
+    font-family: Roboto;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0%;
+}
+
+#comment-btn-wrap button {
+    display: none;
+    background-color: transparent;
+    border-radius: 35px;
+    border: none;
+    color: var(--font);
+    height: 36px;
+    padding: 10px;
+}
+
+/* 댓글 리스트 */
+#comments-list {
+    margin-bottom: 16px;
 }

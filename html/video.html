@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Video</title>
-    <style href="../css/style.css" rel="stylesheet"></style>
-    <style href="../css/video.css" rel="stylesheet"></style>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/video.css">
 </head>
 <body>
     <!-- 상단 메뉴바 자리 -->
@@ -45,7 +45,7 @@
                         <div class="channel-metadata">
                             <div class="channel-metadata-box">
                                 <div class="channel-profile-box">
-                                    <img src="" alt="채널이미지" id="channel-img">
+                                    <img src="../images/marcus.svg" alt="채널이미지" id="channel-img">
                                 </div>
                                 <div id="channel-info">
                                     <div class="channel-name-box">
@@ -64,10 +64,10 @@
                             </div>
                         </div>
                         <div id="video-desc">
-                            <div></div>
                             <p id="description">
                                 Chris Fisher, also known as the Blind Woodturner, learned his craft by listening to hundreds of hours of YouTube videos and experimenting in his workshop. Now he’s a YouTube creator himself, sells his products worldwide, and does demonstrations all around the country.
-                            </p>
+                                <span><button id="description-btn">...more</button></span></p>
+
                         </div>
                     </div>
                 </div>
@@ -87,7 +87,7 @@
                                 <span class="comments">Comments</span>
                             </div>
                             <div class="sort-menu">
-                                <button>
+                                <button class="dropdown">
                                     <div class="comment-sort-img-box">
                                         <img src="../images/filter-left.svg" alt="filter-left">
                                     </div>
@@ -101,7 +101,7 @@
                         </div>
                         <div id="comments-input-box">
                             <div class="profile-box">
-                                <img src="" alt="my-profile-img" id="my-profile">
+                                <img src="../images/icon4.svg" alt="my-profile-img" id="my-profile">
                             </div>
                             <form action="#" method="post" id="comment-form">
                                 <input type="text" id="comment" name="comment" placeholder="Add a public comment...">
