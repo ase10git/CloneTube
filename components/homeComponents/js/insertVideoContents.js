@@ -500,7 +500,7 @@ const video_info = video;
 const temp_div = document.createElement("div");
 
 // 템플릿 코드를 사용하여 비디오 컨텐츠 생성
-fetch("/homeComponents/html/videoContent.html")
+fetch("../components/homeComponents/html/videoContent.html")
     .then(res => {
         if (!res.ok) {
             throw new Error("HTML template 불러오기 실패");

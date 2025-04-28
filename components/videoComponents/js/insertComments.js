@@ -14,7 +14,7 @@ const public_url = '../../images/';
 const temp_div = document.createElement("div");
 
 // 템플릿 코드를 사용하여 비디오 컨텐츠 생성
-fetch("../videoComponents/html/commentTemplate.html")
+fetch("../components/videoComponents/html/commentTemplate.html")
     .then(res => {
         if (!res.ok) {
             throw new Error("HTML template 불러오기 실패");

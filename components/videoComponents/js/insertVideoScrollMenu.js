@@ -1,20 +1,13 @@
 // ------ 스크롤형식의 메뉴 생성 및 추가 -------
-import addScrollEvent from "../../components/scrollMenu/js/addScrollEvent.js";
+import addScrollEvent from "../../scrollMenu/js/addScrollEvent.js";
 
-const home_menu = [
-    {id: 'all', name: 'All', name_ko: '전체'},
-    {id: 'music', name: 'Music', name_ko: '음악'},
-    {id: 'news', name: 'News', name_ko: '뉴스'},
-    {id: 'workout', name:'Workout', name_ko: '운동'},
-    {id: 'painting', name: 'Painting', name_ko: '페인팅',},
-    {id: 'mix', name: 'Mix', name_ko: '믹스', },
-    {id: 'game', name: 'Game', name_ko: '게임', },
-    {id: 'cooking', name: 'Cooking', name_ko: '요리', },
-    {id: 'travel', name: 'Travel', name_ko: '여행', },
-    {id: 'live', name: 'Live', name_ko: '라이브', },
+const video_menu = [
+    {id: 'all', name: 'All', name_ko: '모두'},
+    {id: 'channel', name: 'Channel', name_ko: '채널 제공'},
+    {id: 'related', name: 'Related', name_ko: '관련 콘텐츠'},
+    {id: 'recommend', name: 'Recommend', name_ko: '추천'},
     {id: 'recently-uploaded', name: 'Recently uploaded', name_ko: '최근에 업로드된 동영상', },
     {id: 'watched', name: 'Watched', name_ko: '감상한 동영상', },
-    {id: 'new-to-you', name: 'New to you', name_ko: '새로운 맞춤 동영상', },
 ]
 
 // 템플릿 결과를 담을 태그
@@ -37,13 +30,13 @@ fetch("../../components/scrollMenu/html/scrollMenuTemplate.html")
         // 스크롤 메뉴 전체 박스
         const scroll_wrap = template.querySelector(".scroll-menu-wrap");
 
-        // index.html에서 비디오 목록을 넣을 위치
-        const target = document.querySelector("#btn-header");
+        // video.html에서 메뉴 목록을 넣을 위치
+        const target = document.querySelectorAll(".related-container");
 
         // 템플릿에서 목록 아이템을 넣을 위치
         const menu_list = scroll_wrap.querySelector(".menu-list");
 
-        home_menu.forEach(el => {
+        video_menu.forEach(el => {
             // 리스트 아이템
             const item = document.createElement("li");
             // 버튼 태그
@@ -54,8 +47,11 @@ fetch("../../components/scrollMenu/html/scrollMenuTemplate.html")
 
             menu_list.appendChild(item);
         });
-        target.appendChild(scroll_wrap);
 
+        // need fix : 첫 번째에만 들어가는 문제 발생
+        target.forEach(el=>{
+            el.prepend(scroll_wrap)});
+        
         // 스크롤 이벤트 추가
         addScrollEvent();
     })

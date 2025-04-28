@@ -1,5 +1,5 @@
 // ------ 비디오 페이지의 관련 동영상 추천 목록 추가 ------
-import build_video_menu from "./insertVideoMenu.js";
+import build_video_menu from "../../videoComponents/js/insertVideoMenu.js";
 
 // 테스트용 데이터
 const video = [ 
@@ -27,7 +27,7 @@ const temp_div = document.createElement("div");
 
 // 템플릿 코드를 사용하여 비디오 컨텐츠 생성
 function insert_video_list() {
-    fetch("../videoComponents/html/videoTemplate.html")
+    fetch("../components/videoComponents/html/videoTemplate.html")
     .then(res => {
         if (!res.ok) {
             throw new Error("HTML template 불러오기 실패");
@@ -40,7 +40,7 @@ function insert_video_list() {
 
         // 비디오 태그
         const video_template = temp_div.querySelector("#video-template").content;
-        const recommend_box = document.querySelector(".recommend-box");
+        const recommend_box = document.querySelectorAll(".recommend-box");
 
         // 비디오 메뉴 가져오기
         const menu = build_video_menu("../images/");
@@ -55,7 +55,10 @@ function insert_video_list() {
             clone.querySelector(".uploaded-time").textContent = el.uploaded_time;
             clone.querySelector(".menu-box-img").src = public_url + 'three-dots-vertical.svg';
             clone.querySelector(".video-menu").innerHTML = menu.outerHTML;
-            recommend_box.appendChild(clone);
+
+            // need fix : 첫 번째에만 들어가는 문제 발생
+            recommend_box[0].appendChild(clone);
+            recommend_box[1].appendChild(clone);
         })
     })
 }
