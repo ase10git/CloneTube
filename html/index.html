@@ -14,42 +14,10 @@
     <nav id="menu-nav"></nav>
 
     <main>
-        <!-- 상단 버튼 UI -->
-        <header id="btn-header">
-            <div id="header-wrap">
-                <div id="left-btn-wrap">
-                    <div class="header-btn">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0"/>
-                        </svg>
-                    </div>
-                </div>
-                <div id="btn-tab">
-                    <ul id="btn-list">
-                        <li>전체</li>
-                        <li>음악</li>
-                        <li>뉴스</li>
-                        <li>운동</li>
-                        <li>페인팅</li>
-                        <li>믹스</li>
-                        <li>게임</li>
-                        <li>요리</li>
-                        <li>여행</li>
-                        <li>라이브</li>
-                        <li>최근에 업로드된 동영상</li>
-                        <li>감상한 동영상</li>
-                        <li>새로운 맞춤 동영상</li>
-                    </ul>
-                </div>
-                <div id="right-btn-wrap">
-                    <div class="header-btn">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708"/>
-                        </svg>
-                    </div>
-                </div>
-            </div>
-        </header>
+        <!-- 상단 버튼 UI 
+        insertHomeScrollMenu.js로 버튼이 들어갈 자리
+        -->
+        <header id="btn-header"></header>
 
         <!-- 비디오 목록이 들어가는 자리 -->
         <div id="contents"></div>
@@ -61,5 +29,6 @@
     <script src="../js/topheader/topheader.js" defer></script>
     <script type="module" src="../videoComponents/js/insertRelatedVideoList.js"></script>
     <script type="module" src="../homeComponents/js/insertVideoContents.js"></script>
+    <script type="module" src="../homeComponents/js/insertHomeScrollMenu.js"></script>
 </body>
 </html>

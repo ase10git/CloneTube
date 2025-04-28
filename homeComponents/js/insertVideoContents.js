@@ -1,8 +1,8 @@
-// Home 페이지에 Video 목록 추가
-import menu_titles from "./videoMenuList.js";
+// ----- Home 페이지에 Video 목록 추가 -----
+import build_video_menu from "../../videoComponents/js/insertVideoMenu.js";
 
 // 이미지 경로
-const public_url = '../../images/';
+const public_url = '../images/';
 
 // 비디오 정보
 const video = [
@@ -510,33 +510,26 @@ fetch("/homeComponents/html/videoContent.html")
     .then(data => {
         temp_div.innerHTML = data;
     
-        // 메뉴용 템플릿
-        const menu_template = temp_div.querySelector("#menu-template").content;
-    
         // 비디오용 템플릿
         const content_template = temp_div.querySelector("#content-template").content;
     
-        // 실제 메뉴 리스트 UL 찾기
-        const menu_items = content_template.querySelector(".menu-items");
-    
+        // home에서 비디오 목록을 넣을 위치
         const contents = document.querySelector("#contents");
     
-        menu_titles.forEach(el => {
-            const clone = menu_template.cloneNode(true);
-            clone.querySelector(".menu-icon-img").src = public_url + el.img_name;
-            clone.querySelector(".menu-name").textContent = el.title;
-            menu_items.appendChild(clone);
-        });
-    
+        // 비디오 메뉴 가져오기
+        const menu = build_video_menu("../images/");
+
         video_info.forEach(el => {
             const clone = content_template.cloneNode(true);
-    
             clone.querySelector(".thumbnail-img").src = el.thumbnail;
             clone.querySelector(".video-title").textContent = el.title;
             clone.querySelector(".channel-name").textContent = el.uploader;
             clone.querySelector(".spectator-number").textContent = `조회수 ${el.spectators}`;
             clone.querySelector(".upload-time").textContent = el.uploaded_time;
             clone.querySelector(".avatar-img").src = el.avatar_img;
+            clone.querySelector(".menu-items").innerHTML = menu.outerHTML;
+            clone.querySelector(".btn-icon").src = public_url + "three-dots-vertical.svg";
+            clone.querySelector(".btn-icon").alt = "dot-three-icon";
     
             const link = clone.querySelector(".thumbnail-link");
             const titleLink = clone.querySelector(".video-title-link");

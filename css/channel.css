@@ -101,20 +101,19 @@ body {
     position: relative;
 }
 
-.channel-nav-btn-wrap {
+#channel-nav .nav-btn-wrap {
     width: 56px; height: 100%;
-    display: none;
     display: flex; justify-content: center; align-items: center;
-    position: absolute; bottom:0;
+    position: absolute;
     background-color: var(--ch-profile);
     z-index: 1;
 }
 
-#left-btn-wrap{top:0; left:65px; bottom:0;}
+.left-btn-wrap{top:0; left:65px;}
 
-#right-btn-wrap{top:0; right:65px; bottom:0;}
+.right-btn-wrap{top:0; right:65px;}
 
-#channel-nav .channel-nav-btn-wrap button {
+#channel-nav .nav-btn-wrap button {
     width: 40px; height: 40px;
     border: none;
     display: flex; justify-content: center; align-items: center;
@@ -123,29 +122,41 @@ body {
     transition: background-color 0.2s ease;
 }
 
-#channel-nav .channel-nav-btn-wrap button:active{
+#channel-nav .nav-btn-wrap button:active{
     background-color: var(--bt-border-d);
 }
 
-#channel-nav button svg{
+#channel-nav .nav-btn-wrap button svg{
     color: var(--font-gr);
 }
 
-#channel-nav-list {
+#channel-nav .scroll-menu-box {
+    display: flex;
+    gap: 10px;
+    scroll-behavior: smooth;
+    overflow-x: scroll;
+}
+
+#channel-nav .scroll-menu-box::-webkit-scrollbar {
+    display: none;
+}
+
+#channel-nav .menu-list {
     display: flex;
     list-style: none;
     align-items: center;
-    /* gap: 10px; */
+    overflow: hidden;
+    border:1px solid red;
 }
 
-#channel-nav-list a {
+#channel-nav .menu-list a {
     text-decoration: none;
     color: var(--font-gr);
     font-size: 14px;
     font-weight: 700;
 }
 
-#channel-nav-list li{
+#channel-nav .menu-list li{
     padding: 16px 32px 15px 32px;
     position: relative;
     white-space: nowrap;
@@ -153,25 +164,25 @@ body {
 }
 
 @media (width <= 876px) {
-    #channel-nav-list li{
+    #channel-nav .menu-list li{
         margin-right: 32px;
         padding-left: 0;
         padding-right: 0;
     }
 }
 
-#channel-nav-list li::after{
+#channel-nav .menu-list li::after{
     width: 100%; height: 2px;
     content: '';
     position: absolute;
     bottom:0; left:0;
 }
 
-#channel-nav-list li:hover::after{
+#channel-nav .menu-list li:hover::after{
     background-color: var(--bt-border);
 }
 
-#channel-nav-list li.select::after{
+#channel-nav .menu-list li.select::after{
     background-color: var(--bt-highlight);
 }
 
@@ -181,31 +192,23 @@ body {
     }
 } */
 
-#channel-nav-str {
-    display: flex;
-    gap: 10px;
-    scroll-behavior: smooth;
-    overflow-x: auto;
-}
-
-#channel-nav-str::-webkit-scrollbar {
-    display: none;
-}
-
 #channel-search {
     display: flex;
     align-items: center;
 }
 
-#search-submit-btn{
+#search-icon{
     width: 40px; height: 40px;
+    display: flex; justify-content: center;
+    align-items: center;
     background-color: transparent;
     border: none;
+    cursor: pointer;
     border-radius: 100%;
 }
 
 /* fix - javascript로 버튼 한 번 누를 때, 누른 상태일 때 색상 변화 */
-#search-submit-btn.clicked{
+#search-icon.clicked{
     background-color: var(--bg);
     border: 1px solid var(--bg);
 }
@@ -217,12 +220,17 @@ body {
     box-shadow: none;
     font-size: 14px;
     font-weight: 500;
-    /* display: none; 버튼 누르면 뜨도록 설정 */
 }
 
 #channel-search input:focus-visible{
     outline: none;
     caret-color : var(--font-gr);
+}
+
+#channel-search .search-input-box{display:none;}
+
+#channel-search .search-input-box.active{
+    display: block;
 }
 
 /* fix - javascript로 검색 입력창을 누를 때 언더바 표시 */

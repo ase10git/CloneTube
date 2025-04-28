@@ -1,26 +1,11 @@
-//------- channel 페이지 동적 스타일 적용 파일 -------
-
-// *** 메뉴 상단 스타일 ***
-// 클릭 스타일 지정
-const menu = document.querySelector("#channel-nav-list");
-const menu_items = menu.querySelectorAll("li");
-
-menu_items.forEach(el => {
-    el.addEventListener("click", () => {
-        // 모든 클래스를 먼저 제거
-        menu_items.forEach(item => {item.classList.remove("select")});
-        // 클래스 추가
-        el.classList.add("select");
-    });
-});
-
-// 메뉴바 이동
-document.addEventListener("DOMContentLoaded", function () {
-    const nav_container = document.getElementById("channel-nav-str");
-    const left_btn_wrap = document.getElementById("left-btn-wrap");
-    const right_btn_wrap = document.getElementById("right-btn-wrap");
-    const left_btn = document.getElementById("ch-nav-left-btn");
-    const right_btn = document.getElementById("ch-nav-right-btn");
+// ----- 스크롤바 이벤트 추가 -------
+function addScrollEvent() {
+    // 메뉴바 이동
+    const nav_container = document.querySelector(".scroll-menu-box");
+    const left_btn_wrap = document.querySelector(".left-btn-wrap");
+    const right_btn_wrap = document.querySelector(".right-btn-wrap");
+    const left_btn = document.querySelector(".nav-left-btn");
+    const right_btn = document.querySelector(".nav-right-btn");
 
     // 버튼 표시 설정
     function update_btn_visibility() {
@@ -91,7 +76,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // DOM이 로드된 후 지연된 layout 계산을 위해 requestAnimationFrame
     requestAnimationFrame(update_btn_visibility);
-});
+}
 
-// 검색 버튼 누르면 입력창 활성화
-//document.querySelector("#search-submit-btn").addEventListener
+export default addScrollEvent;
