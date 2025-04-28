@@ -31,42 +31,12 @@
                     </div>
                     <button id="button-subscribe">SUBSCRIBES</button>
                 </div>
-                <!--채널 네비게이션-->
-                <nav id="channel-nav">
-                    <div id="left-btn-wrap" class="channel-nav-btn-wrap">
-                        <button id="ch-nav-left-btn">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0"/>
-                            </svg>
-                        </button> <!-- 왼쪽 화살표 --> <!--반응형 처리 필요-->
-                    </div>
-                    <div id="channel-nav-str">
-                        <ul id="channel-nav-list">
-                            <li class="select"><a href="#">HOME</a></li>
-                            <li><a href="#">VIDEOS</a></li>
-                            <li><a href="#">PLAYLISTS</a></li>
-                            <li><a href="#">COMMUNITY</a></li>
-                            <li><a href="#">CHANNELS</a></li>
-                            <li><a href="#">ABOUT</a></li>
-                        </ul>
-                        <form id="channel-search" action="#" method="GET">  <!--검색 데이터 전송-->
-                            <button type="submit" id="search-submit-btn">
-                                <img src="../images/search.svg" alt="검색돋보기이미지">
-                            </button>
-                            <div>
-                                <input type="search" name="query" placeholder="SEARCH">
-                                <div class="search-underbar"></div>
-                            </div>
-                        </form>
-                    </div>
-                    <div id="right-btn-wrap" class="channel-nav-btn-wrap">
-                        <button id="ch-nav-right-btn">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708"/>
-                            </svg>
-                        </button> <!-- 오른쪽 화살표 -->
-                    </div>
-                </nav>
+
+                <!--채널 네비게이션
+                insertChannelScrollMenu.js로 메뉴 추가
+                -->
+                <nav id="channel-nav"></nav>
+
             </header>
             <!-- 하단 -->
             <section id="channel-section">
@@ -138,7 +108,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="../js/includeHtml.js"></script>
     <script src="../js/channel/channel.js"></script>
-    <script src="../js/channel/channeltopStyle.js"></script>
     <script src="../js/topheader/topheader.js" defer></script>
+    <script type="module" src="../components/channelComponents/js/insertChannelScrollMenu.js"></script>
 </body>
 </html>

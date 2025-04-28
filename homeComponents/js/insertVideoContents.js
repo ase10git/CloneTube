@@ -2,7 +2,7 @@
 import build_video_menu from "../../videoComponents/js/insertVideoMenu.js";
 
 // 이미지 경로
-const public_url = '../../images/';
+const public_url = '../images/';
 
 // 비디오 정보
 const video = [ 
@@ -57,7 +57,7 @@ fetch("/homeComponents/html/videoContent.html")
             clone.querySelector(".upload-time").textContent = el.uploaded_time;
             clone.querySelector(".avatar-img").src = el.avatar_img;
             clone.querySelector(".menu-items").innerHTML = menu.outerHTML;
-            clone.querySelector(".btn-icon").src = public_url + "dot_three.svg";
+            clone.querySelector(".btn-icon").src = public_url + "three-dots-vertical.svg";
             clone.querySelector(".btn-icon").alt = "dot-three-icon";
     
             const link = clone.querySelector(".thumbnail-link");
