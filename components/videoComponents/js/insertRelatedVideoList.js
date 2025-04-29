@@ -25,7 +25,8 @@ xhr.onreadystatechange = function () {
 };
 
 // 요청 전송
-xhr.send();  
+xhr.send(); 
+
 
 
 function video_list(data){
@@ -57,44 +58,28 @@ function video_list(data){
 
             video.forEach(el => {
                 const clone = video_template.cloneNode(true);
-
-                clone.querySelector(".video-thumbnail-img").src = el.thumbnail;
-                clone.querySelector(".video-title").textContent = el.title;
-                clone.querySelector(".channel-name").textContent = el.channel_id;
-                clone.querySelector(".spectator-number").textContent = `조회수 ${el.views}`;
-                clone.querySelector(".uploaded-time").textContent = el.created_dt;
-                clone.querySelector(".menu-box-img").src = public_url + 'three-dots-vertical.svg';
-                clone.querySelector(".video-menu").innerHTML = menu.outerHTML;
-
-                recommend_box.forEach(el=>{
-                    el.appendChild(clone.cloneNode(true));
+            
+                // 채널 정보 가져오기
+                fetch(`http://techfree-oreumi-api.kro.kr:5000/channel/getChannelInfo?id=${el.channel_id}`)
+                .then(res => res.json())
+                .then(channelData => {
+                    clone.querySelector(".video-thumbnail-img").src = el.thumbnail;
+                    clone.querySelector(".video-title").textContent = el.title;
+                    clone.querySelector(".channel-name").textContent = channelData.channel_name;
+                    clone.querySelector(".spectator-number").textContent = `${el.views} views`;
+                    clone.querySelector(".uploaded-time").textContent = el.created_dt;
+                    clone.querySelector(".menu-box-img").src = public_url + 'three-dots-vertical.svg';
+                    clone.querySelector(".video-menu").innerHTML = menu.outerHTML;
+            
+                    recommend_box.forEach(box => {
+                        box.appendChild(clone.cloneNode(true));
+                    });
+                })
+                .catch(error => {
+                    console.error("채널 정보 가져오기 실패:", error);
                 });
-            })
+            });
         })
     }
     insert_video_list();
 }
-
-
-// 테스트용 데이터
-// const video = [ 
-//     {title: 'Lorem ipsum dolor sit amet, consecte adipiscing elit.', uploader: 'James Gouse', spectators: 123, uploaded_time: '2024-01-02', thumbnail: '../images/thumbnail-1.svg', avatar_img: '../images/james.svg'},
-//     {title: 'Lorem ipsum dolor sit amet, consecte adipiscing elit.', uploader: 'Alan Cooper', spectators: 123, uploaded_time: '2024-01-02', thumbnail: '../images/thumbnail-2.svg', avatar_img: '../images/alan.svg'},    
-//     {title: 'Lorem ipsum dolor sit amet, consecte adipiscing elit.', uploader: 'Marcus Levin', spectators: 123, uploaded_time: '2024-01-02', thumbnail: '../images/thumbnail-3.svg', avatar_img: '../images/marcus.svg'},
-//     {title: 'Lorem ipsum dolor sit amet, consecte adipiscing elit.', uploader: 'Alexis Sears', spectators: 123, uploaded_time: '2024-01-02', thumbnail: '../images/thumbnail-4.svg', avatar_img: '../images/alexis.svg'},
-//     {title: 'Lorem ipsum dolor sit amet, consecte adipiscing elit.', uploader: 'Jesica Lambert', spectators: 123, uploaded_time: '2024-01-02', thumbnail: '../images/thumbnail-5.svg', avatar_img: '../images/jesica.svg'},
-//     {title: 'Lorem ipsum dolor sit amet, consecte adipiscing elit.', uploader: 'Anna White', spectators: 123, uploaded_time: '2024-01-02', thumbnail: '../images/thumbnail-6.svg', avatar_img: '../images/anna.svg'},
-//     {title: 'Lorem ipsum dolor sit amet, consecte adipiscing elit.', uploader: 'Skylar Dias', spectators: 123, uploaded_time: '2024-01-02', thumbnail: '../images/thumbnail-7.svg', avatar_img: '../images/skylar.svg'},    
-//     {title: 'Lorem ipsum dolor sit amet, consecte adipiscing elit.', uploader: 'James Gouse', spectators: 123, uploaded_time: '2024-01-02', thumbnail: '../images/thumbnail-8.svg', avatar_img: '../images/james.svg'},
-//     {title: 'Lorem ipsum dolor sit amet, consecte adipiscing elit.', uploader: 'James Gouse', spectators: 123, uploaded_time: '2024-01-02', thumbnail: '../images/thumbnail-2.svg', avatar_img: '../images/james.svg'},
-//     {title: 'Lorem ipsum dolor sit amet, consecte adipiscing elit.', uploader: 'James Gouse', spectators: 123, uploaded_time: '2024-01-02', thumbnail: '../images/thumbnail-1.svg', avatar_img: '../images/james.svg'},
-//     {title: 'Lorem ipsum dolor sit amet, consecte adipiscing elit.', uploader: 'James Gouse', spectators: 123, uploaded_time: '2024-01-02', thumbnail: '../images/thumbnail-3.svg', avatar_img: '../images/james.svg'},
-//     {title: 'Lorem ipsum dolor sit amet, consecte adipiscing elit.', uploader: 'James Gouse', spectators: 123, uploaded_time: '2024-01-02', thumbnail: '../images/thumbnail-4.svg', avatar_img: '../images/james.svg'},
-//     {title: 'Lorem ipsum dolor sit amet, consecte adipiscing elit.', uploader: 'James Gouse', spectators: 123, uploaded_time: '2024-01-02', thumbnail: '../images/thumbnail-5.svg', avatar_img: '../images/james.svg'},
-//     {title: 'Lorem ipsum dolor sit amet, consecte adipiscing elit.', uploader: 'James Gouse', spectators: 123, uploaded_time: '2024-01-02', thumbnail: '../images/thumbnail-6.svg', avatar_img: '../images/james.svg'},
-//     {title: 'Lorem ipsum dolor sit amet, consecte adipiscing elit.', uploader: 'James Gouse', spectators: 123, uploaded_time: '2024-01-02', thumbnail: '../images/thumbnail-7.svg', avatar_img: '../images/james.svg'},
-//     {title: 'Lorem ipsum dolor sit amet, consecte adipiscing elit.', uploader: 'James Gouse', spectators: 123, uploaded_time: '2024-01-02', thumbnail: '../images/thumbnail-8.svg', avatar_img: '../images/james.svg'},
-// ]
-
-
-
