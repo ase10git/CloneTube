@@ -9,19 +9,26 @@
             <span class="side-button" id="side-button">
                 <img src="../images/hamburger.svg" alt="Sidebar Button" width="24" height="24">
             </span>
-            <span class="logo">
+            <a href="index.html" class="logo">
                 <img src="../images/Youtube-Logo.svg" alt="Logo" width="90" height="20">
-            </span>
+            </a>
         </div>
 
         <!-- 중앙: 검색창 + 음성 버튼 -->
         <div class="center-section">
-            <span class="search-bar">
-                <input type="text" placeholder="Search">
-                <span class="search-btn">
-                    <img src="../images/search.svg" alt="Search Icon" width="24" height="24">
-                </span>
-            </span>
+            <form action="search" method="get" id="search-form" class="search-bar">
+                <input type="text" placeholder="Search" name="query" id="search-input">
+                <div class="search-btn-wrap">
+                    <button type="reset" class="reset-button">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                            <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
+                        </svg>
+                    </button>
+                    <button type="submit" id="search-button">
+                        <img src="../images/search.svg" alt="Search Icon" width="24" height="24">
+                    </button>
+                </div>
+            </form>
             <span class="voice-btn" id="voiceBtn">
                 <img src="../images/voice.svg" alt="음성 검색 버튼" width="40" height="40">
             </span>

@@ -175,7 +175,6 @@ body {
     z-index: 1px;
     cursor: pointer;
 }
-
 /* 댓글 구조 */
 #comments-contaner {
     display: flex;

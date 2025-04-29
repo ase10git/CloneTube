@@ -43,8 +43,7 @@ fetch("../../components/scrollMenu/html/scrollMenuTemplate.html")
             const item_btn =  document.createElement("button");
             item_btn.textContent = el.name_ko;
             item.classList.add("menu-item-btn");
-            item.appendChild(item_btn);               
-
+            item.appendChild(item_btn);
             menu_list.appendChild(item);
         });
 
