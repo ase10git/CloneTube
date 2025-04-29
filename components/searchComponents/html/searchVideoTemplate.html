@@ -1,0 +1,83 @@
+<!-- 비디오 목록 -->
+<template id="content-template">
+    <div class="content">
+        <!-- 썸네일 부분 -->
+        <div class="thumbnail-box">
+            <div class="thumbnail">
+                <a class="thumbnail-link" href="#">
+                    <div class="thumbnail-img-box">
+                    <img src="" class="thumbnail-img" alt="">
+                    </div>
+                </a>
+            </div>
+            <!-- hover 시 표현되는 레이어 -->
+            <div class="hover-overlay-wrap">
+                <div class="hover-overlay-box">
+                    <img src="" alt="" class="hover-icon"></img>
+                </div>
+                <div class="hover-overlay-box">
+                    <img src="" alt="" class="hover-icon"></img>
+                </div>
+            </div>
+            <div class="overlay-wrap">
+                <div class="overlay-box">
+                    <img class="overlay-icon"></img>
+                </div>
+                <div class="overlay-box">
+                    <span class="running-time"></span>
+                </div>
+            </div>         
+        </div>
+        <!-- 영상 정보 부분 -->
+        <div class="details">
+            <div class="meta">
+                <div class="video-info">
+                    <h3 class="video-header">
+                        <a href="#" class="video-title-link">
+                            <span class="video-title">영상제목</span>
+                        </a>
+                    </h3>
+                    <div class="video-meta">
+                        <span class="spectator-number">조회수</span>
+                        <span class="spectator-line">•</span>
+                        <span class="upload-time">10시간 전</span>
+                    </div>
+                </div>
+                <div class="metadata">
+                    <div class="channel">
+                        <div class="channel-box">
+                            <div class="channel-meata">
+                                <img src="" alt="채널 프로필" class="avatar-img">
+                            </div>
+                            <span class="channel-name">채널명</span>
+                            <div class="channel-box">
+                                <span class="badge-icon">✔</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="video-desc-box">
+                    <span class="video-description">영상설명</span>
+                </div>
+            </div>
+            <!-- 비디오 메뉴 부분 -->
+            <div class="menu" style="display: none;">
+                <div class="menu-btn-wrap">
+                    <button class="menu-btn">
+                        <div class="btn-icon-box">
+                            <!-- 점 3개 아이콘 박스 -->
+                            <img src="" alt="three-dot-icon" class="btn-icon">
+                        </div>
+                    </button>
+                </div>
+                <div class="menu-list">
+                    <!-- 
+                    "비디오 메뉴 목록" 여러 개 배치
+                    template 태그를 사용힌
+                    li class="menu-item" 가 들어갈 자리 
+                    -->
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
