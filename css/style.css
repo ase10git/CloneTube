@@ -18,5 +18,5 @@ ul, li, ol{list-style-type: none;}
 
 /* 문서 전체 스크롤바 색상 지정 */
 html {
-    scrollbar-color: var(--bg-highlight) var(--bg);
+    scrollbar-color: var(--bt-border) var(--bg);
 }

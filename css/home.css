@@ -7,23 +7,22 @@ main {
 }
 
 /* 사이드바 열렸을 때 */
-#contents {
-    margin-left: 250px;
+#contents, #btn-header {
+    margin-left: 240px;
     transition: margin 0.3s ease;
 }
 
 /* 사이드바 닫혔을 때 */
-body.sidebar-close #contents {
+body.sidebar-close #contents, body.sidebar-close #btn-header{
     margin-left: 0;
 }
 
 /* 상단 버튼 영역 */
 #btn-header {
-    position: sticky; 
-    top: 0;
+    position: fixed; 
+    top: 56px;
     z-index: 10; 
     width: 100%;
-    border-top: 1px solid var(--bg-highlight); 
     border-bottom: 1px solid var(--bg-highlight); 
     background-color: var(--bg-bar); 
 }
@@ -100,7 +99,7 @@ body.sidebar-close #contents {
     align-items: center;
 }
 
-.scroll-menu-box{overflow-x:scroll;}
+.scroll-menu-box{overflow-x:auto;}
 .scroll-menu-box::-webkit-scrollbar{display: none;}
 
 /* 버튼 리스트 UL */
