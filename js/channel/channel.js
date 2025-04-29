@@ -1,214 +1,140 @@
-// toggle 될 때마다 채널 화면 크기 변화 하는 것 (지금 어느 순간 되면 toggle 활성화 false이랑 true가 바뀜 : 이 문제 해결해야함)
+let subscriberCount = 0;
+let isSubscribed = false;
+
 document.addEventListener("DOMContentLoaded", function () {
-
-    const interval = setInterval(() => {
-        const sidebar = document.getElementById("side-bar");
-        const toggleButton = document.getElementById("side-button")
-
-        if (sidebar && toggleButton) {
-            const contentSection = document.getElementById("channel-main");
-
-            //메뉴바 활성화에 마진 따라 변경
-            function calculateMargin() {
-                const windowWidth = window.innerWidth;
-                if (windowWidth < 792) {
-                    contentSection.style.marginLeft = `0px`;
-                } else if (sidebar.classList.contains("active")) {
-                    if (windowWidth < 1312) {
-                        contentSection.style.marginLeft = `72px`;
-                    } else {
-                        contentSection.style.marginLeft = `240px`;
-                    }
-                } else {
-                    contentSection.style.marginLeft = `72px`;
-                }
-            }
-
-            function getSidebarWidth() {
-                const windowWidth = window.innerWidth;
-                console.log(sidebar.classList.contains("active"))
-                if (sidebar.classList.contains("active")) {
-                    if (windowWidth < 1312) {
-                        return 72;
-                    } else {
-                        return 240;
-                    };
-                } else {
-                    return 72;
-                }
-            }
-
-            function calculateSectionWidth() {
-                const windowWidth = window.innerWidth;
-                let sidebarWidth = getSidebarWidth();
-                let availableWidth = windowWidth - sidebarWidth;
-                let sectionWidth;
-
-                // console.log("windowWith:", windowWidth);
-                // console.log("sidebarWidth:", sidebarWidth);
-                // console.log("availableWidth:", availableWidth);
-
-
-                if (windowWidth < 1312) {
-                    sidebarWidth = 72;
-                    availableWidth = windowWidth - sidebarWidth;
-                }
-                if (availableWidth > 1327) {
-                    sectionWidth = 1284;
-                } else if (availableWidth > 1327 - 214) {
-                    sectionWidth = 1284 - 214;
-                } else if (availableWidth > 1327 - 214 * 2) {
-                    sectionWidth = 1284 - 214 * 2;
-                } else if (windowWidth > 685) {
-                    sectionWidth = 1284 - 214 * 3;
-                } else {
-                    sectionWidth = 428;
-                }
-
-                contentSection.style.width = `${sectionWidth}px`;
-            }
-            window.addEventListener("resize", calculateMargin);
-            window.addEventListener("resize", calculateSectionWidth);
-
-            // 새로고침 시 바로 적용
-            calculateMargin();
-            calculateSectionWidth();
-
-            // 토글 버튼 클릭 시 바로 적용
-            toggleButton.addEventListener("click", () => {
-                calculateMargin();
-                calculateSectionWidth();
-            });
-
-            clearInterval(interval);
-        };
-        }, 100);
-    });
-
-
-//API 가져오기
-// const xhr = new XMLHttpRequest();
-//     xhr.open("GET", "http://techfree-oreumi-api.kro.kr:5000/video/getVideoList", true);
-//     xhr.onload = function () {
-//         if (xhr.status >= 200 && xhr.status < 300) {
-//             console.log(JSON.parse(xhr.response));
-//             const sampleVideos = JSON.parse(xhr.response);
-//         } else {
-//             console.error("Error:", xhr.status);
-//         }
-//     };
-//     xhr.onerror = function () {
-//         console.error('Network Error');
-//     };
-//     xhr.send();
-
-
-// 임시 썸네일 카드에 표시될 영상 정보 배열
-const sampleVideos = [
-    {
-        thumbnail: "https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg",
-        duration: "23:45",
-        title: "YouTube",
-        channelName: "Google",
-        views: "1.2M views",
-        uploadDate: "2 months ago",
-        description: "YouTube official video"
-    },
-    {
-        thumbnail: "https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png",
-        duration: "15:20",
-        title: "Instagram",
-        channelName: "Meta",
-        views: "980K views",
-        uploadDate: "1 month ago",
-        description: "Instagram launch"
-    },
-    {
-        thumbnail: "https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg",
-        duration: "19:55",
-        title: "Facebook",
-        channelName: "Meta",
-        views: "2.3M views",
-        uploadDate: "3 months ago",
-        description: "Facebook update"
-    },
-    {
-        thumbnail: "https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg",
-        duration: "45:00",
-        title: "Netflix",
-        channelName: "Netflix Inc",
-        views: "4.2M views",
-        uploadDate: "5 months ago",
-        description: "Netflix new series"
-    },
-    {
-        thumbnail: "https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png",
-        duration: "15:20",
-        title: "Instagram",
-        channelName: "Meta",
-        views: "980K views",
-        uploadDate: "1 month ago",
-        description: "Instagram launch"
-    },
-    {
-        thumbnail: "https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png",
-        duration: "15:20",
-        title: "Instagram",
-        channelName: "Meta",
-        views: "980K views",
-        uploadDate: "1 month ago",
-        description: "Instagram launch"
-    },
-    {
-        thumbnail: "https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg",
-        duration: "45:00",
-        title: "Netflix",
-        channelName: "Netflix Inc",
-        views: "4.2M views",
-        uploadDate: "5 months ago",
-        description: "Netflix new series"
-    },
-    {
-        thumbnail: "https://upload.wikimedia.org/wikipedia/en/6/60/Twitter_Logo_as_of_2021.svg",
-        duration: "10:30",
-        title: "Twitter",
-        channelName: "X",
-        views: "740K views",
-        uploadDate: "1 week ago",
-        description: "Twitter changes"
-    }
-    ];
-
-// 카드 생성 함수 - 특정 섹션에 영상 카드들을 동적으로 렌더링하는 함수
-function renderVideos(sectionId) {
-// HTML에서 전달받은 섹션 ID에 해당하는 요소를 찾음
-const container = document.getElementById(sectionId);
-
-// sampleVideos 배열의 각 비디오 데이터를 순회하면서 카드 생성
-sampleVideos.forEach((video) => {
-    // 새로운 div 요소 생성 (비디오 카드 하나)
-    const videoCard = document.createElement("div");
-    // 비디오 카드에 클래스 추가 (스타일 적용을 위해)
-    videoCard.classList.add("video-card");
-
-    // 카드의 내부 HTML 구조를 템플릿 리터럴을 이용해 작성
-    videoCard.innerHTML = `
-    <div class="video-thumbnail">
-        <img src="${video.thumbnail}" alt="Video Thumbnail" /> <!-- 썸네일 이미지 -->
-        <div class="video-duration">${video.duration}</div> <!-- 영상 재생 시간 -->
-    </div>
-    <div class="video-info">
-        <div class="video-title">${video.title}</div> <!-- 영상 제목 -->
-        <div class="video-meta">${video.channelName}<br>${video.views} · ${video.uploadDate}</div> <!-- 채널명, 조회수, 업로드 날짜 -->
-    </div>
-    `;
-
-    // 완성된 비디오 카드를 컨테이너에 추가
-    container.appendChild(videoCard);
+    setupSubscribeButton(); // 구독 버튼
+    fetchChannelInfo();     // 채널 정보
+    fetchVideosAndRender(); // 영상 목록
 });
+
+// 구독
+function setupSubscribeButton() {
+    const subscribeButton = document.getElementById('button-subscribe');
+
+    subscribeButton.addEventListener('click', () => {
+        if (isSubscribed) {
+            subscriberCount -= 1;
+            subscribeButton.textContent = "SUBSCRIBE"; // 버튼 텍스트 복구
+            isSubscribed = false;
+        } else {
+            subscriberCount += 1;
+            subscribeButton.textContent = "SUBSCRIBED"; // 버튼 텍스트 변경
+            isSubscribed = true;
+        }
+        document.getElementById('subscribers').textContent = `${subscriberCount} subscribers`;
+    });
 }
 
+// 채널 정보 
+function fetchChannelInfo() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const channelId = urlParams.get('channel_id');
 
-// 두 섹션에 영상 표시
-renderVideos('section1');
-renderVideos('section2');
+    if (!channelId) {
+        console.error('채널 ID가 URL에 없습니다!');
+        return;
+    }
+
+    fetch(`http://techfree-oreumi-api.kro.kr:5000/channel/getChannelInfo?id=${channelId}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(channelData => {
+            console.log('채널 정보:', channelData);
+
+            subscriberCount = channelData.subscribers; // 서버에서 받은 구독자 수로 초기화
+
+            document.getElementById('channel-name').textContent = channelData.channel_name;
+            document.getElementById('subscribers').textContent = `${subscriberCount} subscribers`;
+            document.getElementById('channel-profile-img').src = channelData.channel_profile;
+        })
+        .catch(error => {
+            console.error('채널 정보 가져오기 실패:', error);
+        });
+}
+
+// 영상 목록
+function fetchVideosAndRender() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const channelId = urlParams.get('channel_id');
+
+    if (!channelId) {
+        console.error('채널 ID가 URL에 없습니다!');
+        return;
+    }
+
+    fetch(`http://techfree-oreumi-api.kro.kr:5000/video/getChannelVideoList?channel_id=${channelId}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log("받은 데이터:", data);
+            renderVideos('section1', data);
+            renderVideos('section2', data);
+        })
+        .catch(error => {
+            console.error('Fetch error:', error);
+        });
+}
+
+function renderVideos(sectionId, videoList) {
+    const container = document.getElementById(sectionId);
+    container.innerHTML = '';
+
+    videoList.forEach((video) => {
+        const videoCard = document.createElement("div");
+        videoCard.classList.add("video-card");
+
+        // 썸네일이 없으면 기본 이미지
+        const thumbnailUrl = video.thumbnail || "https://via.placeholder.com/300x200.png?text=No+Thumbnail";
+
+        // 날짜 포맷 변환 (optional)
+        const uploadDate = formatUploadDate(video.created_dt);
+
+        // 조회수 포맷 변환
+        const viewsFormatted = formatViews(video.views);
+
+        videoCard.innerHTML = `
+        <div class="video-thumbnail">
+            <img src="${thumbnailUrl}" alt="Video Thumbnail" />
+            <div class="video-duration">00:00</div> <!-- duration 없으면 기본값 -->
+        </div>
+        <div class="video-info">
+            <div class="video-title">${video.title}</div>
+            <div class="video-meta">${viewsFormatted} views · ${uploadDate}</div>
+        </div>
+        `;
+
+        videoCard.addEventListener('click', () => {
+            localStorage.setItem('selectedVideo', JSON.stringify(video));
+            localStorage.setItem('selectedChannelId', video.channel_id);
+            window.location.href = '../html/video.html';
+        });
+
+        container.appendChild(videoCard);
+    });
+}
+
+// 조회수
+function formatViews(views) {
+    if (!views) return "0";
+    if (views >= 1_000_000) return (views / 1_000_000).toFixed(1).replace('.0', '') + "M";
+    if (views >= 1_000) return (views / 1_000).toFixed(1).replace('.0', '') + "K";
+    return views.toString();
+}
+
+// 업로드 날짜 (YYYY-MM-DD 형태)
+function formatUploadDate(dateStr) {
+    if (!dateStr) return "unknown";
+    const date = new Date(dateStr);
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    return `${year}.${month}.${day}`;
+}
