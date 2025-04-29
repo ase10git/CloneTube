@@ -66,11 +66,12 @@ function video_list(data){
                     clone.querySelector(".video-thumbnail-img").src = el.thumbnail;
                     clone.querySelector(".video-title").textContent = el.title;
                     clone.querySelector(".channel-name").textContent = channelData.channel_name;
-                    clone.querySelector(".spectator-number").textContent = `${el.views} views`;
-                    clone.querySelector(".uploaded-time").textContent = el.created_dt;
+                    clone.querySelector(".spectator-number").textContent = `조회수 ${viewsUnit(el.views)}회`;
+                    clone.querySelector(".uploaded-time").textContent = timeCalculator(el.created_dt);
                     clone.querySelector(".menu-box-img").src = public_url + 'three-dots-vertical.svg';
                     clone.querySelector(".video-menu").innerHTML = menu.outerHTML;
-            
+                    clone.querySelector(".video-link").href = `http://127.0.0.1:5500/html/video.html?video_id=${el.id}`;
+
                     recommend_box.forEach(box => {
                         box.appendChild(clone.cloneNode(true));
                     });
@@ -82,4 +83,46 @@ function video_list(data){
         })
     }
     insert_video_list();
+}
+
+function timeCalculator(date) {
+    const now = new Date(); // 현재 날짜
+    const past = new Date(date); // 대상 날짜
+    // 두 시간 차이를 계산(초 단위)
+    const diffInSeconds = Math.floor((now - past) / 1000);
+
+    const secondsInMinute = 60;
+    const secondsInHour = 3600;
+    const secondsInDay = 86400;
+
+    if (diffInSeconds < secondsInMinute) { // 차이가 초 단위일 때
+        return `${diffInSeconds}초 전`;
+    } else if (diffInSeconds < secondsInHour) { // 차이가 분 단위일 때
+        const minutes = Math.floor(diffInSeconds / secondsInMinute);
+        return `${minutes}분 전`;
+    } else if (diffInSeconds < secondsInDay) { // 차이가 시간 단위일 때
+        const hours = Math.floor(diffInSeconds / secondsInHour);
+        return `${hours}시간 전`;
+    } else { // 차이가 일 단위일 때
+        const days = Math.floor(diffInSeconds / secondsInDay);
+        return `${days}일 전`;
+    }
+}
+
+function viewsUnit(views) {
+    if (views / 100000000 >= 1) {
+        return `${(views / 100000000).toFixed(0)}억 ${((views % 100000000) / 10000).toFixed(0)}만`
+    } else if (views / 10000000 >= 1) {
+        return `${(views / 10000000).toFixed(0)},${((views % 10000000) / 10000).toFixed(0)}만`
+    } else if (views / 1000000 >= 1) {
+        return `${(views / 10000).toFixed(0)}만`
+    }else if (views / 100000 >= 1) {
+        return `${(views / 10000).toFixed(0)}만`
+    } else if (views / 10000 >= 1) {
+        return `${(views / 10000).toFixed(1)}만`
+    } else if (views / 1000 >= 1) {
+        return `${(views / 1000).toFixed(1)}천`
+    } else {
+        return `${views}`;
+    }
 }

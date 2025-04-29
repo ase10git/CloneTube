@@ -168,11 +168,12 @@ input:autofill:active {
 
 .side-bar {
     scrollbar-color: var(--bg-highlight) transparent;
+    display: none;
 }
 
 /* 사이드바가 active일 때 */
 .side-bar.active {
-    transform: translateX(-250px);
+    display: block;
 }
 
 /* 사이드바 안의 각 섹션 간격 */

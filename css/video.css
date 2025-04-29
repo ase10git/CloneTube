@@ -24,8 +24,8 @@ body {
     flex-direction: column;
 }
 
-#primary {
-    /* 비디오 비율 유지 */
+#video-player {
+    width: 100%;
 }
 
 .primary-bottom {
