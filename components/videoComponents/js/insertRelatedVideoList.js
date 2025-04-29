@@ -56,9 +56,8 @@ function insert_video_list() {
             clone.querySelector(".menu-box-img").src = public_url + 'three-dots-vertical.svg';
             clone.querySelector(".video-menu").innerHTML = menu.outerHTML;
 
-            // need fix : 첫 번째에만 들어가는 문제 발생
             recommend_box.forEach(el=>{
-                el.prepend(clone.cloneNode(true));
+                el.appendChild(clone.cloneNode(true));
             });
         })
     })

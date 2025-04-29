@@ -47,7 +47,6 @@ fetch("../../components/scrollMenu/html/scrollMenuTemplate.html")
             menu_list.appendChild(item);
         });
 
-        // need fix : 첫 번째에만 들어가는 문제 발생
         target.forEach(el=>{
             el.prepend(scroll_wrap.cloneNode(true));
         });
