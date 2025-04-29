@@ -5,9 +5,18 @@ body {
 
 #video-main {
     display: flex;
+    justify-content: center;
+    margin-top: 54px;
+}
+
+#primary {
+    display: flex;
     flex-direction: column;
-    margin: 0 60px 0 60px;
+    margin-left: 24px;
+    padding: 24px 24px 0 0;
     align-items: center;
+    max-width: 1296px;
+    min-width: 437px;
 }
 
 #chnnel-main {
@@ -67,6 +76,11 @@ body {
     border : none;
     background-color: transparent;
 }
+
+.icon-img-dots {
+    filter: invert();
+}
+
 /* 채널 정보 구조 */
 .botton-row {
     display: flex;
@@ -162,11 +176,6 @@ body {
     cursor: pointer;
 }
 
-@media (min-width: 1050px) {
-    .related-container {
-        display: none;
-    }
-}
 /* 댓글 구조 */
 #comments-contaner {
     display: flex;
@@ -431,7 +440,6 @@ body {
 .related-container {
     display: flex;
     flex-direction: column;
-    margin-top: 8px;
 }
 
 .related-video-content img{
@@ -440,7 +448,135 @@ body {
 
 .related-video-content {
     display: flex;
+    margin-top: 8px;
 }
+
+.first {
+    /* position: absolute;
+    width: 100%; */
+}
+
+@media (min-width: 1015px) {
+    .first {
+        display: none;
+    }
+}
+
+#secondary {
+    min-width: 300px;
+    padding: 24px 24px 0 0;
+}
+
+
+@media (max-width: 1015px) {
+    #secondary {
+        display: none;
+    }
+}
+
+/* 상단 추천 스크롤 메뉴 */
+
+.scroll-menu-wrap {
+    position: relative;
+}
+
+/* 왼쪽 버튼 위치 */
+.left-btn-wrap {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+/* 오른쪽 버튼 위치 */
+.right-btn-wrap {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+/* 좌우 버튼 공통 스타일 */
+.nav-btn-wrap button {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100%; 
+    position: relative;
+    border:none;
+    color: var(--font);
+    background-color: transparent;
+}
+
+.nav-btn-wrap button:hover{
+    background-color: var(--bt-border-d);
+}
+
+/* 버튼 뒤에 흐릿한 배경 추가 */
+.nav-btn-wrap button::after {
+    position: absolute;
+    content: '';
+    background-color: var(--bg-highlight);
+}
+
+/* 버튼 안 아이콘 */
+.nav-btn-wrap button svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* 버튼 리스트 전체 */
+#btn-tab {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.scroll-menu-box{overflow-x:scroll;}
+.scroll-menu-box::-webkit-scrollbar{display: none;}
+
+.menu-list {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    overflow: hidden;
+    scroll-behavior: smooth; 
+}
+
+/* 버튼 아이템 */
+.menu-list li {
+    cursor: pointer;
+    margin: 8px 8px 8px 0;
+    padding: 0 12px;
+    border: none;
+    background-color: var(--bg-highlight);
+    border-radius: 8px;
+    font-size: 14px;
+    line-height: 2rem;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+/* 버튼 호버 효과 */
+.menu-list li:hover {
+    background-color: #444;
+}
+
+/* 선택된 버튼 스타일 */
+.menu-list li.selected {
+    background-color: var(--bg-highlight);
+    color: var(--bg);
+}
+
+.menu-list li button{
+    border: none;
+    background-color: transparent;
+    color: var(--font);
+}
+
 
 /* 추천 동영상 - 썸네일 */
 .video-thumbnail {
@@ -515,12 +651,16 @@ body {
 
 .video-title {
     margin-bottom: 4px;
-    font-family: Roboto;
     font-weight: 400;
     font-size: 14px;
     line-height: 20px;
     letter-spacing: 0%;
     color: var(--font);
+}
+
+#secondary .video-title{
+    max-height: 40px;
+    overflow: hidden;
 }
 
 .video-meta-box {
@@ -537,18 +677,11 @@ body {
     color: var(--font-gr);
 }
 
-.channel-badge-box {
-    width: 15px;
-    height: 15px;
-    background-color: var(--bt-border-d);
-    border-radius: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
 .channel-badge-box img {
-    filter: invert();
-    width: 70%
+    width: 14px;
+    height: 14px;
+    background-color: var(--bt-border-d);
+    border-radius: 14px;
 }
 
 .video-info {
