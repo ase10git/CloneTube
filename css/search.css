@@ -1,0 +1,232 @@
+body {
+    background-color: var(--bg); 
+}
+/* 메인 영역 */
+main {
+    position: relative; 
+    color: var(--font);
+}
+
+/* 사이드바 열렸을 때 */
+#contents, #btn-header{
+    margin-left: 240px;
+    transition: margin 0.3s ease;
+}
+
+/* 사이드바 닫혔을 때 */
+body.sidebar-close #contents, body.sidebar-close #btn-header{
+    margin-left: 0;
+}
+
+/* 상단 버튼 영역 */
+#btn-header {
+    position: fixed; 
+    top: 56px;
+    z-index: 10; 
+    width: 100%;
+    border-bottom: 1px solid var(--bg-highlight); 
+    background-color: var(--bg-bar); 
+}
+
+/* 상단 버튼 래퍼 */
+.scroll-menu-wrap {
+    height: 100%;
+    padding: 0 24px; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    position: relative;
+}
+
+/* 좌우 이동 버튼 */
+.left-btn-wrap, .right-btn-wrap {
+    width: 56px; 
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    background-color: var(--bg-highlight);
+}
+
+/* 왼쪽 버튼 위치 */
+.left-btn-wrap {
+    top: 0;
+    left: 0;
+}
+
+/* 오른쪽 버튼 위치 */
+.right-btn-wrap {
+    top: 0;
+    right: 0;
+}
+
+/* 좌우 버튼 공통 스타일 */
+.nav-btn-wrap button {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100%; 
+    position: relative;
+    border:none;
+    color: var(--font);
+    background-color: transparent;
+}
+
+.nav-btn-wrap button:hover{
+    background-color: var(--bt-border-d);
+}
+
+/* 버튼 뒤에 흐릿한 배경 추가 */
+.nav-btn-wrap button::after {
+    position: absolute;
+    content: '';
+    background-color: var(--bg-highlight);
+}
+
+/* 버튼 안 아이콘 */
+.nav-btn-wrap button svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* 버튼 리스트 전체 */
+#btn-tab {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.scroll-menu-box{overflow-x: auto;}
+.scroll-menu-box::-webkit-scrollbar{display: none;}
+
+/* 버튼 리스트 UL */
+.menu-list {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    overflow: hidden;
+    scroll-behavior: smooth; 
+}
+
+/* 버튼 아이템 */
+.menu-list li {
+    cursor: pointer;
+    margin: 12px 12px 12px 0;
+    padding: 0 12px;
+    border: 1px solid var(--bt-border);
+    background-color: var(--bg-highlight);
+    border-radius: 8px;
+    font-size: 14px;
+    line-height: 2rem;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+/* 버튼 호버 효과 */
+.menu-list li:hover {
+    background-color: #444;
+}
+
+/* 선택된 버튼 스타일 */
+.menu-list li.selected {
+    background-color: var(--bg-highlight);
+    color: var(--bg);
+}
+
+.menu-list li button{
+    border: none;
+    background-color: transparent;
+    color: var(--font);
+}
+
+#contents {
+    margin-top: 124px;
+    max-width : 1280px;
+    padding: 0 24px 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.content {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-content: flex-start;
+    gap: 10px;
+}
+
+.thumbnail-box{
+    max-width: 500px;
+    position:relative;
+}
+
+.hover-overlay-box, .overlay-wrap{
+    width: 100%; height: 100%;
+    position: absolute;
+    top:0; left: 0;
+}
+
+.thumbnail{
+    width: 100%;
+}
+
+.thumbnail-img{
+    width: 100%; height: 100%;
+    border-radius: 10px;
+}
+
+.details{
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    position: relative;
+    font-size: 12px;
+}
+
+.video-header-box {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    word-wrap: break-word;
+}
+
+.video-title{
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--font);
+}
+
+.video-meta{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 5px;
+}
+
+.video-meta span {
+    color: var(--font);
+}
+
+.avatar-img{
+    width: 24px; height: 24px;
+    border-radius: 50%;
+}
+
+.video-desc-box{ overflow: hidden; }
+
+.video-description {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    word-wrap: break-word;
+}
+

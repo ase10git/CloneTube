@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search</title>
+    <link href="../css/style.css" rel="stylesheet">
+    <link href="../css/search.css" rel="stylesheet">
+</head>
+<body>
+    <!-- 상단 메뉴바 자리 -->
+    <header id="top-header"></header>
+
+    <main>
+        <!-- 상단 버튼 UI 
+        insertHomeScrollMenu.js로 버튼이 들어갈 자리
+        -->
+        <header id="btn-header"></header>
+
+        <!-- 비디오 목록이 들어가는 자리 
+        search/search.js
+        -->
+        <div id="contents">
+            <!-- <div class="search-load-wait">
+                <span>검색중...</span>
+            </div> -->
+        </div>
+    </main>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="../js/includeHtml.js"></script>
+    <script type="module" src="../js/search/search.js"></script>
+    <script src="../js/topheader/topheader.js" defer></script>
+    <script type="module" src="../components/homeComponents/js/insertHomeScrollMenu.js"></script>
+</body>
+</html>

@@ -8,7 +8,7 @@ function form_event() {
     search_form.addEventListener("submit", function (e) {
         e.preventDefault();
         const search_query = search_input.value;
-        if (!search_query) return;
+        if (!search_query || search_query.trim().length === 0) return;
         window.location.href = `search.html?query=${search_query}`;
     });
 
