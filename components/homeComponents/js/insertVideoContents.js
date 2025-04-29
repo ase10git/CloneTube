@@ -6,12 +6,6 @@ import formatViews from "./insertVideoFormatViews.js"
 // 이미지 경로
 const public_url = '../images/';
 
-// 비디오 정보
-const video = [
-        
-      ]
-const video_info = video;
-
 const temp_div = document.createElement("div");
 
 // 템플릿 코드를 사용하여 비디오 컨텐츠 생성
