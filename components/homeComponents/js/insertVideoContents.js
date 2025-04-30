@@ -49,6 +49,14 @@ async function insert_video_content(video_info){
         link.href = `/html/video.html?video_id=${el.id}`;
         titleLink.href = `/html/video.html?video_id=${el.id}`;
 
+        const avatarImg = clone.querySelector(".avatar-img"); // 아바타 이미지 선택
+
+        // 아바타 클릭 시 해당 채널 페이지로 이동
+        avatarImg.addEventListener("click", (e) => {
+            e.stopPropagation(); // 부모 클릭 이벤트 방지
+            window.location.href = `/html/channel.html?channel_id=${el.channel_id}`;
+        });
+
         contents.appendChild(clone); // 완성된 비디오 카드를 #contents 영역에 추가
         
 
