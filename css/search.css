@@ -2,9 +2,14 @@
 body {
     background-color: var(--bg); 
 }
+
+/* 검색 페이지 폰트 지정 */
+#search-body{
+    font-family: "Roboto","Arial",sans-serif;
+}
+
 /* 메인 영역 */
-main {
-    position: relative; 
+#search-body main {
     color: var(--font);
 }
 
@@ -21,8 +26,7 @@ body.sidebar-close #contents, body.sidebar-close #btn-header{
 
 /* 상단 버튼 영역 */
 #btn-header {
-    position: fixed; 
-    top: 56px;
+    margin-top: 56px;
     z-index: 10; 
     width: 100%;
     border-bottom: 1px solid var(--bg-highlight); 
@@ -148,7 +152,8 @@ body.sidebar-close #contents, body.sidebar-close #btn-header{
 
 /* 동영상 리스트 영역 */
 #contents {
-    margin-top: 124px;
+    width: 100%;
+    margin-top: 20px;
     max-width : 1280px;
     padding: 0 24px 16px;
     display: flex;
@@ -158,29 +163,42 @@ body.sidebar-close #contents, body.sidebar-close #btn-header{
     gap: 20px;
 }
 
+/* 검색 결과가 없을 때 처리 박스 */
+.search-result {
+    width: 100%; height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid var(--bt-border);
+    border-radius: 5px;
+}
+
 /* 동영상 카드 */
 .content {
     width: 100%;
     display: flex;
     justify-content: flex-start;
     align-content: flex-start;
-    gap: 10px;
+    gap: 16px;
 }
 
 /* 썸네일 */
 .thumbnail-box{
+    width: 100%;
+    min-width: 240px;
     max-width: 500px;
-    position:relative;
+    position: relative;
 }
 
-.hover-overlay-box, .overlay-wrap{
-    width: 100%; height: 100%;
+/* 썸네일 오버레이 */
+.hover-overlay-wrap, .overlay-wrap{
     position: absolute;
-    top:0; left: 0;
+    top:0; right: 0;
 }
 
 .thumbnail{
-    width: 100%;
+    width: 100%; height: 100%;
 }
 
 .thumbnail-img{
@@ -189,8 +207,110 @@ body.sidebar-close #contents, body.sidebar-close #btn-header{
     object-fit: cover;
 }
 
+.hover-overlay-wrap {
+    display: none;
+    z-index: 100;
+}
+
+.video-link:hover .hover-overlay-wrap {
+    display: block;
+}
+
+.hover-overlay-inner-wrap {
+    margin:8px 8px 0 0;
+    display: flex;
+    align-items: center;
+    flex-direction: row-reverse;
+    gap: 10px;
+}
+
+.hover-overlay-text-box{
+    display: none;
+}
+
+.hover-overlay-box {
+    width: 28px;
+    height: 28px;
+    background-color: var(--bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3px;
+    opacity: 0.8;
+    z-index: 200;
+}
+
+.hover-overlay-box:hover {
+    opacity: 1;
+}
+
+.hover-overlay-box:hover ~ .hover-overlay-text-box{
+    display: block;
+    padding: 5px;
+    background-color: var(--bg);
+    color: var(--font);
+    border-radius: 5px;
+    font-size: 12px;
+}
+
+.hover-overlay-box img {
+    filter: invert();
+    width: 70%;
+    object-fit: contain;
+}
+
+/* 동영상 재생 아이콘 및 재생 시간 */
+.overlay-wrap {
+    width: 100%; height: 100%;
+    z-index: 50;
+    position: absolute;
+    top:0; left: 0;
+}
+
+.overlay-box{
+    width: 100%; height: 100%;
+    position: relative;
+}
+
+.overlay-play-box {
+    display: none;
+}
+
+.overlay-box:hover .overlay-play-box{
+    width: 100%; height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top:0; left:0;
+}
+
+.overlay-box:hover .overlay-play-box img{
+    width: 30%; height: 30%;
+    filter: invert();
+    opacity: 0.8;
+}
+
+.overlay-time-box {
+    padding: 1px 4px;
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    bottom: 8px; right: 8px;
+    background-color: var(--time-badge-bg);
+    border-radius: 4px;
+}
+
+.running-time {
+    font-size: 13px;
+    color: var(--font);
+    white-space: nowrap;
+    font-weight: 500;
+}
+
 /* 비디오 정보와 메뉴 영역 */
-.details{
+.details {
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
@@ -204,7 +324,7 @@ body.sidebar-close #contents, body.sidebar-close #btn-header{
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    gap: 5px;
+    gap: 12px;
 }
 
 /* 비디오 제목 */
@@ -213,6 +333,7 @@ body.sidebar-close #contents, body.sidebar-close #btn-header{
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     word-wrap: break-word;
+    overflow: hidden;
 }
 
 .video-title{
@@ -281,6 +402,7 @@ body.sidebar-close #contents, body.sidebar-close #btn-header{
 .video-desc-box{ overflow: hidden; }
 
 .video-description {
+    line-height: 18px;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;

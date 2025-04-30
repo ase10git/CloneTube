@@ -1,5 +1,7 @@
 // ---- 검색 결과 템플릿으로 검색 결과 비디오 카드 생성 ----
 import build_video_menu from "../../videoComponents/js/insertVideoMenu.js";
+import timeCalculator from "../../../js/util/timeCalculator.js";
+import viewsCalculator from "../../../js/util/viewsCalculator.js";
 
 const public_url = '../../images/';
 
@@ -37,15 +39,22 @@ async function insert_search_results(query, total_info) {
             contents.appendChild(result_div);
             return;
         } else {
+            
             // 결과가 있을 때 처리
             total_info.forEach(el => {
+                // 복제할 DOM
                 const clone = template.cloneNode(true);
+                // 업로드한 날짜 계산
+                const uploaded_time = timeCalculator(el.created_dt);
+                const views = viewsCalculator(el.views, "kor");
+
+                // 요소에 넣기
                 clone.querySelector(".thumbnail-img").src = el.thumbnail;
                 clone.querySelector(".thumbnail-img").alt = el.title;
                 clone.querySelector(".video-title").textContent = el.title;
                 clone.querySelector(".channel-name").textContent = el.channel_name;
-                clone.querySelector(".spectator-number").textContent = `조회수 ${el.views}`;
-                clone.querySelector(".upload-time").textContent = el.uploaded_time;
+                clone.querySelector(".spectator-number").textContent = `조회수 ${views}`;
+                clone.querySelector(".upload-time").textContent = uploaded_time;
                 clone.querySelector(".avatar-img").src = el.channel_profile;
                 clone.querySelector(".video-description").textContent = el.description;
                 clone.querySelector(".menu-list").innerHTML = menu.outerHTML;

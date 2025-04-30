@@ -32,4 +32,3 @@ function timeCalculator(date) {
 }
 
 export default timeCalculator;
- 
