@@ -47,6 +47,30 @@ function fetchChannelInfo() {
         });
 }
 
+// 업로드 시간 계산
+function timeCalculator(date) {
+    const now = new Date();
+    const past = new Date(date);
+    const diffInSeconds = Math.floor((now - past) / 1000);
+
+    const secondsInMinute = 60;
+    const secondsInHour = 3600;
+    const secondsInDay = 86400;
+
+    if (diffInSeconds < secondsInMinute) {
+        return `${diffInSeconds}초 전`;
+    } else if (diffInSeconds < secondsInHour) {
+        const minutes = Math.floor(diffInSeconds / secondsInMinute);
+        return `${minutes}분 전`;
+    } else if (diffInSeconds < secondsInDay) {
+        const hours = Math.floor(diffInSeconds / secondsInHour);
+        return `${hours}시간 전`;
+    } else {
+        const days = Math.floor(diffInSeconds / secondsInDay);
+        return `${days}일 전`;
+    }
+}
+
 // 영상 목록
 function fetchVideosAndRender() {
     const urlParams = new URLSearchParams(window.location.search);
@@ -78,7 +102,7 @@ function renderVideos(sectionId, videoList) {
         videoCard.classList.add("video-card");
 
         const thumbnailUrl = video.thumbnail || "https://via.placeholder.com/300x200.png?text=No+Thumbnail";
-        const uploadDate = formatUploadDate(video.created_dt);
+        const uploadText = timeCalculator(video.created_dt);
         const viewsFormatted = formatViews(video.views);
 
         videoCard.innerHTML = `
@@ -88,7 +112,7 @@ function renderVideos(sectionId, videoList) {
         </div>
         <div class="video-info">
             <div class="video-title">${video.title}</div>
-            <div class="video-meta">${viewsFormatted} views · ${uploadDate}</div>
+            <div class="video-meta">${viewsFormatted} views · ${uploadText}</div>
         </div>
         `;
 
