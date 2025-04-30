@@ -3,6 +3,16 @@ body {
     color: var(--font);
 }
 
+#video-body .side-bar {
+    scrollbar-color: var(--bg-highlight) transparent;
+    display: none;
+}
+
+/* 사이드바가 active일 때 */
+#video-body .side-bar.active {
+    display: block;
+}
+
 #video-main {
     display: flex;
     justify-content: center;

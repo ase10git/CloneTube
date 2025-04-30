@@ -10,6 +10,7 @@
     --font : #FFFFFF; /* 기본 폰트 색상 */
     --font-gr : #AAAAAA; /* 흐린(회색) 폰트 색상 (대분류나 작은설명 등) */
     --subscribes : #CC0000; /* 구독 버튼 색 */
+    --time-badge-bg: rgba(0, 0, 0, 0.6);
 }
 
 *{box-sizing: border-box; margin:0; padding:0;}
