@@ -167,14 +167,15 @@ input:autofill:active {
     overflow-y: auto;
 }
 
+/* topheader.css */
 .side-bar {
     scrollbar-color: var(--bg-highlight) transparent;
-    display: none;
+    display: block;
 }
 
 /* 사이드바가 active일 때 */
 .side-bar.active {
-    display: block;
+    display: none;
 }
 
 /* 사이드바 안의 각 섹션 간격 */

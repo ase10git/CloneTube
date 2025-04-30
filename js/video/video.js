@@ -37,7 +37,7 @@ function fetchVideoinfo() {
         .then(response => response.json())
         .then(videoData => {
             document.getElementById('video-player').src = `https://storage.googleapis.com/youtube-clone-video/${videoData.id}.mp4`;
-            document.getElementById('video-title').textContent = videoData.title;
+            document.getElementById('videopage-title').textContent = videoData.title;
             document.getElementById('viewerships').textContent = `조회수 ${viewsUnit(videoData.views)}회`;
             document.getElementById('upload-date').textContent = timeCalculator(videoData.created_dt);
             document.getElementById('description').textContent = videoData.description;
