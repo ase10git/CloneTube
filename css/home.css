@@ -263,6 +263,7 @@ body.sidebar-close #contents, body.sidebar-close #btn-header{
 .avatar-img {
     width: 36px;
     height: 36px;
+    cursor: pointer;
 }
 
 /* 메뉴 버튼 스타일 */
