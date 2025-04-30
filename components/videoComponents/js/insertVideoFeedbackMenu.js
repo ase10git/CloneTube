@@ -26,6 +26,7 @@ const video_menu = document.querySelector("#video-menu");
 function append_element(element, parentElement) {
     // 버튼 태그 생성
     const item = document.createElement("button");
+    item.id = `${element.id}`
 
     // 메뉴 버튼 양식
     let menu_item_html = 
