@@ -1,22 +1,5 @@
-// const buttons = document.querySelectorAll(".comment-icon-box");
-// buttons.forEach(button => {
-//     button.addEventListener('click', function click_report(e) {
-//         const button = e.currentTarget;
-//         const report = button.nextElementSibling; // 바로 옆 형제 요소 가져오기
-    
-//         if (!report || !report.classList.contains('comment-dropdown')) {
-//             console.error("comment-dropdown이 없음");
-//             return;
-//         }
-    
-//         if (report.style.display === 'none' || report.style.display === '') {
-//             report.style.display = 'block';
-//         } else {
-//             report.style.display = 'none';
-//         }
-//     });
-// });
-import {timeCalculator, viewsUnit} from "../../components/videoComponents/js/insertRelatedVideoList.js";
+import timeCalculator from "../../js/util/timeCalculator.js";
+import {subscribersUnit, viewsUnit} from "../../components/videoComponents/js/formUnit.js";
 
 document.addEventListener("DOMContentLoaded", function () {
     fetchVideoinfo();
@@ -76,28 +59,46 @@ function fetchChannelinfo() {
         });
 }
 
-//구독자 수 단위 계산
-function subscribersUnit(views) {
+// 비디오 메뉴버튼 더보기 클릭 시 나타나게
+const dotsbutton = document.getElementById("menu-show-more")
 
-    if (views / 100000000 >= 1) {
-        return `${(views / 100000000).toFixed(0)}억 ${((views % 100000000) / 10000).toFixed(0)}만`
-    } else if (views / 10000000 >= 1) {
-        return `${(views / 10000000).toFixed(0)},${((views % 10000000) / 10000).toFixed(0)}만`
-    } else if (views / 100000 >= 1) {
-        const val = (views / 10000).toFixed(1);
-        if (val.endsWith('.0')) return `${parseInt(val)}만`;
-        return `${val}만`;
-    } else if (views / 10000 >= 1) {
-        const val = (views / 10000).toFixed(2);
-        if (val.endsWith('.00')) return `${parseInt(val)}만`;
-        if (val.endsWith('0')) return `${parseFloat(val).toFixed(1)}만`;
-        return `${val}만`;
-    } else if (views / 1000 >= 1) {
-        const val = (views / 1000).toFixed(2);
-        if (val.endsWith('.00')) return `${parseInt(val)}천`;
-        if (val.endsWith('0')) return `${parseFloat(val).toFixed(1)}천`;
-        return `${val}천`;
+dotsbutton.addEventListener('click', function click_report(e) {
+    const dropbox = document.getElementById("video-menu-dropbox")
+    
+    if (dropbox.style.display === "flex") {
+        dropbox.style.display = "none";
     } else {
-        return `${views}`;
-    }
-}
+        dropbox.style.display = "flex";
+    };
+});
+
+// 댓글 신고 버튼 나타나게
+document.addEventListener("DOMContentLoaded", function () {
+const buttons = document.querySelectorAll(".comment-icon-box");
+buttons.forEach(button => {
+    button.addEventListener("click", function (e) {
+        // 현재 버튼의 다음 형제 요소 (comment-dropdown)
+        const button = e.currentTarget;
+        const dropdown = button.nextElementSibling;
+    
+        // 드롭다운이 없으면 중단
+        if (!dropdown || !dropdown.classList.contains("comment-dropdown")) {
+            console.error("comment-dropdown이 없음");
+            return;
+        }
+    
+        // 지금 클릭한 드롭다운이 열려 있었는지 확인
+        const isAlreadyOpen = dropdown.style.display === "block";
+    
+        // 모든 드롭다운 닫기
+        document.querySelectorAll(".comment-dropdown").forEach(el => {
+            el.style.display = "none";
+        });
+    
+        // 지금 클릭한 드롭다운이 이전에 닫혀 있었다면 열기
+        if (!isAlreadyOpen) {
+            dropdown.style.display = "block";
+        }
+    });
+});
+})
