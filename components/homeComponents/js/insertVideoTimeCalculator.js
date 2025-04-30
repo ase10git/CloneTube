@@ -1,6 +1,6 @@
 function timeCalculator(date) {
-    const now = new Date(); // 현재 날짜를 생성
-    const past = new Date(date); // 인자로 받은 날짜를 Date 객체로 변환
+    const now = new Date().getTime(); // 현재 날짜를 생성
+    const past = new Date(date).getTime(); // 인자로 받은 날짜를 Date 객체로 변환
     const diffInSeconds = Math.floor((now - past) / 1000); // 현재와 대상 날짜의 차이를 초 단위로 계산
 
     const secondsInMinute = 60; // 1분 = 60초

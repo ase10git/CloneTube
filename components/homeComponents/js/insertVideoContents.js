@@ -45,6 +45,10 @@ async function insert_video_content(video_info){
         clone.querySelector(".btn-icon").alt = "dot-three-icon"; // 메뉴 버튼 아이콘의 대체 텍스트
         const link = clone.querySelector(".thumbnail-link"); // 썸네일 링크 요소 선택 (클릭 이벤트용)
         const titleLink = clone.querySelector(".video-title-link"); // 비디오 제목 링크 요소 선택 (클릭 이벤트용)
+        
+        link.href = `/html/video.html?video_id=${el.id}`;
+        titleLink.href = `/html/video.html?video_id=${el.id}`;
+
         contents.appendChild(clone); // 완성된 비디오 카드를 #contents 영역에 추가
         
 
