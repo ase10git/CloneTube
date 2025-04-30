@@ -160,7 +160,6 @@ body.sidebar-close #channel-container {
     list-style: none;
     align-items: center;
     overflow: hidden;
-    border:1px solid red;
 }
 
 #channel-nav .menu-list a {
