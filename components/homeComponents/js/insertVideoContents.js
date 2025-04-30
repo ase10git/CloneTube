@@ -60,7 +60,6 @@ async function insert_video_content(video_info){
         contents.appendChild(clone); // 완성된 비디오 카드를 #contents 영역에 추가
         
 
-  
           // link?.addEventListener("click", (e) => {
           //     e.preventDefault();
           //     alert(`썸네일 클릭: ${el.title}`);

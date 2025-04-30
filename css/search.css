@@ -11,21 +11,26 @@ body {
 /* 메인 영역 */
 #search-body main {
     color: var(--font);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 /* 사이드바 열렸을 때 */
-#contents, #btn-header{
+#search-body main {
     margin-left: 240px;
     transition: margin 0.3s ease;
 }
 
 /* 사이드바 닫혔을 때 */
-body.sidebar-close #contents, body.sidebar-close #btn-header{
+#search-body.sidebar-close main{
     margin-left: 0;
 }
 
 /* 상단 버튼 영역 */
 #btn-header {
+    padding: 0 calc((100% - 1280px) / 2);
     margin-top: 56px;
     z-index: 10; 
     width: 100%;
@@ -109,7 +114,7 @@ body.sidebar-close #contents, body.sidebar-close #btn-header{
 .scroll-menu-box::-webkit-scrollbar{display: none;}
 
 /* 버튼 리스트 UL */
-.menu-list {
+.scroll-menu-wrap .menu-list {
     width: 100%;
     height: 100%;
     display: flex;
@@ -120,7 +125,7 @@ body.sidebar-close #contents, body.sidebar-close #btn-header{
 }
 
 /* 버튼 아이템 */
-.menu-list li {
+.scroll-menu-wrap .menu-list li {
     cursor: pointer;
     margin: 12px 12px 12px 0;
     padding: 0 12px;
@@ -134,20 +139,21 @@ body.sidebar-close #contents, body.sidebar-close #btn-header{
 }
 
 /* 버튼 호버 효과 */
-.menu-list li:hover {
+.scroll-menu-wrap .menu-list li:hover {
     background-color: #444;
 }
 
 /* 선택된 버튼 스타일 */
-.menu-list li.selected {
+.scroll-menu-wrap .menu-list li.selected {
     background-color: var(--bg-highlight);
     color: var(--bg);
 }
 
-.menu-list li button{
+.scroll-menu-wrap .menu-list li button{
     border: none;
     background-color: transparent;
     color: var(--font);
+    cursor: pointer;
 }
 
 /* 동영상 리스트 영역 */
@@ -164,14 +170,22 @@ body.sidebar-close #contents, body.sidebar-close #btn-header{
 }
 
 /* 검색 결과가 없을 때 처리 박스 */
-.search-result {
-    width: 100%; height: 200px;
+.no-search-result {
+    padding-top: 140px;
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border: 1px solid var(--bt-border);
-    border-radius: 5px;
+    gap: 10px;
+}
+
+.no-result-message {
+    font-size: 24px;
+}
+
+.no-result-recommend{
+    font-size: 14px;
 }
 
 /* 동영상 카드 */
@@ -314,7 +328,6 @@ body.sidebar-close #contents, body.sidebar-close #btn-header{
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
-    position: relative;
     font-size: 12px;
 }
 
@@ -348,6 +361,7 @@ body.sidebar-close #contents, body.sidebar-close #btn-header{
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    flex-wrap: wrap;
     gap: 5px;
 }
 
@@ -409,3 +423,104 @@ body.sidebar-close #contents, body.sidebar-close #btn-header{
     word-wrap: break-word;
 }
 
+/* 동영상 메뉴 */
+.details .menu {
+    position: relative;
+}
+
+.menu-toggle-btn, .details .menu-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--bg);
+    border: none;
+    cursor: pointer;
+}
+
+.menu-toggle-btn img, .details .menu-btn img{
+    width: 24px; height: 24px;
+}
+
+.menu-toggle-btn img, .details .menu-btn-wrap img {
+    filter: invert();
+}
+
+/* 메뉴 리스트 */
+.details .menu-list { display: none; }
+
+.details .menu-list.active {
+    display: block;
+    position: fixed;
+    right: 50px;
+    padding: 8px 0;
+    background-color: var(--bg-highlight);
+    border-radius: 12px;
+    z-index: 2000;
+}
+
+@media (width >= 1300px) {
+    .details .menu-list.active {
+        right: calc((100% - 1280px) / 2);
+    }
+}
+
+.details .menu-items span{
+    font-family: "Roboto","Arial",sans-serif;
+    line-height: 20px;
+    color: var(--font);
+}
+
+.details .menu-item {
+    margin: 0;
+    padding: 0 12px 0 16px;
+    height: 36px;
+    font-size: 16px;
+    white-space: nowrap;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    cursor: pointer;
+    border: none;
+    line-height: 24px;
+    border-radius: 0;
+}
+
+.details .menu-item:hover{
+    background-color: #444;
+}
+
+.details .service-bar {
+    margin: 8px 0;
+    width: 100%; height: 1px;
+    content: '';
+    border: none;
+    background-color: var(--bt-border-d);
+    cursor: inherit;
+}
+
+.details .menu-item .menu-btn {
+    margin: 0;
+    background-color: transparent;
+    border: none;
+}
+
+.details .menu-item-line {
+    margin-right: 16px;
+    width: 100%;
+    background-color: var(--border);
+}
+
+.details .menu-icon-box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.details .menu-name{
+    margin-right: 24px;
+    flex: 1;
+}
+
+.details .menu-icon-box .menu-icon-img {
+    filter: invert();
+}

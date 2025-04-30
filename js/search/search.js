@@ -38,15 +38,23 @@ async function get_video_list() {
                 return normalized_title.includes(normalized_query);
             });
 
-            // 비디오 정보와 채널 정보를 담은 새 배열 생성
-            // 채널 정보를 가져오는 비동기 함수의 모든 결과가 나왔을 때 제대로 된 데이터 출력
-            const total_info = await Promise.all(
-                data.map(async video => {
-                    // 채널 정보 가져오기
-                    let channel_info = await get_channel_list(video.channel_id);
-                    return {...video, ...channel_info};
+            // 각 비디오의 채널 정보 가져오기
+            // Set 활용: 중복되는 채널 정보 제거
+            const channel_ids = new Set(data.map(video => video.channel_id));
+            // 채널 id로 채널 정보 가져오기
+            const channel_info = await Promise.all(
+                Array.from(channel_ids).map(async id => {
+                    return get_channel_list(id);
                 })
             );
+
+            // 비디오 정보와 채널 정보를 담은 새 배열 생성
+            // 채널 정보를 가져오는 비동기 함수의 모든 결과가 나왔을 때 제대로 된 데이터 출력
+            const total_info = data.map(video => {
+                // 비디오 정보의 채널 id와 채널 정보의 채널 id가 같은 채널 정보 찾기
+                const channel_data = channel_info.find(channel => channel.id == video.channel_id);
+                return {...video, ...channel_data};
+            });
 
             // 표시할 결과 생성
             insert_search_results(query, total_info);
@@ -74,8 +82,3 @@ async function get_channel_list(channel_id) {
 
 // 웹 페이지 로드 시 이벤트 처리
 window.addEventListener('DOMContentLoaded', get_video_list);
-
-window.addEventListener('load', function() {
-    const wait_div = document.querySelector(".search-load-wait");
-    wait_div.style.display = "none";
-});
