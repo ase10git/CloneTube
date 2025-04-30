@@ -73,7 +73,9 @@ function video_list(data){
                     clone.querySelector(".uploaded-time").textContent = timeCalculator(el.created_dt);
                     clone.querySelector(".menu-box-img").src = public_url + 'three-dots-vertical.svg';
                     clone.querySelector(".video-menu").innerHTML = menu.outerHTML;
-                    clone.querySelector(".video-link").href = `http://127.0.0.1:5500/html/video.html?video_id=${el.id}`;
+                    clone.querySelectorAll(".video-link").forEach(link => {
+                        link.href = `http://127.0.0.1:5500/html/video.html?video_id=${el.id}`;
+                    });
 
                     recommend_box.forEach(box => {
                         box.appendChild(clone.cloneNode(true));

@@ -56,7 +56,6 @@ body {
 
 .video-title-box {
     width: 100%;
-    max-height: 52px;
 }
 
 /* 비디오 제목 */
@@ -69,10 +68,8 @@ body {
     font-weight: 400;
     font-size: 18px;
     line-height: 1.4;
-    height: 27px;
     letter-spacing: 1%;
     vertical-align: middle;
-    font-variant-numeric-fraction: stacked-fractions;
 }
 /* 비디오 정보, 버튼 메뉴 구조 */
 .top-row {
@@ -308,20 +305,22 @@ body {
 #comment-top {
     display: flex;
     justify-content: left;
+    margin-bottom: 24px;
 }
 /* 댓글 수 구조*/
 #comments-option {
-    font-weight: 400;
-    font-size: 16px;
+    font-weight: 700;
+    font-size: 19px;
     line-height: 22px;
     letter-spacing: 0%;
-    width: 142px;
+    width: 126px;
     height: 24px;
 }
 /* 댓글 정렬 */
 .sort-menu {
     display: flex;
     flex-direction: column;
+    position: relative;
 }
 
 .sort-menu button {
@@ -339,20 +338,36 @@ body {
 /* 이미지 색상 반전 */
 .comment-sort-img-box img {
     filter: invert();
-    width: 32px;
+    width: 24px;
     height: 24px;
     object-fit: cover;
+    margin-right: 8px;
 }
 /* 드롭다운 메뉴 */
 .sort-options {
     display: none;
-    /* display: flex;
     flex-direction: column;
-    z-index: 1; */
-    width: 128.234px;
-    height: 96px;
+    z-index: 1;
+    position: absolute;
+    top: 100%;
+    width: 101px;
+    background-color: var(--bg-bar);
     padding: 8px 0 8px 0;
+    border-radius: 5px;
 }
+
+.sort-options button {
+    height: 48px;
+    padding: 0 16px 0 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sort-options button:hover {
+    background-color: var(--bt-border-d);
+}
+
 /* 댓글 쓰기창 */
 #comments-input-box {
     display: flex;

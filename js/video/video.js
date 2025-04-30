@@ -60,7 +60,7 @@ function fetchChannelinfo() {
 }
 
 // 비디오 메뉴버튼 더보기 클릭 시 나타나게
-const dotsbutton = document.getElementById("menu-show-more")
+const dotsbutton = document.getElementById("menu-show-more");
 
 dotsbutton.addEventListener('click', function click_report(e) {
     const dropbox = document.getElementById("video-menu-dropbox")
@@ -72,8 +72,20 @@ dotsbutton.addEventListener('click', function click_report(e) {
     };
 });
 
+// 댓글 정렬기준 클릭 시 나타나게
+const sortbutton = document.querySelector(".dropdown");
+
+sortbutton.addEventListener('click', function click_report(e) {
+    const dropbox = document.querySelector(".sort-options")
+    
+    if (dropbox.style.display === "flex") {
+        dropbox.style.display = "none";
+    } else {
+        dropbox.style.display = "flex";
+    };
+});
+
 // 댓글 신고 버튼 나타나게
-document.addEventListener("DOMContentLoaded", function () {
 const buttons = document.querySelectorAll(".comment-icon-box");
 buttons.forEach(button => {
     button.addEventListener("click", function (e) {
@@ -101,4 +113,3 @@ buttons.forEach(button => {
         }
     });
 });
-})
