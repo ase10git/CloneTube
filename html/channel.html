@@ -13,35 +13,35 @@
     <header id="top-header"></header>
     <!-- 사이드바 자리 -->
     <!-- <nav id="menu-nav"></nav> -->
-    <div id = "channel-container">
-        <main id="channel-main">
-            <!-- 상단 -->
-            <header id="channel-header">
-                <img src="../images/Channel-Cover.svg" alt="채널페이지 이미지" id="channel-cover-img">
-                <!--채널 프로필-->
-                <div id="channel-profile">
-                    <div id="channel-id">
-                        <div id="channel-profile-box">
-                            <img src="../images/marcus.svg" alt="프로필 이미지" id="channel-profile-img">
-                        </div>
-                        <div id="channel-name-box"> <!--채널 이름과 구독자 수를 받는 방식으로 나중에 바꿔야 함-->
-                            <div id="channel-name">Marcus Levin</div>
-                            <div id="subscribers">1.2M subscribers</div>
-                        </div>
+    <main id="channel-main">
+        <!-- 상단 -->
+        <header id="channel-header">
+            <img src="../images/Channel-Cover.svg" alt="채널페이지 이미지" id="channel-cover-img">
+            <!--채널 프로필-->
+            <div id="channel-profile">
+                <div id="channel-id">
+                    <div id="channel-profile-box">
+                        <img src="../images/marcus.svg" alt="프로필 이미지" id="channel-profile-img">
                     </div>
-                    <button id="button-subscribe">SUBSCRIBE</button>
+                    <div id="channel-name-box"> <!--채널 이름과 구독자 수를 받는 방식으로 나중에 바꿔야 함-->
+                        <div id="channel-name">Marcus Levin</div>
+                        <div id="subscribers">1.2M subscribers</div>
+                    </div>
                 </div>
+                <button id="button-subscribe">SUBSCRIBE</button>
+            </div>
 
-                <!--채널 네비게이션
-                insertChannelScrollMenu.js로 메뉴 추가
-                -->
-                <nav id="channel-nav"></nav>
+            <!--채널 네비게이션
+            insertChannelScrollMenu.js로 메뉴 추가
+            -->
+            <nav id="channel-nav"></nav>
 
-            </header>
-            <!-- 하단 -->
-            <section id="channel-section">
-                <!-- 메인영상 -->
-                <div id="main-video">
+        </header>
+        <!-- 하단 -->
+        <section id="channel-section">
+            <!-- 메인영상 -->
+            <div id="main-video">
+                <div class="main-video-box">
                     <video autoplay muted controls poster="#" class="video-player">
                         <source src="#" type="video/mp4">
                     </video>
@@ -59,51 +59,51 @@
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <!-- 메인 콘텐츠 영역 -->
-                <div class="main-content">
-                    <!-- 첫 번째 섹션 -->
-                    <div class="playlist-section">
-                        <div class="video-scroll-wrapper">
-                            <div class="section-header">
-                                <div class="section-title">Search On ‘21</div>
-                                <button class="play-all">
-                                <img class="play-icon" src="../images/Group.svg" alt="플레이아이콘">
-                                Play all
-                                </button>
-                            </div>
-                            <div class="video-playlist">
-                                <button class="video-button-left">&lt;</button>
-                                <div class="video-row" id="section1"></div>
-                                <button class="video-button-right">&gt;</button>
-                            </div>
+            <!-- 메인 콘텐츠 영역 -->
+            <div class="main-content">
+                <!-- 첫 번째 섹션 -->
+                <div class="playlist-section">
+                    <div class="video-scroll-wrapper">
+                        <div class="section-header">
+                            <div class="section-title">Search On ‘21</div>
+                            <button class="play-all">
+                            <img class="play-icon" src="../images/Group.svg" alt="플레이아이콘">
+                            Play all
+                            </button>
                         </div>
-                    </div>
-
-                    <!-- 구분선 -->
-                    <div class="divider"></div>
-
-                    <!-- 두 번째 섹션 -->
-                    <div class="playlist-section">
-                        <div class="video-scroll-wrapper">
-                            <div class="section-header">
-                                <div class="section-title">Search On ‘22</div>
-                                <button class="play-all">
-                                <img class="play-icon" src="../images/Group.svg" alt="플레이아이콘">
-                                Play all
-                                </button>
-                            </div>
-                            <div class="video-playlist">
-                                <button class="video-button-left">&lt;</button>
-                                <div class="video-row" id="section2"></div>
-                                <button class="video-button-right">&gt;</button>
-                            </div>
+                        <div class="video-playlist">
+                            <button class="video-button-left">&lt;</button>
+                            <div class="video-row" id="section1"></div>
+                            <button class="video-button-right">&gt;</button>
                         </div>
                     </div>
                 </div>
-            </section>
-        </main>
-    </div>
+
+                <!-- 구분선 -->
+                <div class="divider"></div>
+
+                <!-- 두 번째 섹션 -->
+                <div class="playlist-section">
+                    <div class="video-scroll-wrapper">
+                        <div class="section-header">
+                            <div class="section-title">Search On ‘22</div>
+                            <button class="play-all">
+                            <img class="play-icon" src="../images/Group.svg" alt="플레이아이콘">
+                            Play all
+                            </button>
+                        </div>
+                        <div class="video-playlist">
+                            <button class="video-button-left">&lt;</button>
+                            <div class="video-row" id="section2"></div>
+                            <button class="video-button-right">&gt;</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="../js/includeHtml.js"></script>

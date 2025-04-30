@@ -30,7 +30,7 @@ function no_result_html(query) {
     `
     <div class="no-search-result">
         <div class="no-search-result-img-box">
-            <img src="../../images/no-search-result.svg" alt="no-search-result">
+            <img src="../../images/search-no-result.svg" alt="no-search-result">
         </div>
         <div>
             <span class="no-result-message">${query} 검색결과가 없습니다.</span>

@@ -3,6 +3,9 @@ body {
     color: var(--font);
 }
 
+/* 비디오 페이지에선 미니 사이드바 숨김 */
+#video-body #mini-nav{display: none;}
+
 /* video.css */
 #video-body .side-bar {
     scrollbar-color: var(--bg-highlight) transparent;

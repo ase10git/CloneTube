@@ -1,5 +1,5 @@
 /* 메인 영역 */
-main {
+#home-body main {
     margin-top: 56px; 
     background-color: var(--bg); 
     position: relative; 
@@ -14,7 +14,7 @@ main {
 
 /* 사이드바 닫혔을 때 */
 body.sidebar-close #contents, body.sidebar-close #btn-header{
-    margin-left: 0;
+    margin-left: var(--mini-nav-width);
 }
 
 /* 상단 버튼 영역 */
