@@ -1,3 +1,5 @@
+import timeCalculator from '../util/timeCalculator.js';
+
 let subscriberCount = 0;
 let isSubscribed = false;
 
@@ -47,29 +49,30 @@ function fetchChannelInfo() {
         });
 }
 
-// 업로드 시간 계산
-function timeCalculator(date) {
-    const now = new Date();
-    const past = new Date(date);
-    const diffInSeconds = Math.floor((now - past) / 1000);
+// 메인 비디오
+function renderMainVideo(videoId) {
+    fetch(`http://techfree-oreumi-api.kro.kr:5000/video/getVideoInfo?video_id=${videoId}`)
+        .then(response => response.json())
+        .then(video => {
+            // 영상 소스 삽입
+            const source = document.querySelector('#main-video video source');
+            source.src = `https://storage.googleapis.com/youtube-clone-video/${video.id}.mp4`;
 
-    const secondsInMinute = 60;
-    const secondsInHour = 3600;
-    const secondsInDay = 86400;
+            // video 태그 재로드 (src 변경 시 필요)
+            const videoElement = document.querySelector('#main-video video');
+            videoElement.load();
 
-    if (diffInSeconds < secondsInMinute) {
-        return `${diffInSeconds}초 전`;
-    } else if (diffInSeconds < secondsInHour) {
-        const minutes = Math.floor(diffInSeconds / secondsInMinute);
-        return `${minutes}분 전`;
-    } else if (diffInSeconds < secondsInDay) {
-        const hours = Math.floor(diffInSeconds / secondsInHour);
-        return `${hours}시간 전`;
-    } else {
-        const days = Math.floor(diffInSeconds / secondsInDay);
-        return `${days}일 전`;
-    }
+            // 텍스트 정보 삽입
+            document.getElementById('video-title').textContent = video.title;
+            document.getElementById('spectators').textContent = `${video.views} views`;
+            document.getElementById('uploaded-time').textContent = formatUploadDate(video.created_dt);
+            document.getElementById('video-description').textContent = video.description;
+        })
+        .catch(error => {
+            console.error('메인 비디오 불러오기 실패:', error);
+        });
 }
+renderMainVideo(1);
 
 // 영상 목록
 function fetchVideosAndRender() {
