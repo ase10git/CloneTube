@@ -94,6 +94,8 @@ function timeCalculator(date) {
     const secondsInMinute = 60;
     const secondsInHour = 3600;
     const secondsInDay = 86400;
+    const secondsInMonth = 2592000;
+    const secondsInYear = 31536000;
 
     if (diffInSeconds < secondsInMinute) { // 차이가 초 단위일 때
         return `${diffInSeconds}초 전`;
@@ -103,9 +105,15 @@ function timeCalculator(date) {
     } else if (diffInSeconds < secondsInDay) { // 차이가 시간 단위일 때
         const hours = Math.floor(diffInSeconds / secondsInHour);
         return `${hours}시간 전`;
-    } else { // 차이가 일 단위일 때
+    } else if (diffInSeconds < secondsInMonth) { // 차이가 일 단위일 때
         const days = Math.floor(diffInSeconds / secondsInDay);
         return `${days}일 전`;
+    } else if (diffInSeconds < secondsInYear) {
+        const days = Math.floor(diffInSeconds / secondsInMonth);
+        return `${days}달 전`
+    } else {
+        const days = Math.floor(diffInSeconds / secondsInYear);
+        return `${days}년 전`
     }
 }
 
@@ -119,10 +127,14 @@ function viewsUnit(views) {
     }else if (views / 100000 >= 1) {
         return `${(views / 10000).toFixed(0)}만`
     } else if (views / 10000 >= 1) {
-        return `${(views / 10000).toFixed(1)}만`
+        const val = (views / 10000).toFixed(1);
+        return val.endsWith('.0') ? `${parseInt(val)}만` : `${val}만`;
     } else if (views / 1000 >= 1) {
-        return `${(views / 1000).toFixed(1)}천`
+        const val = (views / 1000).toFixed(1);
+        return val.endsWith('.0') ? `${parseInt(val)}천` : `${val}천`;
     } else {
         return `${views}`;
     }
 }
+
+export {timeCalculator, viewsUnit};

@@ -16,7 +16,7 @@
 //         }
 //     });
 // });
-// import timeCalculator from "../../components/videoComponents/js/insertRelatedVideoList.js";
+import {timeCalculator, viewsUnit} from "../../components/videoComponents/js/insertRelatedVideoList.js";
 
 document.addEventListener("DOMContentLoaded", function () {
     fetchVideoinfo();
@@ -76,61 +76,27 @@ function fetchChannelinfo() {
         });
 }
 
-function timeCalculator(date) {
-    const now = new Date(); // 현재 날짜
-    const past = new Date(date); // 대상 날짜
-    // 두 시간 차이를 계산(초 단위)
-    const diffInSeconds = Math.floor((now - past) / 1000);
-
-    const secondsInMinute = 60;
-    const secondsInHour = 3600;
-    const secondsInDay = 86400;
-
-    if (diffInSeconds < secondsInMinute) { // 차이가 초 단위일 때
-        return `${diffInSeconds}초 전`;
-    } else if (diffInSeconds < secondsInHour) { // 차이가 분 단위일 때
-        const minutes = Math.floor(diffInSeconds / secondsInMinute);
-        return `${minutes}분 전`;
-    } else if (diffInSeconds < secondsInDay) { // 차이가 시간 단위일 때
-        const hours = Math.floor(diffInSeconds / secondsInHour);
-        return `${hours}시간 전`;
-    } else { // 차이가 일 단위일 때
-        const days = Math.floor(diffInSeconds / secondsInDay);
-        return `${days}일 전`;
-    }
-}
-
-function viewsUnit(views) {
-    if (views / 100000000 >= 1) {
-        return `${(views / 100000000).toFixed(0)}억 ${((views % 100000000) / 10000).toFixed(0)}만`
-    } else if (views / 10000000 >= 1) {
-        return `${(views / 10000000).toFixed(0)},${((views % 10000000) / 10000).toFixed(0)}만`
-    } else if (views / 1000000 >= 1) {
-        return `${(views / 10000).toFixed(0)}만`
-    }else if (views / 100000 >= 1) {
-        return `${(views / 10000).toFixed(0)}만`
-    } else if (views / 10000 >= 1) {
-        return `${(views / 10000).toFixed(1)}만`
-    } else if (views / 1000 >= 1) {
-        return `${(views / 1000).toFixed(1)}천`
-    } else {
-        return `${views}`;
-    }
-}
-
+//구독자 수 단위 계산
 function subscribersUnit(views) {
+
     if (views / 100000000 >= 1) {
         return `${(views / 100000000).toFixed(0)}억 ${((views % 100000000) / 10000).toFixed(0)}만`
     } else if (views / 10000000 >= 1) {
         return `${(views / 10000000).toFixed(0)},${((views % 10000000) / 10000).toFixed(0)}만`
-    } else if (views / 1000000 >= 1) {
-        return `${(views / 10000).toFixed(2)}만`
-    }else if (views / 100000 >= 1) {
-        return `${(views / 10000).toFixed(2)}만`
+    } else if (views / 100000 >= 1) {
+        const val = (views / 10000).toFixed(1);
+        if (val.endsWith('.0')) return `${parseInt(val)}만`;
+        return `${val}만`;
     } else if (views / 10000 >= 1) {
-        return `${(views / 10000).toFixed(2)}만`
+        const val = (views / 10000).toFixed(2);
+        if (val.endsWith('.00')) return `${parseInt(val)}만`;
+        if (val.endsWith('0')) return `${parseFloat(val).toFixed(1)}만`;
+        return `${val}만`;
     } else if (views / 1000 >= 1) {
-        return `${(views / 1000).toFixed(2)}천`
+        const val = (views / 1000).toFixed(2);
+        if (val.endsWith('.00')) return `${parseInt(val)}천`;
+        if (val.endsWith('0')) return `${parseFloat(val).toFixed(1)}천`;
+        return `${val}천`;
     } else {
         return `${views}`;
     }

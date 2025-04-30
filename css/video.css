@@ -26,6 +26,7 @@ body {
 
 #video-player {
     width: 100%;
+    border-radius: 7px;
 }
 
 .primary-bottom {
@@ -33,14 +34,16 @@ body {
     flex-direction: column;
 }
 
-.video-title-box {
-
+#video-meta {
+    margin: 12px 0 24px 0;
 }
+
 /* 비디오 제목 */
 #video-title {
     font-weight: 400;
     font-size: 18px;
     line-height: 100%;
+    height: 27px;
     letter-spacing: 1%;
     vertical-align: middle;
     font-variant-numeric-fraction: stacked-fractions;
@@ -64,6 +67,7 @@ body {
 #video-menu {
     display: flex;
     gap: 8px;
+    position: relative;
 }
 /* 비디오 메뉴 버튼*/
 #video-menu button{
@@ -74,7 +78,21 @@ body {
     text-transform: uppercase;
     color: var(--font);
     border : none;
-    background-color: transparent;
+    background-color: var(--bg-highlight);
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    height: 36px;
+    border-radius: 20px;
+    padding: 0 16px 0 16px;
+}
+
+#video-menu-dropbox {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    display: none;
+    z-index: 1;
 }
 
 .icon-img-dots {
@@ -259,7 +277,6 @@ body {
 }
 
 #comment-form input::placeholder {
-    font-family: Roboto;
     font-weight: 400;
     font-size: 14px;
     line-height: 20px;
@@ -448,6 +465,7 @@ body {
 .related-video-content {
     display: flex;
     margin-top: 8px;
+    height: 94px;
 }
 
 .first {
@@ -462,10 +480,15 @@ body {
 }
 
 #secondary {
+    width: 402px;
     min-width: 300px;
     padding: 24px 24px 0 0;
 }
-
+@media (min-width: 1029px) {
+    #secondary {
+        min-width: 402px;
+    }
+}
 
 @media (max-width: 1015px) {
     #secondary {
@@ -507,15 +530,24 @@ body {
     background-color: transparent;
 }
 
-.nav-btn-wrap button:hover{
-    background-color: var(--bt-border-d);
+/* 버튼 뒤에 흐릿한 배경 추가 */
+.nav-btn-wrap {
+    width: 48px;
+    height: 51px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+} 
+
+.left-btn-wrap {
+    background: linear-gradient(to right, var(--ch-profile), transparent);
+}
+.right-btn-wrap {
+    background: linear-gradient(to left, var(--ch-profile), transparent);
 }
 
-/* 버튼 뒤에 흐릿한 배경 추가 */
-.nav-btn-wrap button::after {
-    position: absolute;
-    content: '';
-    background-color: var(--bg-highlight);
+.nav-btn-wrap button:hover{
+    background-color: var(--bt-border-d);
 }
 
 /* 버튼 안 아이콘 */
@@ -532,8 +564,12 @@ body {
     align-items: center;
 }
 
-.scroll-menu-box{overflow-x:scroll;}
-.scroll-menu-box::-webkit-scrollbar{display: none;}
+.scroll-menu-box {
+    overflow-x: scroll;
+}
+.scroll-menu-box::-webkit-scrollbar {
+    display: none;
+}
 
 .menu-list {
     width: 100%;
@@ -541,7 +577,6 @@ body {
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    overflow: hidden;
     scroll-behavior: smooth; 
 }
 
@@ -590,6 +625,7 @@ body {
 .video-thumbnail-img {
     width: 100%;
     object-fit: cover;
+    border-radius: 7px;
 }
 
 .hover-overlay-wrap {
@@ -613,6 +649,7 @@ body {
     align-items: center;
     justify-content: center;
     border-radius: 3px;
+    opacity: 0.8;
 }
 
 .hover-overlay-box img {
@@ -669,11 +706,12 @@ body {
 
 .channel-info-box {
     display: flex;
+    height: 18px;
     gap: 4px;
-    font-family: Roboto;
     font-weight: 400;
     font-size: 12px;
     color: var(--font-gr);
+    overflow: hidden;
 }
 
 .channel-badge-box img {
@@ -684,10 +722,11 @@ body {
 }
 
 .video-info {
-    font-family: Roboto;
+    height: 18px;
     font-weight: 400;
     font-size: 12px;
     color: var(--font-gr);
+    overflow: hidden;
 }
 
 /* 추천 동영상 세개 점 목록 */
