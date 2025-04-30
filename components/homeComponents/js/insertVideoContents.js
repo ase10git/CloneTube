@@ -1,6 +1,6 @@
 // ----- Home 페이지에 Video 목록 추가 -----
 import build_video_menu from "../../videoComponents/js/insertVideoMenu.js";
-import timeCalculator from "./insertVideoTimeCalculator.js";
+import timeCalculator from "../../../js/util/timeCalculator.js";
 import formatViews from "./insertVideoFormatViews.js"
 
 // 이미지 경로
