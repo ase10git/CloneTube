@@ -48,9 +48,11 @@ fetch("../../components/scrollMenu/html/scrollMenuTemplate.html")
         });
 
         target.forEach(el=>{
-            el.prepend(scroll_wrap.cloneNode(true));
+            const menu_node = scroll_wrap.cloneNode(true);
+            // 스크롤 이벤트 추가
+            addScrollEvent();
+            el.prepend(menu_node);
         });
+
         
-        // 스크롤 이벤트 추가
-        addScrollEvent();
     })

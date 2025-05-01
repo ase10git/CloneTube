@@ -609,7 +609,6 @@ body {
 }
 
 /* 상단 추천 스크롤 메뉴 */
-
 .scroll-menu-wrap {
     position: relative;
 }
@@ -677,7 +676,7 @@ body {
 }
 
 .scroll-menu-box {
-    overflow-x: scroll;
+    overflow-x: auto;
 }
 .scroll-menu-box::-webkit-scrollbar {
     display: none;

@@ -1,7 +1,7 @@
 // ----- 스크롤바 이벤트 추가 -------
 function addScrollEvent() {
     // 메뉴바 이동
-    const nav_container = document.querySelector(".scroll-menu-box");
+    const nav_container = document.querySelector(".menu-list");
     const left_btn_wrap = document.querySelector(".left-btn-wrap");
     const right_btn_wrap = document.querySelector(".right-btn-wrap");
     const left_btn = document.querySelector(".nav-left-btn");
