@@ -375,9 +375,23 @@ body {
     width: 100%;
 }
 
+.profile-box {
+    display: flex;
+    gap: 16px;
+}
+
 .profile-box img {
     width: 40px;
     height: 40px;
+}
+
+#my-name {
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 20px;
+    letter-spacing: 0%;
+    vertical-align: top;
+    display: none;
 }
 
 #comment-form {
@@ -400,14 +414,20 @@ body {
     letter-spacing: 0%;
 }
 
+#comment-form input {
+    background-color: transparent;
+    color: var(--font);
+}
+
 #comment-btn-wrap button {
-    display: none;
+    /* display: none; */
     background-color: transparent;
     border-radius: 35px;
     border: none;
     color: var(--font);
     height: 36px;
     padding: 10px;
+    cursor: pointer;
 }
 
 /* 댓글 리스트 */
