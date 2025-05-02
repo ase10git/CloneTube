@@ -33,11 +33,6 @@ body {
     min-width: 437px;
 }
 
-#chnnel-main {
-    display : flex;
-    flex-direction: column;
-}
-
 #video-player {
     width: 100%;
     border-radius: 7px;
@@ -688,6 +683,7 @@ body {
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    overflow: hidden;
     scroll-behavior: smooth; 
 }
 

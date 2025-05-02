@@ -57,5 +57,5 @@ fetch("../../components/scrollMenu/html/scrollMenuTemplate.html")
         target.appendChild(scroll_wrap);
 
         // 스크롤 이벤트 추가
-        addScrollEvent();
+        addScrollEvent(scroll_wrap);
     })

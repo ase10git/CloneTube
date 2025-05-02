@@ -65,10 +65,16 @@ fetch("../../components/scrollMenu/html/scrollMenuTemplate.html")
         // 스크롤 메뉴 바에 검색 폼 추가
         scroll_wrap.querySelector(".scroll-menu-box").appendChild(search_form);
 
+        // 검색 폼을 ul에 등록
+        const search_form_li = document.createElement("li");
+        search_form_li.classList.add("form_li");
+        search_form_li.appendChild(search_form);
+        menu_list.appendChild(search_form_li);
+
         target.appendChild(scroll_wrap);
 
         // 스크롤 이벤트 추가
-        addScrollEvent();
+        addScrollEvent(scroll_wrap);
     })
 
 

@@ -1,11 +1,14 @@
 // ----- 스크롤바 이벤트 추가 -------
-function addScrollEvent() {
+function addScrollEvent(menu_container) {
+    // 매개변수 : 스크롤 메뉴 랩
+    // const menu_container = document.querySelector(".scroll-menu-wrap");
+
     // 메뉴바 이동
-    const nav_container = document.querySelector(".menu-list");
-    const left_btn_wrap = document.querySelector(".left-btn-wrap");
-    const right_btn_wrap = document.querySelector(".right-btn-wrap");
-    const left_btn = document.querySelector(".nav-left-btn");
-    const right_btn = document.querySelector(".nav-right-btn");
+    const nav_container = menu_container.querySelector(".menu-list");
+    const left_btn_wrap = menu_container.querySelector(".left-btn-wrap");
+    const right_btn_wrap = menu_container.querySelector(".right-btn-wrap");
+    const left_btn = menu_container.querySelector(".nav-left-btn");
+    const right_btn = menu_container.querySelector(".nav-right-btn");
 
     // 버튼 표시 설정
     function update_btn_visibility() {
@@ -13,10 +16,12 @@ function addScrollEvent() {
         // nav_container.scrollWidth : 스크롤 가능한 전체 길이
         // nav_container.clientWidth : 실제 보이는 스크롤 길이
         const scroll_left = nav_container.scrollLeft;
-        const max_scroll_left = nav_container.scrollWidth - nav_container.clientWidth;
-
+        const scroll_width = nav_container.scrollWidth;
+        const client_width = nav_container.clientWidth;
+        const max_scroll_left = scroll_width - client_width;
+        
         // 화면이 클 때는 버튼이 안보이게 설정
-        if (nav_container.scrollWidth <= nav_container.clientWidth) {
+        if (scroll_width <= client_width) {
             left_btn_wrap.style.display = "none";
             right_btn_wrap.style.display = "none";
             return;
@@ -29,11 +34,16 @@ function addScrollEvent() {
         right_btn_wrap.style.display = scroll_left >= max_scroll_left ? "none" : "flex";
     }
 
+    // 스크롤 여부
     let is_scrolling = false;
+    // 스크롤 방향
     let scroll_direction = 0;
+    // 마지막 위치
     let last_timestamp = null;
+    // 스크롤 속도
     const scroll_speed = 50; // px per ms
 
+    // 스크롤 이동 간격 지정
     function step(timestamp) {
         if (!is_scrolling) return;
         if (last_timestamp !== null) {
