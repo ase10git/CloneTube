@@ -1,4 +1,5 @@
 import timeCalculator from '../util/timeCalculator.js';
+import insert_video_scroll from '../../components/channelComponents/insertVideoScroll.js';
 
 let subscriberCount = 0;
 let isSubscribed = false;
@@ -127,6 +128,12 @@ function renderVideos(sectionId, videoList) {
 
         container.appendChild(videoCard);
     });
+
+    // 비디오 목록 스크롤 이벤트 추가
+    const video_playlist = document.querySelectorAll(".video-playlist");
+    video_playlist.forEach(playlist => {
+        insert_video_scroll(playlist);
+    })
 }
 
 // 조회수

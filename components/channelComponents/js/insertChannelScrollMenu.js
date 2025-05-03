@@ -58,8 +58,10 @@ fetch("../../components/scrollMenu/html/scrollMenuTemplate.html")
                 item_btn.forEach(item => {item.classList.remove("select")});
                 // 클래스 추가
                 el.classList.add("select");
-            });});
+            });
+        });
 
+        // 검색 폼 생성
         const search_form = build_search_form();
 
         // 스크롤 메뉴 바에 검색 폼 추가
