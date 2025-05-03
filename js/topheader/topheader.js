@@ -16,10 +16,13 @@ function form_event() {
     search_input.addEventListener("input", function () {
         if (search_input.value) {
             reset_button.classList.add("visible");
-        } else {
-            reset_button.classList.remove("visible");
         }
     });
+
+    // reset button을 누른 후에 다시 안보이게 설정
+    reset_button.addEventListener("click", function () {
+        reset_button.classList.remove("visible");
+    })
 }
 
 // side nav의 버튼 동작을 제어

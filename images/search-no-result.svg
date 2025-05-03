@@ -1,0 +1,17 @@
+<svg width="168" height="130" viewBox="0 0 168 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="0.5" y="0.5" width="165" height="120" rx="4.5" fill="#D9D9D9" stroke="black"/>
+<path d="M5 0.5H161C163.485 0.500001 165.5 2.51472 165.5 5V16.5H0.5V5C0.5 2.51472 2.51472 0.5 5 0.5Z" fill="#D9D9D9" stroke="black"/>
+<rect x="9.5" y="27.5" width="59" height="35" rx="4.5" fill="#D9D9D9" stroke="black"/>
+<rect x="42.5" y="4.5" width="80" height="8" rx="4" fill="#D9D9D9" stroke="black"/>
+<rect x="9.5" y="73.5" width="59" height="35" rx="4.5" fill="#D9D9D9" stroke="black"/>
+<path d="M78 32H148" stroke="black" stroke-linecap="round"/>
+<path d="M78 60H148" stroke="black" stroke-linecap="round"/>
+<path d="M78 51H148" stroke="black" stroke-linecap="round"/>
+<path d="M78 42H148" stroke="black" stroke-linecap="round"/>
+<path d="M78 78H148" stroke="black" stroke-linecap="round"/>
+<path d="M78 106H148" stroke="black" stroke-linecap="round"/>
+<path d="M78 97H148" stroke="black" stroke-linecap="round"/>
+<path d="M78 88H148" stroke="black" stroke-linecap="round"/>
+<circle cx="97" cy="65" r="33" fill="#D9D9D9" fill-opacity="0.62" stroke="black" stroke-width="10"/>
+<line x1="119.707" y1="85.1737" x2="165.707" y2="128.174" stroke="black" stroke-width="5"/>
+</svg>

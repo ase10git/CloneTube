@@ -47,10 +47,12 @@ fetch("../../components/scrollMenu/html/scrollMenuTemplate.html")
             menu_list.appendChild(item);
         });
 
+        // primary와 secondary div에 스크롤 메뉴 추가
         target.forEach(el=>{
-            el.prepend(scroll_wrap.cloneNode(true));
+            // 스크롤 메뉴 클론
+            const menu_node = scroll_wrap.cloneNode(true);
+            // 스크롤 이벤트 추가
+            addScrollEvent(menu_node);
+            el.prepend(menu_node);
         });
-        
-        // 스크롤 이벤트 추가
-        addScrollEvent();
     })

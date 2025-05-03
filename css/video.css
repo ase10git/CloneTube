@@ -3,6 +3,9 @@ body {
     color: var(--font);
 }
 
+/* 비디오 페이지에선 미니 사이드바 숨김 */
+#video-body #mini-nav{display: none;}
+
 /* video.css */
 #video-body .side-bar {
     scrollbar-color: var(--bg-highlight) transparent;
@@ -28,11 +31,6 @@ body {
     align-items: center;
     max-width: 1296px;
     min-width: 437px;
-}
-
-#chnnel-main {
-    display : flex;
-    flex-direction: column;
 }
 
 #video-player {
@@ -641,7 +639,6 @@ body {
 }
 
 /* 상단 추천 스크롤 메뉴 */
-
 .scroll-menu-wrap {
     position: relative;
 }
@@ -709,7 +706,7 @@ body {
 }
 
 .scroll-menu-box {
-    overflow-x: scroll;
+    overflow-x: auto;
 }
 .scroll-menu-box::-webkit-scrollbar {
     display: none;
@@ -721,6 +718,7 @@ body {
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    overflow: hidden;
     scroll-behavior: smooth; 
 }
 

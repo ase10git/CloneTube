@@ -29,32 +29,37 @@ async function get_video_list() {
         .then(async data => {
             // 검색 키워드 가공
             const normalized_query = normalize_for_search(query);
-            
-            // 채널 목록 중에서 검색어에 맞는 비디오 목록만 추출
-            data = data.filter(video => {
-                // 비디오 제목의 공백 무시, 소문자 치환, 부분 문자열 검사 준비
-                const normalized_title = normalize_for_search(video.title);
-                // 비디오 제목에 검색어를 포함하는 경우만 추출
-                return normalized_title.includes(normalized_query);
-            });
 
-            // 각 비디오의 채널 정보 가져오기
-            // Set 활용: 중복되는 채널 정보 제거
-            const channel_ids = new Set(data.map(video => video.channel_id));
-            // 채널 id로 채널 정보 가져오기
-            const channel_info = await Promise.all(
-                Array.from(channel_ids).map(async id => {
-                    return get_channel_list(id);
-                })
-            );
+            // 비디오와 채널 정보를 담은 배열
+            let total_info = [];
 
-            // 비디오 정보와 채널 정보를 담은 새 배열 생성
-            // 채널 정보를 가져오는 비동기 함수의 모든 결과가 나왔을 때 제대로 된 데이터 출력
-            const total_info = data.map(video => {
-                // 비디오 정보의 채널 id와 채널 정보의 채널 id가 같은 채널 정보 찾기
-                const channel_data = channel_info.find(channel => channel.id == video.channel_id);
-                return {...video, ...channel_data};
-            });
+            if (query) {
+                // 채널 목록 중에서 검색어에 맞는 비디오 목록만 추출
+                data = data.filter(video => {
+                    // 비디오 제목의 공백 무시, 소문자 치환, 부분 문자열 검사 준비
+                    const normalized_title = normalize_for_search(video.title);
+                    // 비디오 제목에 검색어를 포함하는 경우만 추출
+                    return normalized_title.includes(normalized_query);
+                });
+
+                // 각 비디오의 채널 정보 가져오기
+                // Set 활용: 중복되는 채널 정보 제거
+                const channel_ids = new Set(data.map(video => video.channel_id));
+                // 채널 id로 채널 정보 가져오기
+                const channel_info = await Promise.all(
+                    Array.from(channel_ids).map(async id => {
+                        return get_channel_list(id);
+                    })
+                );
+
+                // 비디오 정보와 채널 정보를 담은 새 배열 생성
+                // 채널 정보를 가져오는 비동기 함수의 모든 결과가 나왔을 때 제대로 된 데이터 출력
+                total_info = data.map(video => {
+                    // 비디오 정보의 채널 id와 채널 정보의 채널 id가 같은 채널 정보 찾기
+                    const channel_data = channel_info.find(channel => channel.id == video.channel_id);
+                    return {...video, ...channel_data};
+                });
+            }
 
             // 표시할 결과 생성
             insert_search_results(query, total_info);

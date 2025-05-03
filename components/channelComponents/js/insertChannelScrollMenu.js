@@ -58,20 +58,29 @@ fetch("../../components/scrollMenu/html/scrollMenuTemplate.html")
                 item_btn.forEach(item => {item.classList.remove("select")});
                 // 클래스 추가
                 el.classList.add("select");
-            });});
+            });
+        });
 
+        // 검색 폼 생성
         const search_form = build_search_form();
 
         // 스크롤 메뉴 바에 검색 폼 추가
         scroll_wrap.querySelector(".scroll-menu-box").appendChild(search_form);
 
+        // 검색 폼을 ul에 등록
+        const search_form_li = document.createElement("li");
+        search_form_li.classList.add("form_li");
+        search_form_li.appendChild(search_form);
+        menu_list.appendChild(search_form_li);
+
         target.appendChild(scroll_wrap);
 
         // 스크롤 이벤트 추가
-        addScrollEvent();
+        addScrollEvent(scroll_wrap);
     })
 
 
+// 검색 폼 생성 및 이벤트 리스너 추가
 function build_search_form() {
     // 검색 폼
     const form_tag = 
@@ -81,7 +90,10 @@ function build_search_form() {
     </div>
     <div class="search-input-box">
         <input type="search" name="query" placeholder="SEARCH">
-        <div class="search-underbar"></div>
+        <div class="search-underbar">
+            <div class="unfocus-underbar"></div>
+            <div class="focus-underbar"></div>
+        </div>
     </div>
     `;
 
@@ -92,17 +104,40 @@ function build_search_form() {
     search_form.method = "GET";
     search_form.innerHTML = form_tag;
 
-    // 이벤트 리스너 등록
-    // *********** need fix - 버튼을 한 번 눌렀을 때 애니메이션 실행?
-    // input창을 누르면 다시 toggle되는 문제 발생
+    // 검색 폼 하위 요소 지정
     const search_icon = search_form.querySelector("#search-icon");
-    const search_input = search_form.querySelector(".search-input-box");
+    const search_input_box = search_form.querySelector(".search-input-box");
+    const search_input = search_input_box.querySelector("input");
     const search_underbar = search_form.querySelector(".search-underbar");
-    search_form.addEventListener("click", ()=>{
-        search_icon.classList.toggle("clicked");
-        search_input.classList.toggle("active");
-        search_underbar.classList.toggle("visible");
-    })
-    
+    const search_underbar_focus = search_underbar.querySelector(".focus-underbar");
+
+    // 검색 폼 클릭 시 스타일 지정
+    search_icon.addEventListener("click", function () {
+        // 검색 아이콘 애니메이션 설정
+        search_icon.classList.remove("clicked");
+        void search_icon.offsetWidth; // 리플로우 트리거
+        search_icon.classList.add("clicked");
+
+        // 검색창 박스 표시
+        search_input_box.classList.add("active");
+        search_underbar.classList.add("visible");
+
+        // 검색창의 포커스 언더바 애니메이션 설정
+        search_underbar_focus.classList.remove("clicked");
+        void search_underbar_focus.offsetWidth; // 리플로우 트리거
+        search_underbar_focus.classList.add("clicked");
+
+        // 버튼 클릭 시 input으로 자동 포커스
+        search_input.focus();
+    });
+
+    // 검색폼 외의 영역 클릭 시 검색 폼 숨기기
+    document.addEventListener("click", function(e) {
+        if (!search_form.contains(e.target)) {
+            search_input_box.classList.remove("active");
+            search_input.classList.remove("active");
+            search_underbar.classList.remove("visible");
+        }
+    });
     return search_form;
 }
