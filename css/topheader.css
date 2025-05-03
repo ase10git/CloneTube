@@ -132,6 +132,7 @@ input:autofill:active {
     cursor: pointer;
 }
 
+/* 검색어 초기화 버튼 */
 #search-button, .reset-button.visible{
     display: flex;
     justify-content: center;
