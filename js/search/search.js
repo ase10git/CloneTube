@@ -31,34 +31,12 @@ async function get_video_list() {
             const normalized_query = normalize_for_search(query);
 
             // 비디오와 채널 정보를 담은 배열
+            // 비디오 제목 검색 + 비디오 태그 검색 결과
             let total_info = [];
 
             if (query) {
-                // 채널 목록 중에서 검색어에 맞는 비디오 목록만 추출
-                data = data.filter(video => {
-                    // 비디오 제목의 공백 무시, 소문자 치환, 부분 문자열 검사 준비
-                    const normalized_title = normalize_for_search(video.title);
-                    // 비디오 제목에 검색어를 포함하는 경우만 추출
-                    return normalized_title.includes(normalized_query);
-                });
-
-                // 각 비디오의 채널 정보 가져오기
-                // Set 활용: 중복되는 채널 정보 제거
-                const channel_ids = new Set(data.map(video => video.channel_id));
-                // 채널 id로 채널 정보 가져오기
-                const channel_info = await Promise.all(
-                    Array.from(channel_ids).map(async id => {
-                        return get_channel_list(id);
-                    })
-                );
-
-                // 비디오 정보와 채널 정보를 담은 새 배열 생성
-                // 채널 정보를 가져오는 비동기 함수의 모든 결과가 나왔을 때 제대로 된 데이터 출력
-                total_info = data.map(video => {
-                    // 비디오 정보의 채널 id와 채널 정보의 채널 id가 같은 채널 정보 찾기
-                    const channel_data = channel_info.find(channel => channel.id == video.channel_id);
-                    return {...video, ...channel_data};
-                });
+                // 비디오 제목 검색 결과
+                total_info = await get_video_query(data, normalized_query);
             }
 
             // 표시할 결과 생성
@@ -67,6 +45,48 @@ async function get_video_list() {
         .catch(error => {
             console.error("Error:", error);
         });
+}
+
+// 비디오 제목과 태그 검색
+async function get_video_query(data, normalized_query) {
+    // 비디오 제목에 검색어를 포함하는 경우만 추출
+    const video_title_query = data.filter(video => {
+        // 비디오 제목의 공백 무시, 소문자 치환, 부분 문자열 검사 준비
+        const normalized_title = normalize_for_search(video.title);
+        return normalized_title.includes(normalized_query);
+    });
+
+    // 비디오 태그에 검색어를 포함하는 경우만 추출
+    const video_tag_query = data.filter(video => {
+        // 조건(테스트 함수)를 만족하는 요소가 있는지 찾음
+        return video.tags.some(tag => {
+            const normalized_tag = normalize_for_search(tag);
+            return normalized_tag.includes(normalized_query);
+        });
+    });
+
+    // 검색 결과 합치기
+    const total_query = Array.from(new Set([...video_title_query, ...video_tag_query]));
+
+    // 각 비디오의 채널 정보 가져오기
+    // Set 활용: 중복되는 채널 정보 제거
+    const channel_ids = new Set(total_query.map(video => video.channel_id));
+    // 채널 id로 채널 정보 가져오기
+    const channel_info = await Promise.all(
+        Array.from(channel_ids).map(async id => {
+            return get_channel_list(id);
+        })
+    );
+
+    // 비디오 정보와 채널 정보를 담은 새 배열 생성
+    // 채널 정보를 가져오는 비동기 함수의 모든 결과가 나왔을 때 제대로 된 데이터 출력
+    const total_info = total_query.map(video => {
+        // 비디오 정보의 채널 id와 채널 정보의 채널 id가 같은 채널 정보 찾기
+        const channel_data = channel_info.find(channel => channel.id == video.channel_id);
+        return {...video, ...channel_data};
+    });
+
+    return total_info;
 }
 
 // 채널 정보 가져오기

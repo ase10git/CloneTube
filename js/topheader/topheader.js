@@ -9,20 +9,36 @@ function form_event() {
         e.preventDefault();
         const search_query = search_input.value;
         if (!search_query || search_query.trim().length === 0) return;
+        // 검색 페이지로 이동
         window.location.href = `search.html?query=${search_query}`;
+        // 로컬 저장소에 검색했던 값 저장
+        localStorage.setItem("query", search_query);
     });
 
-    // input 내의 값 유무에 따른 reset button 표시
-    search_input.addEventListener("input", function () {
+    // 리셋 버튼 표시 콜백
+    function update_reset_button() {
         if (search_input.value) {
             reset_button.classList.add("visible");
+        } else {
+            reset_button.classList.remove("visible");
         }
-    });
+    }
+
+    // input 내의 값 유무에 따른 reset button 표시
+    search_input.addEventListener("input", update_reset_button);
 
     // reset button을 누른 후에 다시 안보이게 설정
     reset_button.addEventListener("click", function () {
         reset_button.classList.remove("visible");
-    })
+        // 로컬 저장소에 저장된 값 제거
+        localStorage.removeItem("query");
+    });
+
+    // localStorage에서 검색어 가져오기
+    search_input.value = localStorage.getItem("query") ? localStorage.getItem("query") : "";
+
+    // 리셋 버튼 class 업데이트
+    update_reset_button();
 }
 
 // side nav의 버튼 동작을 제어
