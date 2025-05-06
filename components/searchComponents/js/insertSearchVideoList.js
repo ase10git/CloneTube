@@ -28,16 +28,14 @@ function edit_menu() {
 function no_result_html(query) {
     const html_template = 
     `
-    <div class="no-search-result">
-        <div class="no-search-result-img-box">
-            <img src="../../images/search-no-result.svg" alt="no-search-result">
-        </div>
-        <div>
-            <span class="no-result-message">${query} 검색결과가 없습니다.</span>
-        </div>
-        <div>
-            <span class="no-result-recommend">다른 검색어를 시도해 보거나 검색 필터를 삭제하세요.</span>
-        </div>
+    <div class="no-search-result-img-box">
+        <img src="../../images/search-no-result.svg" alt="no-search-result">
+    </div>
+    <div>
+        <span class="no-result-message">${query} 검색결과가 없습니다.</span>
+    </div>
+    <div>
+        <span class="no-result-recommend">다른 검색어를 시도해 보거나 검색 필터를 삭제하세요.</span>
     </div>
     `
     return html_template;
@@ -49,7 +47,7 @@ async function insert_search_results(query, total_info) {
     const temp_div = document.createElement("div");
 
     // 탬플릿 가져오기
-    fetch("../../components/searchComponents/html/searchVideoTemplate.html")
+    return fetch("../../components/searchComponents/html/searchVideoTemplate.html")
     .then(res => {
         if (!res.ok) {
             throw new Error("video template 불러오기 실패");
@@ -68,15 +66,25 @@ async function insert_search_results(query, total_info) {
         // 비디오 메뉴 가져오기
         const video_menu = edit_menu();
 
+        // 검색 결과나 필터 결과가 없을 때 표시할 요소
+        const no_result = document.createElement("div");
+        no_result.classList.add("no-search-result");
+        no_result.innerHTML = no_result_html(query);
+        no_result.style.display = "none"; // 안보이게 설정
+        contents.appendChild(no_result);
+
         // 결과 배열 길이에 따른 화면 처리
         if (total_info.length == 0) {
-            contents.innerHTML = no_result_html(query);
+            no_result.style.display = "flex";
         } else {
             // 검색한 비디오 데이터 출력
             // 결과가 있을 때 처리
             total_info.forEach(el => {
                 // 복제할 DOM
                 const clone = template.cloneNode(true);
+                // 비디오 id 데이터 추가
+                clone.querySelector(".content").dataset.videoId = el.id;
+
                 // 업로드한 날짜 계산
                 const uploaded_time = timeCalculator(el.created_dt);
                 const views = viewsCalculator(el.views, "kor");
@@ -133,11 +141,15 @@ async function insert_search_results(query, total_info) {
                 });
             })
         }
+        
+        return {
+            video_content: document.querySelectorAll(".content"),
+            no_result: document.querySelector(".no-search-result")
+        };
     })
     .catch(error => {
-        console.error("Error:", error);
+        // console.error("Error:", error);
     });
 }
-
 
 export default insert_search_results;

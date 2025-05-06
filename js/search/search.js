@@ -1,10 +1,19 @@
 // ------ 상단 바에서 검색 시 검색 결과를 가져오는 영역 -------
 import insert_search_results from "../../components/searchComponents/js/insertSearchVideoList.js";
+import {getTag} from "./tag_filter.js";
 
 // 검색어
 // 한글 검색을 위한 URI decoding 처리
 const params = new URLSearchParams(window.location.search);
 const query = decodeURIComponent(params.get("query") || "");
+
+// 가져온 전체 비디오 내용
+let video_total_list = [];
+
+// 검색 결과 비디오 카드
+let video_content_div;
+// 검색 결과 없을 때 표시용 div
+let no_result_div;
 
 // 검색어 키워드와 비디오 제목의 공백 무시, 소문자로 치환, 부분 문자열 검사 진행
 function normalize_for_search(str) {
@@ -30,20 +39,21 @@ async function get_video_list() {
             // 검색 키워드 가공
             const normalized_query = normalize_for_search(query);
 
-            // 비디오와 채널 정보를 담은 배열
-            // 비디오 제목 검색 + 비디오 태그 검색 결과
-            let total_info = [];
-
+            // 검색어가 있을 때만 검색 요청 처리
             if (query) {
-                // 비디오 제목 검색 결과
-                total_info = await get_video_query(data, normalized_query);
+                // 비디오와 채널 정보를 담은 배열
+                // 비디오 제목 검색 + 비디오 태그 검색 결과
+                // 전역 변수에 비디오 목록 저장
+                video_total_list = await get_video_query(data, normalized_query);
             }
 
             // 표시할 결과 생성
-            insert_search_results(query, total_info);
+            const {video_content, no_result} = await insert_search_results(query, video_total_list);
+            video_content_div = video_content;
+            no_result_div = no_result;
         })
         .catch(error => {
-            console.error("Error:", error);
+            // console.error("Error:", error);
         });
 }
 
@@ -65,16 +75,20 @@ async function get_video_query(data, normalized_query) {
         });
     });
 
+    // 검색 결과 배열을 Set로 생성 - 합칠 때 중복 제거용
+    const title_query_set = new Set(video_title_query);
+    const tag_query_set = new Set(video_tag_query);
+
     // 검색 결과 합치기
-    const total_query = Array.from(new Set([...video_title_query, ...video_tag_query]));
+    const total_query = Array.from(title_query_set.union(tag_query_set));
 
     // 각 비디오의 채널 정보 가져오기
-    // Set 활용: 중복되는 채널 정보 제거
     const channel_ids = new Set(total_query.map(video => video.channel_id));
+
     // 채널 id로 채널 정보 가져오기
     const channel_info = await Promise.all(
         Array.from(channel_ids).map(async id => {
-            return get_channel_list(id);
+            return await get_channel_list(id);
         })
     );
 
@@ -82,8 +96,13 @@ async function get_video_query(data, normalized_query) {
     // 채널 정보를 가져오는 비동기 함수의 모든 결과가 나왔을 때 제대로 된 데이터 출력
     const total_info = total_query.map(video => {
         // 비디오 정보의 채널 id와 채널 정보의 채널 id가 같은 채널 정보 찾기
-        const channel_data = channel_info.find(channel => channel.id == video.channel_id);
-        return {...video, ...channel_data};
+        let channel_data = channel_info.find(channel => channel.id == video.channel_id);
+        // id = channel.id, 그 외에는 각 대응되는 변수 이름에 저장
+        const {id, ...rest_channel_data} = channel_data || {};
+        // 채널 데이터의 key를 가공한 새 채널 데이터 객체 생성
+        const renamed_channel_data = {channel_id: id, ...rest_channel_data};
+        // 비디오 정보와 채널 데이터를 합친 객체 생성
+        return {...video, ...renamed_channel_data};
     });
 
     return total_info;
@@ -101,9 +120,67 @@ async function get_channel_list(channel_id) {
         })
         .then(data => data)
         .catch(error => {
-            console.error("Error:", error);
+            //console.error("Error:", error);
         });
 }
 
 // 웹 페이지 로드 시 이벤트 처리
 window.addEventListener('DOMContentLoaded', get_video_list);
+
+// ---------- 검색 결과 태그 필터링 동작 ---------- //
+// 검색 결과 리스트에서 태그 필터링
+async function filter_tags() {
+    // 버튼으로 설정된 태그 가져오기
+    const tag_filter = getTag();
+    
+    // 검색 결과에서 태그를 포함하는 동영상의 id만 추출
+    const filtered_video_list = video_total_list.filter(
+        video => video.tags.some(tag => tag.includes(tag_filter))
+    ).map(video => video.id);
+
+    // 표시할 결과 생성
+    filtered_video_display(filtered_video_list);
+}
+
+// 태그 필터에 걸린 항목만 표시
+function filtered_video_display(video_list) {
+    // 태그 필터에 해당하는 항목이 없을 때의 표시
+    if (video_list.length === 0) {
+        video_content_div.forEach(content => {
+            content.style.display = "none";
+        });
+        no_result_div.style.display = "flex";
+    } else {
+        // 태그 필터에 해당하는 항목이 1개 이상일 때 표시
+        no_result_div.style.display = "none";
+
+        video_content_div.forEach(content => {
+            // content div에 있는 비디오 id 가져오기
+            const video_id = Number(content.dataset.videoId);
+            // 태그 필터링 대상에 따른 표시 여부
+            if (video_list.includes(video_id)) {
+                content.style.display = "flex";
+            } else {
+                content.style.display = "none";
+            }
+        });
+    }
+}
+
+// 필터 없을 때 전체 표시
+function display_all_video() {
+    video_content_div.forEach(content => {
+        content.style.display = "flex";
+    });
+}
+
+// 태그 버튼 이벤트로 태그 변동 시 검색 결과에 필터링 적용
+document.addEventListener('tagChanged', function () {
+    const tag_filter = getTag();
+    if (tag_filter && tag_filter !== '전체') { 
+        filter_tags();
+    } else {
+        // 표시할 결과 생성
+        display_all_video();
+    }
+});

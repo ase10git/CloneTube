@@ -1,5 +1,5 @@
 import timeCalculator from '../util/timeCalculator.js';
-import insert_video_scroll from '../../components/channelComponents/insertVideoScroll.js';
+import insert_video_scroll from '../../components/channelComponents/js/insertVideoScroll.js';
 
 let subscriberCount = 0;
 let isSubscribed = false;
