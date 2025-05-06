@@ -4,7 +4,7 @@ let subscriberCount = 0;
 let isSubscribed = false;
 
 document.addEventListener("DOMContentLoaded", function () {
-    setupSubscribeButton(); // 구독 버튼
+    
     fetchChannelInfo(); // 채널 정보
     fetchVideosAndRender(); // 영상 목록
 });
@@ -43,6 +43,7 @@ function fetchChannelInfo() {
             document.getElementById('channel-name').textContent = channelData.channel_name;
             document.getElementById('subscribers').textContent = `${subscriberCount} subscribers`;
             document.getElementById('channel-profile-img').src = channelData.channel_profile;
+            setupSubscribeButton();
         })
         .catch(error => {
             console.error('채널 정보 가져오기 실패:', error);
@@ -50,31 +51,27 @@ function fetchChannelInfo() {
 }
 
 // 메인 비디오
-function renderMainVideo(videoId) {
-    fetch(`http://techfree-oreumi-api.kro.kr:5000/video/getVideoInfo?video_id=${videoId}`)
-        .then(response => response.json())
-        .then(video => {
-            // 영상 소스 삽입
-            const source = document.querySelector('#main-video video source');
-            source.src = `https://storage.googleapis.com/youtube-clone-video/${video.id}.mp4`;
+function renderMainVideo(video) {
+    if (!video) {
+        console.warn("표시할 메인 비디오가 없습니다.");
+        return;
+    }
 
-            // video 태그 재로드 (src 변경 시 필요)
-            const videoElement = document.querySelector('#main-video video');
-            videoElement.load();
+    // 영상 소스 삽입
+    const source = document.querySelector('#main-video video source');
+    source.src = `https://storage.googleapis.com/youtube-clone-video/${video.id}.mp4`;
 
-            // 텍스트 정보 삽입
-            document.getElementById('video-title').textContent = video.title;
-            document.getElementById('spectators').textContent = `${video.views} views`;
-            document.getElementById('uploaded-time').textContent = formatUploadDate(video.created_dt);
-            document.getElementById('video-description').textContent = video.description;
-        })
-        .catch(error => {
-            console.error('메인 비디오 불러오기 실패:', error);
-        });
+    const videoElement = document.querySelector('#main-video video');
+    videoElement.load();
+
+    // 텍스트 정보 삽입
+    document.getElementById('video-title').textContent = video.title;
+    document.getElementById('spectators').textContent = `${formatViews(video.views)} views`;
+    document.getElementById('uploaded-time').textContent = timeCalculator(video.created_dt);
+    document.getElementById('video-description').textContent = video.description;
 }
-renderMainVideo(1);
 
-// 영상 목록
+// 영상 목록 + 메인 비디오 연결
 function fetchVideosAndRender() {
     const urlParams = new URLSearchParams(window.location.search);
     const channelId = urlParams.get('channel_id');
@@ -87,6 +84,12 @@ function fetchVideosAndRender() {
     fetch(`http://techfree-oreumi-api.kro.kr:5000/video/getChannelVideoList?channel_id=${channelId}`)
         .then(response => response.json())
         .then(data => {
+            // 메인 비디오는 최신..일단...
+            const sortedVideos = data.sort((a, b) => new Date(b.created_dt) - new Date(a.created_dt));
+            const latestVideo = sortedVideos[0];
+            renderMainVideo(latestVideo);
+
+            // 영상 목록
             renderVideos('section1', data);
             renderVideos('section2', data);
         })
@@ -94,6 +97,16 @@ function fetchVideosAndRender() {
             console.error('Fetch error:', error);
         });
 }
+
+
+// 페이지 로드 시 실행
+document.addEventListener("DOMContentLoaded", function () {
+    setupSubscribeButton();
+    fetchChannelInfo();
+    fetchVideosAndRender(); 
+});
+
+
 
 
 function renderVideos(sectionId, videoList) {
@@ -122,7 +135,7 @@ function renderVideos(sectionId, videoList) {
         videoCard.addEventListener('click', () => {
             localStorage.setItem('selectedVideo', JSON.stringify(video));
             localStorage.setItem('selectedChannelId', video.channel_id);
-            window.location.href = '../html/video.html';
+            window.location.href = `../html/video.html?video_id=${video.id}`;
         });
 
         container.appendChild(videoCard);
@@ -137,9 +150,3 @@ function formatViews(views) {
     return views.toString();
 }
 
-// 날짜
-function formatUploadDate(dateStr) {
-    if (!dateStr) return "unknown";
-    const date = new Date(dateStr);
-    return `${date.getFullYear()}.${(date.getMonth() + 1).toString().padStart(2, '0')}.${date.getDate().toString().padStart(2, '0')}`;
-}
