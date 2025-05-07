@@ -159,6 +159,9 @@ body {
 }
 
 /* 필터 영역 */
+#search-filter {
+    position: relative;
+}
 #search-filter button{
     width: 81.77px;
     height: 36px;
@@ -172,7 +175,6 @@ body {
     border: none;
     gap: 5px;
     cursor: pointer;
-    position: relative;
 }
 
 #search-filter button:hover {
@@ -189,7 +191,9 @@ body {
     position: absolute;
     display: none;
     z-index: 1;
+    right: 0;
     background-color: var(--bg-bar);
+    padding: 8px 0;
 }
 
 #date-dropdown, #sort-dropdown {

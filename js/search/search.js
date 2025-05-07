@@ -61,7 +61,7 @@ async function get_video_list() {
 async function get_video_query(data, normalized_query) {
     // 비디오 제목에 검색어를 포함하는 경우만 추출
 
-    console.log(data)
+    
     const video_title_query = data.filter(video => {
         // 비디오 제목의 공백 무시, 소문자 치환, 부분 문자열 검사 준비
         const normalized_title = normalize_for_search(video.title);
@@ -146,6 +146,9 @@ async function filter_tags() {
 
 // 태그 필터에 걸린 항목만 표시
 function filtered_video_display(video_list) {
+    //부모 div
+    const container = document.getElementById("contents");
+
     // 태그 필터에 해당하는 항목이 없을 때의 표시
     if (video_list.length === 0) {
         video_content_div.forEach(content => {
@@ -156,13 +159,17 @@ function filtered_video_display(video_list) {
         // 태그 필터에 해당하는 항목이 1개 이상일 때 표시
         no_result_div.style.display = "none";
 
-        video_content_div.forEach(content => {
-            // content div에 있는 비디오 id 가져오기
-            const video_id = Number(content.dataset.videoId);
-            // 태그 필터링 대상에 따른 표시 여부
-            if (video_list.includes(video_id)) {
+        video_list.forEach(id => {
+            const content = Array.from(video_content_div).find(div => Number(div.dataset.videoId) === id);  //배열로 바꿔야 find가능
+            if (content) {
                 content.style.display = "flex";
-            } else {
+                container.appendChild(content);  // DOM 위치를 이동시킴 (정렬 순서 반영)
+            }
+        });
+        //나머지는 숨김
+        video_content_div.forEach(content => {
+            const video_id = Number(content.dataset.videoId);
+            if (!video_list.includes(video_id)) {
                 content.style.display = "none";
             }
         });
@@ -171,6 +178,9 @@ function filtered_video_display(video_list) {
 
 // 필터 없을 때 전체 표시
 function display_all_video() {
+     // -----> 필터 결과 없을 때 출력하는 div 숨기기
+    no_result_div.style.display = "none";
+    // 비디오 카드 전체 표시
     video_content_div.forEach(content => {
         content.style.display = "flex";
     });
@@ -230,6 +240,7 @@ async function detail_filter_tags(date) {
 
 const date_dropdown = document.getElementById("date-dropdown");
 
+//버튼의 filter 타입에 따라 이벤트 다르게 반응
 date_dropdown.addEventListener('click', function (e) {
     if (e.target.tagName === "BUTTON") {
         const filter_type = e.target.dataset.filter;
@@ -275,36 +286,33 @@ sort_dropdown.addEventListener('click', function (e) {
 });
 
 function video_sort(filter_type) {
-    //created_dt, likes, views
 
     let video_list = [];
+    let sorted_list = [];
     video_content_div.forEach(content => {
         if (content.style.display == "flex" || content.style.display == ""){
-            video_list.push(content.dataset.videoId);
+            video_list.push(Number(content.dataset.videoId));
         }
     });
+    const matchedVideos = video_total_list.filter(video =>
+        video_list.includes(video.id)
+    );
 
     switch (filter_type) {
         case "sort-views" :
-            {
-                video_total_list.filter(video =>
-                    video_list.includes(video.id)
-                );
-                console.log(video_total_list);
-            }
+            sorted_list = [...matchedVideos].sort((a, b) => Number(b.views) - Number(a.views));
             break;
         case "sort-date" :
+            sorted_list = [...matchedVideos].sort((a, b) => new Date(b.created_dt) - new Date(a.created_dt));
             break;
         case "sort-likes" :
+            sorted_list = [...matchedVideos].sort((a, b) => Number(b.likes) - Number(a.likes));
             break;
         default:
             break;
     }
-    console.log(video_list);
 
-    return video_list;
-};
+    const sorted_ids = sorted_list.map(video => video.id);
+    filtered_video_display(sorted_ids);
 
-function sort_list(list, value) {
-    
 };
