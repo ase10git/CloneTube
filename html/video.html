@@ -6,7 +6,7 @@
     <title>Video</title>
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/video.css">
-    "Authorization" : "YOUR_ACCESS_KEY"
+    <!---"Authorization" : "" -->
 </head>
 <body id="video-body">
     <!-- 상단 메뉴바 자리 -->
@@ -44,11 +44,11 @@
                         <div class="channel-metadata">
                             <div class="channel-metadata-box">
                                 <div class="channel-profile-box">
-                                    <img src="../images/marcus.svg" alt="채널이미지" id="channel-img">
+                                    <img src="../images/marcus.svg" alt="채널이미지" id="channel-img" style="cursor: pointer">
                                 </div>
                                 <div id="channel-info">
                                     <div class="channel-name-box">
-                                        <p id="channel-name">Test</p>
+                                        <p id="channel-name" style="cursor: pointer">Test</p>
                                         <div id="badge" class="badge">
                                             <img class="badge" src="../images/check-lg.svg" alt="checkmark">
                                         </div>
@@ -59,7 +59,8 @@
                                 </div>
                             </div>
                             <div>
-                                <button class="subscribe-btn">Subscribe</button>
+                                <button id="subscribe-btn" class="subscribe-btn">SUBSCRIBE</button>
+
                             </div>
                         </div>
                         <div id="video-desc">
