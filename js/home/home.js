@@ -1,35 +1,129 @@
 import insert_video_content from "../../components/homeComponents/js/insertVideoContents.js";
+import { getTag } from "../search/tag_filter.js";
+
+// HTTP request 객체
+const xhr = new XMLHttpRequest();
+
+// 가져온 전체 비디오 내용
+let video_total_list = [];
+
+// 비디오 카드
+let video_content_div;
 
 // API에서 비디오 목록 가져오기
-const xhr = new XMLHttpRequest();
-xhr.open("GET", "http://techfree-oreumi-api.kro.kr:5000/video/getVideoList", true);
-xhr.onload = function () {
-    if (xhr.status === 200 && xhr.readyState === 4) {
-        const sampleVideos = JSON.parse(xhr.response);  // JSON 데이터 파싱
+async function get_video_list() {
+    // api 요청
+    fetch("http://techfree-oreumi-api.kro.kr:5000/video/getVideoList")
+    .then(res => {
+        if (!res.ok) {
+            throw new Error("Video list 불러오기 실패");
+        }
+        return res.json();
+    })
+    .then(async data => {
+        // 변수에 전체 비디오 목록 저장
+        video_total_list = data;
 
-        // avatar_img와 관련된 값이 sampleVideos에 포함되어 있다고 가정
-        const avatarImages = [
-            '../images/james.svg',
-            '../images/alan.svg',
-            '../images/marcus.svg',
-            '../images/alexis.svg',
-            '../images/jesica.svg',
-            '../images/anna.svg',
-            '../images/skylar.svg'
-        ];
+        // 각 비디오의 채널 id만 추출
+        const channel_ids = new Set(video_total_list.map(video => video.channel_id));
 
-        // 각 비디오 객체에 avatar_img를 추가
-        sampleVideos.forEach((video, index) => {
-            video.avatar_img = avatarImages[index % avatarImages.length]; // 인덱스에 맞는 아바타 이미지 할당
+        // 채널 id로 채널 정보 가져오기
+        const channel_info = await Promise.all(
+            Array.from(channel_ids).map(async id => {
+                return await get_channel_info(id);
+            })
+        );
+
+        // 비디오 정보와 채널 정보를 담은 새 배열 생성
+        const total_info = video_total_list.map(video => {
+            // 비디오 정보의 채널 id와 채널 정보의 채널 id가 같은 채널 정보 찾기
+            let channel_data = channel_info.find(channel => channel.id == video.channel_id);
+            // id = channel.id, 그 외에는 각 대응되는 변수 이름에 저장
+            const {id, ...rest_channel_data} = channel_data || {};
+            // 채널 데이터의 key를 가공한 새 채널 데이터 객체 생성
+            const renamed_channel_data = {channel_id: id, ...rest_channel_data};
+            // 비디오 정보와 채널 데이터를 합친 객체 생성
+            return {...video, ...renamed_channel_data};
         });
-
+        
         // 비디오 목록을 화면에 추가
-        insert_video_content(sampleVideos);
+        const {video_content} = await insert_video_content(total_info);
+        video_content_div = video_content;
+    })
+    .catch(error => {
+        // console.error("Error:", error);
+    });
+}
+
+// 채널 정보 요청
+async function get_channel_info(channel_id) {
+    // api 요청
+    return fetch(`http://techfree-oreumi-api.kro.kr:5000/channel/getChannelInfo?id=${channel_id}`)
+        .then(res => {
+            if (!res.ok) {
+                throw new Error("Channel 정보 불러오기 실패");
+            }
+            return res.json();
+        })
+        .then(data => data)
+        .catch(error => {
+            //console.error("Error:", error);
+        });
+}
+
+// 비디오 가져오기
+window.addEventListener('DOMContentLoaded', get_video_list);
+
+// ---------- 검색 결과 태그 필터링 동작 ---------- //
+// 태그 필터링
+async function filter_tags() {
+    // 버튼으로 설정된 태그 가져오기
+    const tag_filter = getTag();
+    // 검색 결과에서 태그를 포함하는 동영상의 id만 추출
+    const filtered_video_list = video_total_list.filter(
+        video => video.tags.some(tag => tag.includes(tag_filter))
+    ).map(video => video.id);
+    // 표시할 결과 생성
+    filtered_video_display(filtered_video_list);
+}
+
+// 태그 필터에 걸린 항목만 표시
+function filtered_video_display(video_list) {
+    // 태그 필터에 해당하는 항목이 없을 때의 표시
+    if (video_list.length === 0) {
+        video_content_div.forEach(content => {
+            content.style.display = "none";
+        });
     } else {
-        console.error("Error:", xhr.status);
+        // 태그 필터에 해당하는 항목이 1개 이상일 때 표시
+
+        video_content_div.forEach(content => {
+            // content div에 있는 비디오 id 가져오기
+            const video_id = Number(content.dataset.videoId);
+            // 태그 필터링 대상에 따른 표시 여부
+            if (video_list.includes(video_id)) {
+                content.style.display = "block";
+            } else {
+                content.style.display = "none";
+            }
+        });
     }
-};
-xhr.onerror = function () {
-    console.error('Network Error');
-};
-xhr.send();
+}
+
+// 필터 없을 때 전체 표시
+function display_all_video() {
+    video_content_div.forEach(content => {
+        content.style.display = "flex";
+    });
+}
+
+// 태그 버튼 이벤트로 태그 변동 시 검색 결과에 필터링 적용
+document.addEventListener('tagChanged', function () {
+    const tag_filter = getTag();
+    if (tag_filter && tag_filter !== '전체') { 
+        filter_tags();
+    } else {
+        // 표시할 결과 생성
+        display_all_video();
+    }
+});
