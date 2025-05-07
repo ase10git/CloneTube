@@ -29,7 +29,9 @@ xhr.onload = function () {
         console.error("Error:", xhr.status);
     }
 };
+
 xhr.onerror = function () {
     console.error('Network Error');
 };
 xhr.send();
+

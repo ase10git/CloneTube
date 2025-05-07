@@ -77,6 +77,35 @@ fetch("../../components/scrollMenu/html/scrollMenuTemplate.html")
 
         // 스크롤 이벤트 추가
         addScrollEvent(scroll_wrap);
+
+        // 이벤트 리스너 등록
+        item_btn.forEach(el => {
+            el.addEventListener("click", () => {
+                // 모든 메뉴 항목 선택 클래스 초기화
+                item_btn.forEach(item => item.classList.remove("select"));
+                el.classList.add("select");
+
+                const clickedMenuId = el.querySelector("a").getAttribute("href").substring(1); // 예: 'home', 'videos'
+
+                const mainVideo = document.getElementById("main-video");
+                const mainContent = document.querySelector(".main-content");
+
+                if (clickedMenuId === "home") {
+                    // HOME 선택 시: 메인 비디오 + 메인 콘텐츠 모두 보여줌
+                    if (mainVideo) mainVideo.style.display = "block";
+                    if (mainContent) mainContent.style.display = "block";
+                } else if (clickedMenuId === "videos") {
+                    // VIDEOS 선택 시: 메인 비디오는 숨기고 콘텐츠만 보여줌
+                    if (mainVideo) mainVideo.style.display = "none";
+                    if (mainContent) mainContent.style.display = "block";
+                } else {
+                    // 그 외 메뉴 선택 시: 모두 숨기거나 원하는 방식으로 처리 가능
+                    if (mainVideo) mainVideo.style.display = "none";
+                    if (mainContent) mainContent.style.display = "none"; // 필요 시 조정
+                }
+            });
+        });
+
     })
 
 
@@ -141,3 +170,31 @@ function build_search_form() {
     });
     return search_form;
 }
+
+// 이벤트 리스너 등록
+item_btn.forEach(el => {
+    el.addEventListener("click", () => {
+        // 모든 메뉴 항목 선택 클래스 초기화
+        item_btn.forEach(item => item.classList.remove("select"));
+        el.classList.add("select");
+
+        const clickedMenuId = el.querySelector("a").getAttribute("href").substring(1); // 예: 'home', 'videos'
+
+        const mainVideo = document.getElementById("main-video");
+        const mainContent = document.querySelector(".main-content");
+
+        if (clickedMenuId === "home") {
+            // HOME 선택 시: 메인 비디오 + 메인 콘텐츠 모두 보여줌
+            if (mainVideo) mainVideo.style.display = "block";
+            if (mainContent) mainContent.style.display = "block";
+        } else if (clickedMenuId === "videos") {
+            // VIDEOS 선택 시: 메인 비디오는 숨기고 콘텐츠만 보여줌
+            if (mainVideo) mainVideo.style.display = "none";
+            if (mainContent) mainContent.style.display = "block";
+        } else {
+            // 그 외 메뉴 선택 시: 모두 숨기거나 원하는 방식으로 처리 가능
+            if (mainVideo) mainVideo.style.display = "none";
+            if (mainContent) mainContent.style.display = "none"; // 필요 시 조정
+        }
+    });
+});
