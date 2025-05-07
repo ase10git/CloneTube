@@ -60,6 +60,8 @@ async function get_video_list() {
 // 비디오 제목과 태그 검색
 async function get_video_query(data, normalized_query) {
     // 비디오 제목에 검색어를 포함하는 경우만 추출
+
+    console.log(data)
     const video_title_query = data.filter(video => {
         // 비디오 제목의 공백 무시, 소문자 치환, 부분 문자열 검사 준비
         const normalized_title = normalize_for_search(video.title);
@@ -184,3 +186,125 @@ document.addEventListener('tagChanged', function () {
         display_all_video();
     }
 });
+
+
+// ---------- 날짜 필터링 동작 ---------- //
+// 클릭 시 필터 조건 나타나게
+const filter_btn = document.getElementById("search-filter");
+const filter_dropdown = document.getElementById("filter-dropdown");
+
+filter_btn.addEventListener("click", function () {
+
+    if (filter_dropdown.style.display == "flex") {
+        filter_dropdown.style.display = "none";
+    } else {
+        filter_dropdown.style.display = "flex";
+    }
+});
+
+// 검색,태그 결과 리스트에서 필터링
+async function detail_filter_tags(date) {
+    // 버튼으로 설정된 타겟 날짜 가져오기
+    const tag_filter = getTag();
+    const target = date;
+    let video_list = [];
+
+    //태그 유무에 따른 비디오 리스트 설정
+    if (tag_filter && tag_filter !== '전체') { 
+        video_list = video_total_list.filter(
+            video => video.tags.some(tag => tag.includes(tag_filter))
+        );
+    } else {
+        video_list = video_total_list;
+    }
+
+    //날짜 필터에 따른 비디오 리스트 설정
+    const filtered_video_list = video_list.filter(video => {
+        const videoDate = new Date(video.created_dt);
+        return videoDate >= target;
+        }).map(video => video.id);
+
+    // 표시할 결과 생성
+    filtered_video_display(filtered_video_list);
+};
+
+const date_dropdown = document.getElementById("date-dropdown");
+
+date_dropdown.addEventListener('click', function (e) {
+    if (e.target.tagName === "BUTTON") {
+        const filter_type = e.target.dataset.filter;
+        applyDateFilter(filter_type);
+    }
+});
+
+function applyDateFilter(filter_type) {
+    const now = new Date();
+    let startDate;
+
+    switch (filter_type) {
+        case "1hour":
+            startDate = new Date(now.getTime() - 60 * 60 * 1000);
+            break;
+        case "today":
+            startDate = new Date(now.setHours(0, 0, 0, 0));
+            break;
+        case "week":
+            startDate = new Date(now.setDate(now.getDate() - 7));
+            break;
+        case "month":
+            startDate = new Date(now.setMonth(now.getMonth() - 1));
+            break;
+        case "year":
+            startDate = new Date(now.setFullYear(now.getFullYear() - 1));
+            break;
+        default:
+            return;
+    }
+
+    detail_filter_tags(startDate);
+}
+
+// ---------- 정렬 필터링 동작 ---------- //
+const sort_dropdown = document.getElementById("sort-dropdown");
+
+sort_dropdown.addEventListener('click', function (e) {
+    if (e.target.tagName === "BUTTON") {
+        const filter_type = e.target.dataset.filter;
+        video_sort(filter_type);
+    }
+});
+
+function video_sort(filter_type) {
+    //created_dt, likes, views
+
+    let video_list = [];
+    video_content_div.forEach(content => {
+        if (content.style.display == "flex" || content.style.display == ""){
+            video_list.push(content.dataset.videoId);
+        }
+    });
+
+    switch (filter_type) {
+        case "sort-views" :
+            {
+                video_total_list.filter(video =>
+                    video_list.includes(video.id)
+                );
+                console.log(video_total_list);
+            }
+            break;
+        case "sort-date" :
+            break;
+        case "sort-likes" :
+            break;
+        default:
+            break;
+    }
+    console.log(video_list);
+
+    return video_list;
+};
+
+function sort_list(list, value) {
+    
+};

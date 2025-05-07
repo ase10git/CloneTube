@@ -24,8 +24,10 @@ body {
     margin-left: var(--mini-nav-width);
 }
 
-/* 상단 버튼 영역 */
-#btn-header {
+/* 상단 버튼 헤더 */
+#search-header {
+    display: flex;
+    align-items: center;
     width: 100%;
     padding: 0 calc((100% - 1280px) / 2);
     margin-top: 56px;
@@ -34,10 +36,15 @@ body {
     background-color: var(--bg-bar); 
 }
 
+/* 상단 버튼 영역 */
+#btn-header {
+    width: calc(100% - 105.77px);
+}
+
 /* 상단 버튼 래퍼 */
 .scroll-menu-wrap {
     height: 100%;
-    padding: 0 24px; 
+    padding-left: 24px; 
     display: flex; 
     justify-content: space-between; 
     align-items: center; 
@@ -52,7 +59,6 @@ body {
     justify-content: center;
     align-items: center;
     position: absolute;
-    background-color: var(--bg-highlight);
 }
 
 /* 왼쪽 버튼 위치 */
@@ -86,18 +92,11 @@ body {
 }
 
 /* 버튼 뒤에 흐릿한 배경 추가 */
-.left-btn-wrap::after {
-    width: 20px; height: 100%;
-    position: absolute; right: -20px;
-    content: '';
-    background: linear-gradient(to right, var(--bg-highlight), transparent);
+.left-btn-wrap {
+    background: linear-gradient(to right, var(--bg-bar) 0%, var(--bg-bar) 50%, transparent 100%);
 }
-
-.right-btn-wrap::after {
-    width: 20px; height: 100%;
-    position: absolute; left: -20px;
-    content: '';
-    background: linear-gradient(to left, var(--bg-highlight), transparent);
+.right-btn-wrap {
+    background: linear-gradient(to left, var(--bg-bar) 0%, var(--bg-bar) 50%, transparent 100%);
 }
 
 /* 버튼 안 아이콘 */
@@ -129,13 +128,13 @@ body {
 }
 
 /* 버튼 아이템 */
-.menu-list li {
+.scroll-menu-wrap .menu-list li {
     margin: 12px 12px 12px 0;
     white-space: nowrap;
 }
 
 /* 태그 버튼 */
-.menu-list li button{
+.scroll-menu-wrap .menu-list li button{
     width: 100%; height: 100%;
     padding: 0 12px;
     border: 1px solid var(--bt-border);
@@ -149,14 +148,59 @@ body {
 }
 
 /* 버튼 호버 효과 */
-.menu-list li button:hover {
+.scroll-menu-wrap .menu-list li button:hover {
     background-color: #444;
 }
 
 /* 선택된 버튼 스타일 */
-.menu-list li button.selected {
+.scroll-menu-wrap .menu-list li button.selected {
     background-color: var(--bt-border);
     color: var(--bg);
+}
+
+/* 필터 영역 */
+#search-filter button{
+    width: 81.77px;
+    height: 36px;
+    margin-right: 24px;
+    color: var(--font);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 30px;
+    background-color: transparent;
+    border: none;
+    gap: 5px;
+    cursor: pointer;
+    position: relative;
+}
+
+#search-filter button:hover {
+    background-color: var(--bg-highlight);
+}
+
+#filter-img {
+    width: 24px;
+    height: 24px;
+    filter: invert();
+}
+
+#filter-dropdown {
+    position: absolute;
+    display: none;
+    z-index: 1;
+    background-color: var(--bg-bar);
+}
+
+#date-dropdown, #sort-dropdown {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+}
+
+#filter-dropdown button {
+    border-radius: 0;
+    margin : 0px;
 }
 
 /* 동영상 리스트 영역 */
@@ -523,7 +567,6 @@ body {
 
 .details .menu-item-line {
     margin-right: 16px;
-    width: 100%;
     background-color: var(--border);
 }
 
