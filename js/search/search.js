@@ -54,6 +54,8 @@ async function get_video_list() {
 // 비디오 제목과 태그 검색
 async function get_video_query(data, normalized_query) {
     // 비디오 제목에 검색어를 포함하는 경우만 추출
+
+    
     const video_title_query = data.filter(video => {
         // 비디오 제목의 공백 무시, 소문자 치환, 부분 문자열 검사 준비
         const normalized_title = normalize_for_search(video.title);
@@ -138,6 +140,9 @@ async function filter_tags() {
 
 // 태그 필터에 걸린 항목만 표시
 function filtered_video_display(video_list) {
+    //부모 div
+    const container = document.getElementById("contents");
+
     // 태그 필터에 해당하는 항목이 없을 때의 표시
     if (video_list.length === 0) {
         video_content_div.forEach(content => {
@@ -148,13 +153,17 @@ function filtered_video_display(video_list) {
         // 태그 필터에 해당하는 항목이 1개 이상일 때 표시
         no_result_div.style.display = "none";
 
-        video_content_div.forEach(content => {
-            // content div에 있는 비디오 id 가져오기
-            const video_id = Number(content.dataset.videoId);
-            // 태그 필터링 대상에 따른 표시 여부
-            if (video_list.includes(video_id)) {
+        video_list.forEach(id => {
+            const content = Array.from(video_content_div).find(div => Number(div.dataset.videoId) === id);  //배열로 바꿔야 find가능
+            if (content) {
                 content.style.display = "flex";
-            } else {
+                container.appendChild(content);  // DOM 위치를 이동시킴 (정렬 순서 반영)
+            }
+        });
+        //나머지는 숨김
+        video_content_div.forEach(content => {
+            const video_id = Number(content.dataset.videoId);
+            if (!video_list.includes(video_id)) {
                 content.style.display = "none";
             }
         });
@@ -163,6 +172,9 @@ function filtered_video_display(video_list) {
 
 // 필터 없을 때 전체 표시
 function display_all_video() {
+     // -----> 필터 결과 없을 때 출력하는 div 숨기기
+    no_result_div.style.display = "none";
+    // 비디오 카드 전체 표시
     video_content_div.forEach(content => {
         content.style.display = "flex";
     });
@@ -178,3 +190,142 @@ document.addEventListener('tagChanged', function () {
         display_all_video();
     }
 });
+
+
+// ---------- 날짜 필터링 동작 ---------- //
+// 클릭 시 필터 조건 나타나게
+const filter_btn = document.getElementById("search-filter");
+const filter_dropdown = document.getElementById("filter-dropdown");
+
+filter_btn.addEventListener("click", function () {
+
+    if (filter_dropdown.style.display == "flex") {
+        filter_dropdown.style.display = "none";
+    } else {
+        filter_dropdown.style.display = "flex";
+    }
+});
+
+// 검색,태그 결과 리스트에서 필터링
+async function detail_filter_tags(date) {
+    // 버튼으로 설정된 타겟 날짜 가져오기
+    const tag_filter = getTag();
+    const target = date;
+    let video_list = [];
+
+    //태그 유무에 따른 비디오 리스트 설정
+    if (tag_filter && tag_filter !== '전체') { 
+        video_list = video_total_list.filter(
+            video => video.tags.some(tag => tag.includes(tag_filter))
+        );
+    } else {
+        video_list = video_total_list;
+    }
+
+    //날짜 필터에 따른 비디오 리스트 설정
+    const filtered_video_list = video_list.filter(video => {
+        const videoDate = new Date(video.created_dt);
+        return videoDate >= target;
+        }).map(video => video.id);
+
+    // 표시할 결과 생성
+    filtered_video_display(filtered_video_list);
+};
+
+const date_dropdown = document.getElementById("date-dropdown");
+
+//버튼의 filter 타입에 따라 이벤트 다르게 반응
+date_dropdown.addEventListener('click', function (e) {
+    if (e.target.tagName === "BUTTON") {
+        const filter_type = e.target.dataset.filter;
+        applyDateFilter(filter_type);
+    }
+});
+
+function applyDateFilter(filter_type) {
+    const now = new Date();
+    let startDate;
+
+    switch (filter_type) {
+        case "1hour":
+            startDate = new Date(now.getTime() - 60 * 60 * 1000);
+            break;
+        case "today":
+            startDate = new Date(now.setHours(0, 0, 0, 0));
+            break;
+        case "week":
+            startDate = new Date(now.setDate(now.getDate() - 7));
+            break;
+        case "month":
+            startDate = new Date(now.setMonth(now.getMonth() - 1));
+            break;
+        case "year":
+            startDate = new Date(now.setFullYear(now.getFullYear() - 1));
+            break;
+        default:
+            return;
+    }
+
+    detail_filter_tags(startDate);
+}
+
+// ---------- 정렬 필터링 동작 ---------- //
+const sort_dropdown = document.getElementById("sort-dropdown");
+
+sort_dropdown.addEventListener('click', function (e) {
+    if (e.target.tagName === "BUTTON") {
+        const filter_type = e.target.dataset.filter;
+        video_sort(filter_type);
+    }
+});
+
+function video_sort(filter_type) {
+
+    let video_list = [];
+    let sorted_list = [];
+    video_content_div.forEach(content => {
+        if (content.style.display == "flex" || content.style.display == ""){
+            video_list.push(Number(content.dataset.videoId));
+        }
+    });
+    const matchedVideos = video_total_list.filter(video =>
+        video_list.includes(video.id)
+    );
+
+    switch (filter_type) {
+        case "sort-views" :
+            sorted_list = [...matchedVideos].sort((a, b) => Number(b.views) - Number(a.views));
+            break;
+        case "sort-date" :
+            sorted_list = [...matchedVideos].sort((a, b) => new Date(b.created_dt) - new Date(a.created_dt));
+            break;
+        case "sort-likes" :
+            sorted_list = [...matchedVideos].sort((a, b) => Number(b.likes) - Number(a.likes));
+            break;
+        default:
+            break;
+    }
+
+    const sorted_ids = sorted_list.map(video => video.id);
+    filtered_video_display(sorted_ids);
+
+};
+
+
+// 썸네일 이미지 비율 고정(240px일 경우)
+function thumbnail_height() {
+    const thumbnails = document.querySelectorAll('.thumbnail-box');
+    thumbnails.forEach(el => {
+        const width = el.offsetWidth;
+        if (width === 240) {
+            el.style.height = '139px';
+        } else
+        {
+            el.style.height = '';
+        };
+    });
+}
+
+// 실행 시점
+window.addEventListener('resize', thumbnail_height);
+window.addEventListener('DOMContentLoaded', thumbnail_height);

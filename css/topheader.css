@@ -170,6 +170,14 @@ input:autofill:active {
     height: calc(100vh - 56px); /* 헤더 제외한 높이로 설정 */
     background-color: var(--bg-color);
     overflow-y: auto;
+
+    /* 스크롤바 숨기기용*/
+    scrollbar-width: none;
+}
+
+/* 사이드바 hover시 스크롤바 보이게 */
+.side-bar:hover {
+    scrollbar-width: thin;
 }
 
 /* topheader.css */
