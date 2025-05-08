@@ -5,7 +5,6 @@ let subscriberCount = 0;
 let isSubscribed = false;
 
 document.addEventListener("DOMContentLoaded", function () {
-    
     fetchChannelInfo(); // 채널 정보
     fetchVideosAndRender(); // 영상 목록
 });
@@ -45,6 +44,9 @@ function fetchChannelInfo() {
             document.getElementById('subscribers').textContent = `${subscriberCount} subscribers`;
             document.getElementById('channel-profile-img').src = channelData.channel_profile;
             setupSubscribeButton();
+
+            // 문서 title을 채널 이름으로 변경
+            document.title = channelData.channel_name;
         })
         .catch(error => {
             console.error('채널 정보 가져오기 실패:', error);

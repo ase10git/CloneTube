@@ -24,6 +24,9 @@ function fetchVideoinfo() {
             document.getElementById('viewerships').textContent = `조회수 ${viewsUnit(videoData.views)}회`;
             document.getElementById('upload-date').textContent = timeCalculator(videoData.created_dt);
             document.getElementById('description').textContent = videoData.description;
+
+            // 문서 title을 비디오 제목으로 설정
+            document.title = videoData.title;
         })
         .catch(error => {
             console.error('비디오 정보 가져오기 실패:', error);

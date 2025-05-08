@@ -8,6 +8,9 @@ import {getTag} from "./tag_filter.js";
 const params = new URLSearchParams(window.location.search);
 const query = decodeURIComponent(params.get("query") || "");
 
+// 문서 title 변경
+document.title = `${query} - YouTube`;
+
 // 가져온 전체 비디오 내용
 let video_total_list = [];
 
