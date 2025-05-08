@@ -9,6 +9,22 @@ document.addEventListener("DOMContentLoaded", function () {
     fetchChannelInfo(); // 채널 정보
     fetchVideosAndRender(); // 영상 목록
     setupVideoButton(); // 동영상 버튼 설정
+
+    // 해시(#)에 따라 body 클래스 조절
+    function updateBodySectionClass() {
+        const hash = window.location.hash.substring(1); // URL 해시 가져오기
+        document.body.classList.remove("section-home", "section-videos");
+
+        if (hash === "videos") {
+            document.body.classList.add("section-videos");
+        } else {
+            document.body.classList.add("section-home");
+        }
+    }
+
+    // 이벤트 등록
+    window.addEventListener("load", updateBodySectionClass);
+    window.addEventListener("hashchange", updateBodySectionClass);
 });
 
 // 동영상 버튼 클릭 시 동영상 목록 표시/숨기기
@@ -176,3 +192,20 @@ function formatUploadDate(dateStr) {
     const date = new Date(dateStr);
     return `${date.getFullYear()}.${(date.getMonth() + 1).toString().padStart(2, '0')}.${date.getDate().toString().padStart(2, '0')}`;
 }
+
+// 섹션 내 스크롤
+document.querySelectorAll('.video-playlist').forEach(section => {
+    const row = section.querySelector('.video-row');
+    const leftBtn = section.querySelector('.video-button-left');
+    const rightBtn = section.querySelector('.video-button-right');
+
+    const scrollAmount = 1200; // 원하는 만큼 조절 가능
+
+    leftBtn.addEventListener('click', () => {
+        row.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+    });
+
+    rightBtn.addEventListener('click', () => {
+        row.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    });
+});

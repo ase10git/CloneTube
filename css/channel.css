@@ -472,3 +472,52 @@ body.sidebar-close #channel-main {
     #video-desc-box { display: none; }
     #video-title { margin-bottom : 0;}
 }
+
+/* #home에서는 한 줄만 보이게 (가로 스크롤) */
+body.section-home .video-row {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 16px;
+    scrollbar-color: var(--bt-border) transparent;
+}
+
+/* #videos에서는 여러 줄로 자동 줄바꿈 */
+body.section-videos .video-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    overflow-x: unset;
+    justify-content: flex-start;
+}
+
+/* 두 번째 세션도 보이도록 설정 (필요시 조건에 맞게 변경 가능) */
+body.section-videos .playlist-section:nth-child(2) {
+    display: block;
+}
+
+.video-row {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 16px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scrollbar-width: none; /* Firefox */
+}
+
+/* 첫 번째 세션만 보이도록 하는 스타일 */
+body.section-home .playlist-section:nth-child(2) {
+    display: none;
+}
+
+/* 동영상 탭에서는 방향 화살표 숨김 */
+body.section-videos .video-button-left,
+body.section-videos .video-button-right {
+    display: none;
+}
+
+/* 홈 탭에서는 기본 표시 (이미 display: block이거나 inline-block일 가능성 있음) */
+body.section-home .video-button-left,
+body.section-home .video-button-right {
+    display: block;
+}

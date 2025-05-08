@@ -1,4 +1,3 @@
-// ------ 스크롤형식의 메뉴 생성 및 추가 -------
 import addScrollEvent from "../../scrollMenu/js/addScrollEvent.js";
 
 const channel_menu = [
@@ -52,14 +51,43 @@ fetch("../../components/scrollMenu/html/scrollMenuTemplate.html")
         const item_btn = menu_list.querySelectorAll("li");
 
         // 이벤트 리스너 등록
-        item_btn.forEach(el => {        
-            el.addEventListener("click", () => {
-                // 모든 클래스를 먼저 제거
-                item_btn.forEach(item => {item.classList.remove("select")});
-                // 클래스 추가
+        item_btn.forEach(el => {
+            el.addEventListener("click", (e) => {
+                e.preventDefault();
+        
+                item_btn.forEach(item => item.classList.remove("select"));
                 el.classList.add("select");
+        
+                const clickedMenuId = el.querySelector("a").getAttribute("href").substring(1);
+        
+                const urlParams = new URLSearchParams(window.location.search);
+                const channelId = urlParams.get('channel_id');
+                const newUrl = `channel.html?channel_id=${channelId}#${clickedMenuId}`;
+                window.location.href = newUrl;
+        
+                const mainVideo = document.getElementById("main-video");
+                const mainContent = document.querySelector(".main-content");
+        
+                const section1 = document.getElementById("section1")?.parentElement?.parentElement?.parentElement;
+                const section2 = document.getElementById("section2")?.parentElement?.parentElement?.parentElement;
+        
+                if (clickedMenuId === "home") {
+                    if (mainVideo) mainVideo.style.display = "block";
+                    if (mainContent) mainContent.style.display = "block";
+                    if (section1) section1.style.display = "block";
+                    if (section2) section2.style.display = "block";
+                } else if (clickedMenuId === "videos") {
+                    if (mainVideo) mainVideo.style.display = "none";
+                    if (mainContent) mainContent.style.display = "block";
+                    if (section1) section1.style.display = "block";
+                    if (section2) section2.style.display = "none";
+                } else {
+                    if (mainVideo) mainVideo.style.display = "none";
+                    if (mainContent) mainContent.style.display = "none";
+                }
             });
         });
+        
 
         // 검색 폼 생성
         const search_form = build_search_form();
@@ -77,41 +105,11 @@ fetch("../../components/scrollMenu/html/scrollMenuTemplate.html")
 
         // 스크롤 이벤트 추가
         addScrollEvent(scroll_wrap);
-
-        // 이벤트 리스너 등록
-        item_btn.forEach(el => {
-            el.addEventListener("click", () => {
-                // 모든 메뉴 항목 선택 클래스 초기화
-                item_btn.forEach(item => item.classList.remove("select"));
-                el.classList.add("select");
-
-                const clickedMenuId = el.querySelector("a").getAttribute("href").substring(1); // 예: 'home', 'videos'
-
-                const mainVideo = document.getElementById("main-video");
-                const mainContent = document.querySelector(".main-content");
-
-                if (clickedMenuId === "home") {
-                    // HOME 선택 시: 메인 비디오 + 메인 콘텐츠 모두 보여줌
-                    if (mainVideo) mainVideo.style.display = "block";
-                    if (mainContent) mainContent.style.display = "block";
-                } else if (clickedMenuId === "videos") {
-                    // VIDEOS 선택 시: 메인 비디오는 숨기고 콘텐츠만 보여줌
-                    if (mainVideo) mainVideo.style.display = "none";
-                    if (mainContent) mainContent.style.display = "block";
-                } else {
-                    // 그 외 메뉴 선택 시: 모두 숨기거나 원하는 방식으로 처리 가능
-                    if (mainVideo) mainVideo.style.display = "none";
-                    if (mainContent) mainContent.style.display = "none"; // 필요 시 조정
-                }
-            });
-        });
-
     })
 
 
 // 검색 폼 생성 및 이벤트 리스너 추가
 function build_search_form() {
-    // 검색 폼
     const form_tag = 
     `
     <div id="search-icon">
@@ -126,41 +124,33 @@ function build_search_form() {
     </div>
     `;
 
-    // 검색 폼 생성
     const search_form = document.createElement("form");
     search_form.id = "channel-search";
     search_form.action = "#";
     search_form.method = "GET";
     search_form.innerHTML = form_tag;
 
-    // 검색 폼 하위 요소 지정
     const search_icon = search_form.querySelector("#search-icon");
     const search_input_box = search_form.querySelector(".search-input-box");
     const search_input = search_input_box.querySelector("input");
     const search_underbar = search_form.querySelector(".search-underbar");
     const search_underbar_focus = search_underbar.querySelector(".focus-underbar");
 
-    // 검색 폼 클릭 시 스타일 지정
     search_icon.addEventListener("click", function () {
-        // 검색 아이콘 애니메이션 설정
         search_icon.classList.remove("clicked");
-        void search_icon.offsetWidth; // 리플로우 트리거
+        void search_icon.offsetWidth;
         search_icon.classList.add("clicked");
 
-        // 검색창 박스 표시
         search_input_box.classList.add("active");
         search_underbar.classList.add("visible");
 
-        // 검색창의 포커스 언더바 애니메이션 설정
         search_underbar_focus.classList.remove("clicked");
-        void search_underbar_focus.offsetWidth; // 리플로우 트리거
+        void search_underbar_focus.offsetWidth;
         search_underbar_focus.classList.add("clicked");
 
-        // 버튼 클릭 시 input으로 자동 포커스
         search_input.focus();
     });
 
-    // 검색폼 외의 영역 클릭 시 검색 폼 숨기기
     document.addEventListener("click", function(e) {
         if (!search_form.contains(e.target)) {
             search_input_box.classList.remove("active");
@@ -168,33 +158,21 @@ function build_search_form() {
             search_underbar.classList.remove("visible");
         }
     });
-    return search_form;
-}
 
-// 이벤트 리스너 등록
-item_btn.forEach(el => {
-    el.addEventListener("click", () => {
-        // 모든 메뉴 항목 선택 클래스 초기화
-        item_btn.forEach(item => item.classList.remove("select"));
-        el.classList.add("select");
+    // 🔧 검색 이벤트 처리
+    search_form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        const query = search_input.value.trim();
 
-        const clickedMenuId = el.querySelector("a").getAttribute("href").substring(1); // 예: 'home', 'videos'
+        const urlParams = new URLSearchParams(window.location.search);
+        const channelId = urlParams.get('channel_id');
 
-        const mainVideo = document.getElementById("main-video");
-        const mainContent = document.querySelector(".main-content");
-
-        if (clickedMenuId === "home") {
-            // HOME 선택 시: 메인 비디오 + 메인 콘텐츠 모두 보여줌
-            if (mainVideo) mainVideo.style.display = "block";
-            if (mainContent) mainContent.style.display = "block";
-        } else if (clickedMenuId === "videos") {
-            // VIDEOS 선택 시: 메인 비디오는 숨기고 콘텐츠만 보여줌
-            if (mainVideo) mainVideo.style.display = "none";
-            if (mainContent) mainContent.style.display = "block";
+        if (channelId) {
+            window.location.href = `channel.html?channel_id=${channelId}&query=${encodeURIComponent(query)}`;
         } else {
-            // 그 외 메뉴 선택 시: 모두 숨기거나 원하는 방식으로 처리 가능
-            if (mainVideo) mainVideo.style.display = "none";
-            if (mainContent) mainContent.style.display = "none"; // 필요 시 조정
+            window.location.href = `channel.html?query=${encodeURIComponent(query)}`;
         }
     });
-});
+
+    return search_form;
+}
