@@ -20,6 +20,13 @@ body {
     margin-left: var(--mini-nav-width);
 }
 
+/* viewport 791px 이하에서 마진 제거 */
+@media (max-width: 791px) {
+    #home-body.sidebar-close main{
+        margin-left: 0;
+    }
+}
+
 /* 상단 버튼 영역 */
 #btn-header {
     margin-top: 56px;

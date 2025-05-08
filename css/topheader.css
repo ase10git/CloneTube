@@ -302,6 +302,11 @@ input:autofill:active {
     z-index: 900;
 }
 
+/* viewport 791px 이하일 때 숨기기 */
+@media (max-width: 791px) {
+    #mini-nav { display: none; }
+}
+
 #mini-nav ul {
     width: 100%; height: 100vh;
     margin-top: 4px;
