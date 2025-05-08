@@ -12,7 +12,8 @@ let comments = JSON.parse(localStorage.getItem(`comments_${videoId}`)) || [
     liked: 100,
     disliked: 0,
     likedActive: false,
-    dislikedActive: false
+    dislikedActive: false,
+    replies: [] //test
     },
     {
     author: "park",
@@ -40,7 +41,31 @@ function commentInsert() {
     const container = document.querySelector("#comments-list");
     container.innerHTML = "";
 
-    comments.forEach((comment, index) => {
+    // 정렬 버튼 스타일 유지
+    document.querySelectorAll('.sort-options button').forEach(btn => {
+        btn.classList.remove('selected'); // 일단 제거..
+    });
+
+    if (localStorage.getItem("comment_sort") === "latest") {
+        document.querySelectorAll('.sort-options button')[1].classList.add('selected');
+    } else {
+        document.querySelectorAll('.sort-options button')[0].classList.add('selected');
+    }
+
+
+// 정렬 기준 불러오기
+const sortOption = localStorage.getItem("comment_sort") || "popular"; // 기본: 인기 댓글순
+
+// 정렬 기준에 따라 정렬
+let sortedComments = [...comments];
+if (sortOption === "popular") {
+    sortedComments.sort((a, b) => b.liked - a.liked);
+} else if (sortOption === "latest") {
+    sortedComments.reverse(); // 최신순
+}
+
+
+    sortedComments.forEach((comment, index) => {
         const clone = document.importNode(template.content, true);
         clone.querySelector(".commentor-author-profile").src = comment.profile;
         clone.querySelector(".comment-author").textContent = comment.author;
@@ -48,7 +73,96 @@ function commentInsert() {
         clone.querySelector(".comment-body").textContent = comment.body;
         clone.querySelector(".comment-liked-number").textContent = comment.liked;
         
+        //신고버튼 
+        const menuBtn = clone.querySelector(".comment-icon-box");
+    const dropdown = clone.querySelector(".comment-dropdown");
+    menuBtn.addEventListener("click", (e) => {
+        e.stopPropagation(); // 다른 클릭 이벤트 방지
+        document.querySelectorAll(".comment-dropdown").forEach(el => {
+            if (el !== dropdown) el.style.display = "none";
+        });
+        dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+        });
+        document.addEventListener("click", (e) => {
+            if (!menuBtn.contains(e.target)) {
+                dropdown.style.display = "none";
+            }
+        });
 
+        // 답글 버튼
+        const replyBtn = clone.querySelector(".reply-btn");
+        const commentBox = clone.querySelector(".comment-box");
+        const replyDiv = document.createElement("div");
+        replyDiv.classList.add("reply-input-box");
+        replyDiv.innerHTML = `
+            <img src="../../../images/icon4.svg" alt="my-profile" style="width: 36px; height: 36px; border-radius: 50%;">
+            <input type="text" class="reply-input" placeholder="답글을 입력하세요" />
+            <div class="reply-action-buttons">
+                <button class="reply-cancel-btn">취소</button>
+                <button class="reply-submit-btn">답글</button>
+            </div>
+        `;
+        
+        replyBtn.addEventListener("click", () => {
+            const commentBox = replyBtn.closest(".comment-box");
+            const repliesContainer = commentBox.querySelector(".replies-container");
+            if (commentBox.querySelector(".reply-input-box")) return; // 중복 방지
+        
+            const replyDiv = document.createElement("div");
+            replyDiv.classList.add("reply-input-box");
+            replyDiv.innerHTML = `
+                <img src="../../../images/icon4.svg" alt="my-profile" style="width: 36px; height: 36px; border-radius: 50%;">
+                <input type="text" class="reply-input" />
+                <div class="reply-action-buttons">
+                    <button class="reply-cancel-btn">취소</button>
+                    <button class="reply-submit-btn">답글</button>
+                </div>
+            `;
+            repliesContainer.parentNode.insertBefore(replyDiv, repliesContainer);
+
+    const submitBtn = replyDiv.querySelector(".reply-submit-btn");
+    const inputField = replyDiv.querySelector(".reply-input");
+
+    submitBtn.addEventListener("click", () => {
+        const text = inputField.value.trim();
+        if (!text) return;
+        if (!comment.replies) comment.replies = [];
+
+        comment.replies.push({
+            author: "오르미",
+            commented_at: timeCalculator(new Date()),
+            body: text
+        });
+
+        saveComments();
+        commentInsert();
+    });
+
+    replyDiv.querySelector(".reply-cancel-btn").addEventListener("click", () => {
+        replyDiv.remove();
+    });
+});
+        
+        // 답글 목록
+        const repliesContainer = clone.querySelector(".replies-container");
+
+        if (comment.replies && comment.replies.length > 0) {
+            comment.replies.forEach(reply => {
+                const replyEl = document.createElement("div");
+                replyEl.className = "reply-item";
+                replyEl.innerHTML = `
+                    <img src="../../../images/icon4.svg" alt="reply-profile">
+                    <div class="reply-body">
+                        <div class="reply-author">${reply.author} <span class="reply-date">${reply.commented_at}</span></div>
+                        <div class="reply-text">${reply.body}</div>
+                    </div>
+                `;
+                repliesContainer.appendChild(replyEl);
+            });
+        }
+
+
+        // 좋아요, 싫어요 버튼
         const likeBtn = clone.querySelectorAll(".comment-feedback button")[0];
         const dislikeBtn = clone.querySelectorAll(".comment-feedback button")[1];
 
@@ -81,6 +195,7 @@ function commentInsert() {
         });
         
         container.appendChild(clone);
+
         });
     });
 }

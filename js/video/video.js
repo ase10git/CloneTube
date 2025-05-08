@@ -93,6 +93,20 @@ sortbutton.addEventListener('click', function click_report(e) {
         dropbox.style.display = "flex";
     };
 });
+// 정렬 버튼 클릭 시 정렬 기준 설정하고 댓글 다시 로드
+document.querySelectorAll(".sort-options button").forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+        const selected = e.target.textContent.trim();
+        if (selected === "인기 댓글순") {
+            localStorage.setItem("comment_sort", "popular");
+        } else if (selected === "최신순") {
+            localStorage.setItem("comment_sort", "latest");
+        }
+        location.reload();
+    });
+});
+
+
 
 // 댓글 신고 버튼 나타나게
 const buttons = document.querySelectorAll(".comment-icon-box");
@@ -134,4 +148,16 @@ document.addEventListener("DOMContentLoaded", () => {
             subscribeBtn.textContent = subscribed ? "SUBSCRIBED" : "SUBSCRIBE";
         });
     }
+});
+
+// 인기 댓글순
+document.querySelector(".sort-options button:nth-child(1)").addEventListener("click", () => {
+    localStorage.setItem("comment_sort", "popular");
+    commentInsert();
+});
+
+// 최신순
+document.querySelector(".sort-options button:nth-child(2)").addEventListener("click", () => {
+    localStorage.setItem("comment_sort", "latest");
+    commentInsert();
 });

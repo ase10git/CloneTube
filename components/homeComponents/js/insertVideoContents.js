@@ -10,26 +10,26 @@ const temp_div = document.createElement("div");
 
 // 템플릿 코드를 사용하여 비디오 컨텐츠 생성
 async function insert_video_content(video_info){
-  fetch("../components/homeComponents/html/videoContent.html")
-  .then(res => {
-      if (!res.ok) {
-          throw new Error("HTML template 불러오기 실패");
-      }
-      return res.text();
-  })
-  .then(data => {
-      temp_div.innerHTML = data;
-  
-      // 비디오용 템플릿
-      const content_template = temp_div.querySelector("#content-template").content;
-  
-      // home에서 비디오 목록을 넣을 위치
-      const contents = document.querySelector("#contents");
-  
-      // 비디오 메뉴 가져오기
-      const menu = build_video_menu("../images/");
+    fetch("../components/homeComponents/html/videoContent.html")
+    .then(res => {
+        if (!res.ok) {
+            throw new Error("HTML template 불러오기 실패");
+        }
+        return res.text();
+    })
+    .then(data => {
+        temp_div.innerHTML = data;
 
-      video_info.forEach(el => {
+      // 비디오용 템플릿
+        const content_template = temp_div.querySelector("#content-template").content;
+    
+      // home에서 비디오 목록을 넣을 위치
+        const contents = document.querySelector("#contents");
+    
+      // 비디오 메뉴 가져오기
+        const menu = build_video_menu("../images/");
+
+        video_info.forEach(el => {
 
         //사용 하는것들: channel_id, created_dt, thumbnail, title, views
         //사용 안하는것들: dislikes, likes, tags
@@ -64,14 +64,14 @@ async function insert_video_content(video_info){
           //     e.preventDefault();
           //     alert(`썸네일 클릭: ${el.title}`);
           // });
-  
+
           // titleLink?.addEventListener("click", (e) => {
           //     e.preventDefault();
           //     alert(`비디오 제목 클릭: ${el.title}`);
           // });
-      });
-  
-  })
+        });
+    
+    })
 }
 
 export default insert_video_content
