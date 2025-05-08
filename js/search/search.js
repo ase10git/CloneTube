@@ -316,3 +316,22 @@ function video_sort(filter_type) {
     filtered_video_display(sorted_ids);
 
 };
+
+
+// 썸네일 이미지 비율 고정(240px일 경우)
+function thumbnail_height() {
+    const thumbnails = document.querySelectorAll('.thumbnail-box');
+    thumbnails.forEach(el => {
+        const width = el.offsetWidth;
+        if (width === 240) {
+            el.style.height = '139px';
+        } else
+        {
+            el.style.height = '';
+        };
+    });
+}
+
+// 실행 시점
+window.addEventListener('resize', thumbnail_height);
+window.addEventListener('DOMContentLoaded', thumbnail_height);

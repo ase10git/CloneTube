@@ -20,17 +20,24 @@
             <div id=search-filter>
                 <button>필터 <span><img src="../images/filter-left.svg" alt="filter-img" id="filter-img"></span></button>
                 <div id="filter-dropdown">
-                    <div id = "date-dropdown">
-                        <button data-filter="1hour">지난 1시간</button>
-                        <button data-filter="today">오늘</button>
-                        <button data-filter="week">이번 주</button>
-                        <button data-filter="month">이번 달</button>
-                        <button data-filter="year">올해</button>
-                    </div>
-                    <div id = "sort-dropdown">
-                        <button data-filter="sort-views">조회수</button>
-                        <button data-filter="sort-date">업로드 날짜</button>
-                        <button data-filter="sort-likes">좋아요수</button>
+                    <div id="search-filter-title">검색 필터</div>
+                    <div id= "dropdown-menu">
+                        <div id = "date-dropdown">
+                            <div class="dropdown-title">업로드 날짜</div>
+                            <hr class="dropdown-line" />
+                            <button data-filter="1hour">지난 1시간</button>
+                            <button data-filter="today">오늘</button>
+                            <button data-filter="week">이번 주</button>
+                            <button data-filter="month">이번 달</button>
+                            <button data-filter="year">올해</button>
+                        </div>
+                        <div id = "sort-dropdown">
+                            <div class="dropdown-title">정렬기준</div>
+                            <hr class="dropdown-line" />
+                            <button data-filter="sort-views">조회수</button>
+                            <button data-filter="sort-date">업로드 날짜</button>
+                            <button data-filter="sort-likes">좋아요수</button>
+                        </div>
                     </div>
                 </div>
             </div>
