@@ -79,75 +79,86 @@ async function insert_video_content(video_info){
             });
 
             contents.appendChild(clone); // 완성된 비디오 카드를 #contents 영역에 추가
-            contents.appendChild(video_menu_div);
         });
+
+        // #contents 영역에 비디오 메뉴 추가
+        contents.appendChild(video_menu_div);
 
         // ----- 메뉴 토글 이벤트 등록
         // 메뉴 토글 버튼 가져오기
         const video_card = contents.querySelectorAll('.content');
+        
+        // 버튼에 이벤트 등록
+        add_button_events(video_card, video_menu_div);
 
-        // 메뉴 숨기기 함수
-        function hide_menu() {
-            video_menu_div.classList.remove("active");
-        }
-    
-        // 버튼 클릭 이벤트 등록
-        video_card.forEach(card => {
-            const button = card.querySelector(".menu-toggle-btn");
-            button.addEventListener('click', (event) => {
-                event.stopPropagation(); // 이벤트 버블링 방지
-                const active_button = video_menu_div.dataset.activeButton;
-                const button_video_id = button.dataset.videoId;
-                // 같은 버튼을 누르면 안보이게 설정
-                if (video_menu_div.classList.contains("active")
-                    && active_button === button_video_id) 
-                {
-                    hide_menu();
-                    video_menu_div.dataset.activeButton = '';
-                } else {
-                    show_menu(card.dataset.videoId, video_menu_div);
-                    video_menu_div.dataset.activeButton = button_video_id;
-                }
-
-                // 클릭 스타일 설정
-                button.classList.remove("clicked");
-                void button.offsetWidth;
-                button.classList.add("clicked");
-            });
-
-            button.addEventListener('mousedown', (event) => {
-                event.stopPropagation(); // 이벤트 버블링 방지
-                // 클릭 스타일 설정
-                button.classList.add("hold");
-            });
-
-            button.addEventListener('mouseup', (event) => {
-                event.stopPropagation(); // 이벤트 버블링 방지
-                // 클릭 스타일 설정
-                button.classList.remove("hold");
-            });
-
-            button.addEventListener('mouseleave', (event) => {
-                event.stopPropagation(); // 이벤트 버블링 방지
-                // 클릭 스타일 설정
-                button.classList.remove("hold");
-            });
-
-            // 애니메이션 종료 후 클래스 제거
-            button.addEventListener("animationend", () => {
-                button.classList.remove("clicked");
-            });
-        });
-    
         // 문서 클릭 시 메뉴 숨기기
         document.addEventListener('click', () => {
-            hide_menu();
+            hide_menu(video_menu_div);
             video_menu_div.dataset.activeButton = '';
         });
+        
         return { video_content: document.querySelectorAll(".content") };
     })
     .catch(err => {
         //console.log(err)
+    });
+}
+
+// 메뉴 숨기기
+function hide_menu(video_menu_div) {
+    video_menu_div.classList.remove("active");
+}
+
+// 버튼에 메뉴 관련 이벤트 등록
+function add_button_events(video_card, video_menu_div) {
+    // 버튼 클릭 이벤트 등록
+    video_card.forEach(card => {
+        const button = card.querySelector(".menu-toggle-btn");
+        button.addEventListener('click', (event) => {
+            event.stopPropagation(); // 이벤트 버블링 방지
+            // 활성화 상태의 버튼 체크용
+            const active_button = video_menu_div.dataset.activeButton;
+            const button_video_id = button.dataset.videoId;
+            
+            // 같은 버튼을 누르면 안보이게 설정
+            if (video_menu_div.classList.contains("active")
+                && active_button === button_video_id) 
+            {
+                hide_menu(video_menu_div);
+                video_menu_div.dataset.activeButton = '';
+            } else {
+                show_menu(card.dataset.videoId, video_menu_div);
+                video_menu_div.dataset.activeButton = button_video_id;
+            }
+
+            // 클릭 스타일 설정
+            button.classList.remove("clicked");
+            void button.offsetWidth;
+            button.classList.add("clicked");
+        });
+
+        // 마우스 누르고 있을 때 동작
+        button.addEventListener('mousedown', (event) => {
+            event.stopPropagation(); // 이벤트 버블링 방지
+            button.classList.add("hold");
+        });
+
+        // 마우스 뗐을 때 동작
+        button.addEventListener('mouseup', (event) => {
+            event.stopPropagation(); // 이벤트 버블링 방지
+            button.classList.remove("hold");
+        });
+
+        // 마우스 떠날 때 동작
+        button.addEventListener('mouseleave', (event) => {
+            event.stopPropagation(); // 이벤트 버블링 방지
+            button.classList.remove("hold");
+        });
+
+        // 애니메이션 종료 후 클래스 제거
+        button.addEventListener("animationend", () => {
+            button.classList.remove("clicked");
+        });
     });
 }
 

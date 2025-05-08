@@ -1,11 +1,11 @@
 import insert_video_content from "../../components/homeComponents/js/insertVideoContents.js";
 import { getTag } from "../search/tag_filter.js";
 
-// HTTP request 객체
-const xhr = new XMLHttpRequest();
-
 // 가져온 전체 비디오 내용
 let video_total_list = [];
+
+// 비디오 내의 태그 목록
+let video_tags = [];
 
 // 비디오 카드
 let video_content_div;
@@ -23,6 +23,10 @@ async function get_video_list() {
     .then(async data => {
         // 변수에 전체 비디오 목록 저장
         video_total_list = data;
+
+        // 비디오 전체의 태그 목록을 변수에 저장
+        const tags_set = new Set(data.map(video => video.tags).flat());
+        video_tags = Array.from(tags_set);
 
         // 각 비디오의 채널 id만 추출
         const channel_ids = new Set(video_total_list.map(video => video.channel_id));
