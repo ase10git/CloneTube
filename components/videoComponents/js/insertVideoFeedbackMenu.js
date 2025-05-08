@@ -2,7 +2,7 @@
 
 // 상시 표시용 메뉴 목록
 const feedback_list = [
-    {id: "like", name: "좋아요", img_src: "liked-videos.svg", need_invert: false},
+    {id: "like", name: "좋아요", img_src: "liked-videos.svg", need_invert: false, count: 100, liked: false},
     {id: "dislike", name: "싫어요", img_src: "/DisLiked.svg", need_invert: false},
     {id: "share", name: "공유", img_src: "share_arrow.svg", need_invert: false},
 ]
@@ -26,7 +26,7 @@ const video_menu = document.querySelector("#video-menu");
 function append_element(element, parentElement) {
     // 버튼 태그 생성
     const item = document.createElement("button");
-    item.id = `${element.id}`
+    item.id = `${element.id}`;
 
     // 메뉴 버튼 양식
     let menu_item_html = 
@@ -34,7 +34,9 @@ function append_element(element, parentElement) {
         <img src="../images/${element.img_src}" alt="${element.name}" class="icon-img">
     </div>
     <div class="menu-option-name" id="menu-${element.id}">
-        ${(element.id === "like" || element.id === "dislike") ? "" : element.name}
+        ${(element.id === "like") 
+            ? `<span class="like-text">${element.name}</span> <span class="like-count">${element.count ?? 0}</span>` 
+            : element.name}
     </div>`;
 
     // 버튼을 부모 요소에 추가
@@ -46,6 +48,17 @@ function append_element(element, parentElement) {
     } else {
         item.querySelector(".icon-img").classList.add('no-invert');
     }  
+    // 좋아요 버튼 토글 기능
+    if (element.id === "like") {
+        item.addEventListener("click", function () {
+            const countSpan = item.querySelector(".like-count");
+            let current = parseInt(countSpan.textContent);
+            
+            element.liked = !element.liked;
+            countSpan.textContent = element.liked ? current + 1 : current - 1;
+
+        });
+    }
 
     parentElement.appendChild(item);
 }

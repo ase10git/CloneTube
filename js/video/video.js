@@ -70,7 +70,6 @@ function fetchChannelinfo() {
         });
 }
 
-
 // 비디오 메뉴버튼 더보기 클릭 시 나타나게
 const dotsbutton = document.getElementById("menu-show-more");
 

@@ -161,7 +161,7 @@ if (sortOption === "popular") {
             });
         }
 
-
+        
         // 좋아요, 싫어요 버튼
         const likeBtn = clone.querySelectorAll(".comment-feedback button")[0];
         const dislikeBtn = clone.querySelectorAll(".comment-feedback button")[1];
