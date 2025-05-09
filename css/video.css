@@ -268,6 +268,28 @@ body {
     padding: 12px 0px 0px 64px;
     height: 104px;
 }
+/* 설명 전체 박스 (조회수 + 날짜 + 설명 포함) */
+#video-desc {
+    background-color: #2a2a2a;
+    border-radius: 12px;
+    padding: 16px;
+    margin-top: 16px;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* 조회수 + 업로드 날짜 */
+#video-desc #video-info {
+    display: flex;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--font-gr);
+}
+
+
 /* 비디오 설명 */
 #description {
     font-weight: 400;
@@ -280,7 +302,7 @@ body {
     word-wrap: break-word;
     overflow: hidden;
 }
-/* 비디오 설명 더보기 버튼 */
+/* 비디오 설명 더보기 버튼 보류..*/
 #description-btn {
     background-color: transparent;
     border: none;
@@ -997,3 +1019,4 @@ body {
     font-size: 12px;
     color: var(--font-gr);
 }
+
