@@ -21,6 +21,7 @@ body {
     display: flex;
     justify-content: center;
     margin-top: 54px;
+    position: relative;
 }
 
 #primary {
@@ -114,6 +115,7 @@ body {
     height: 36px;
     border-radius: 50px;
     padding: 0 16px 0 16px;
+    cursor:pointer;
 }
 
 /* 더보기 버튼 */
@@ -429,6 +431,7 @@ body {
     border-color: var(--bg-bar);
     padding-bottom: 4px; 
     width: 100%;
+    outline: none;
 }
 
 #comment-form input::placeholder {
@@ -569,6 +572,7 @@ body {
     align-items: center;
     justify-content: center;
     background-color: transparent;
+    cursor:pointer;
 }
 
 .comment-icon-box img {
@@ -590,6 +594,10 @@ body {
     border-radius: 12px;
     background-color: var(--bg-highlight);
     box-sizing: content-box;
+}
+
+.comment-dropdown.visible {
+    display: block;
 }
 
 .comment-dropdown button {
@@ -832,6 +840,7 @@ body {
     bottom: 0px;
     right: 0px;
 }
+
 .overlay-box {
     height: 20px;
     margin: 4px;
@@ -846,11 +855,21 @@ body {
     opacity: 0.65;
 }
 
+/* 이미지 색 지정 */
+.invert {
+    filter: invert(1);
+}
+.no-invert {
+    filter: none;
+}
 
 /* 추천 동영상 - 비디오 정보 */
 .video-detail-box {
+    width: 100%;
+    padding-right: 24px;
     display: flex;
     flex-direction: column;
+    position: relative;
 }
 
 .video-title {
@@ -898,7 +917,7 @@ body {
 }
 
 /* 추천 동영상 세개 점 목록 */
-.menu-items {
+/* .menu-items {
     display: none;
     background-color: var(--bg-highlight);
     border-radius: 5px;
@@ -920,13 +939,6 @@ body {
     align-items: center;
 }
 
-.invert {
-    filter: invert(1);
-}
-.no-invert {
-    filter: none;
-}
-
 .menu-icon-img {
     height: 24px;
     width: 24px;
@@ -935,7 +947,7 @@ body {
 
 .menu-btn:hover {
     background-color: var(--bt-border-d);
-}
+} */
 
 /* 일단.. */
 .reply-input-box {
@@ -1020,3 +1032,135 @@ body {
     color: var(--font-gr);
 }
 
+/* 비디오 메뉴 버튼 */
+.related-video-menu {
+    position: absolute;
+    top: 0; right: 0;
+}
+
+.related-video-menu .menu-toggle-btn, 
+.related-video-menu-list .menu-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--ch-profile);
+    border: none;
+    cursor: pointer;
+}
+
+.related-video-menu .menu-toggle-btn img, 
+.related-video-menu-list .menu-btn-wrap img {
+    filter: invert();
+}
+
+.related-video-menu .menu-toggle-btn {
+    width: 24px; height: 24px;
+    border-radius: 100%;
+    border: none;
+    transition: background-color 0.2s ease-in-out, border 0.2s ease-out;
+}
+
+.related-video-menu .menu-toggle-btn img {
+    width: 18px; height: 18px;
+    object-fit: fill;
+}
+
+@keyframes toggle-btn-blink {
+    0% {
+        background-color: var(--bg-highlight);
+        border: 1px solid var(--bt-border);
+    }
+    100% {
+        background-color: transparent;
+        border: none;
+    }
+}
+
+.related-video-menu .menu-toggle-btn.clicked {
+    animation: toggle-btn-blink forwards 0.5s ease-in-out 1;
+}
+
+.related-video-menu .menu-toggle-btn.hold {
+    background-color: var(--bg-highlight);
+    border: 1px solid var(--bg-highlight);
+}
+
+/* 비디오 메뉴 리스트 */
+.related-video-menu-list { 
+    visibility: hidden;
+    position: absolute;
+    display: block;
+}
+
+.related-video-menu-list.active {
+    visibility: visible;
+    padding: 8px 0;
+    background-color: var(--bg-highlight);
+    border-radius: 12px;
+    z-index: 2000;
+}
+
+.related-video-menu-list .menu-items span{
+    font-family: "Roboto","Arial",sans-serif;
+    line-height: 20px;
+    color: var(--font);
+}
+
+.related-video-menu-list .menu-item {
+    margin: 0;
+    padding: 0 12px 0 16px;
+    height: 36px;
+    font-size: 16px;
+    white-space: nowrap;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    cursor: pointer;
+    border: none;
+    line-height: 24px;
+    border-radius: 0;
+}
+
+.related-video-menu-list .menu-item:hover{
+    background-color: #444;
+}
+
+.related-video-menu-list .service-bar {
+    margin: 8px 0;
+    width: 100%; height: 1px;
+    content: '';
+    border: none;
+    background-color: var(--bt-border-d);
+    cursor: inherit;
+}
+
+.related-video-menu-list .menu-item .menu-btn {
+    margin: 0;
+    background-color: transparent;
+    border: none;
+}
+
+.related-video-menu-list .menu-btn img{
+    width: 24px; height: 24px;
+}
+
+.related-video-menu-list .menu-item-line {
+    margin-right: 16px;
+    width: 100%;
+    background-color: var(--border);
+}
+
+.related-video-menu-list .menu-icon-box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.related-video-menu-list .menu-name{
+    margin-right: 24px;
+    flex: 1;
+}
+
+.related-video-menu-list .menu-icon-box .menu-icon-img.invert {
+    filter: invert();
+}

@@ -1,7 +1,7 @@
 // ------ 비디오 페이지의 관련 동영상 추천 목록 추가 ------
-import build_video_menu from "../../videoComponents/js/insertVideoMenu.js";
 import timeCalculator from "../../../js/util/timeCalculator.js";
 import { viewsUnit } from "./formUnit.js";
+import insert_related_video_menu from "./insertRelatedVideoMenu.js";
 
 //-----현재 비디오 태그 정보 가져오기------//
 async function Current_video_tags_info () {
@@ -72,7 +72,8 @@ async function tags_count(list, tags) {
                         count++;
                     else {
                         //같은 태그가 아닐경우 유사도 계산해서 넣기
-                        sim_sum += await similarity_tag(tags[i], data.tags[j]);
+                        //sim_sum += await similarity_tag(tags[i], data.tags[j]);
+                        sim_sum = 1
                     }
                     j++;
                 }
@@ -195,9 +196,6 @@ function video_list(data){
                 const video_template = temp_div.querySelector("#video-template").content;
                 const recommend_box = document.querySelectorAll(".recommend-box");
 
-                // 비디오 메뉴 가져오기
-                const menu = build_video_menu("../images/");
-
                 // 비디오에 대한 채널 정보를 비동기적으로 가져오기
                 const videoPromises = video.map(el => {
                     // 채널 정보 가져오기
@@ -205,13 +203,14 @@ function video_list(data){
                         .then(res => res.json())
                         .then(channelData => {
                             const clone = video_template.cloneNode(true);
+                            clone.querySelector(".related-video-content").dataset.videoId = el.id;
                             clone.querySelector(".video-thumbnail-img").src = el.thumbnail;
                             clone.querySelector(".video-title").textContent = el.title;
                             clone.querySelector(".channel-name").textContent = channelData.channel_name;
                             clone.querySelector(".spectator-number").textContent = `조회수 ${viewsUnit(el.views)}회`;
                             clone.querySelector(".uploaded-time").textContent = timeCalculator(el.created_dt);
-                            clone.querySelector(".menu-box-img").src = public_url + 'three-dots-vertical.svg';
-                            clone.querySelector(".video-menu").innerHTML = menu.outerHTML;
+                            clone.querySelector(".btn-icon").src = public_url + 'three-dots-vertical.svg';
+                            clone.querySelector(".menu-toggle-btn").dataset.videoId = el.id; // 메뉴 버튼에 id 지정
                             clone.querySelectorAll(".video-link").forEach(link => {
                                 link.href = `http://127.0.0.1:5500/html/video.html?video_id=${el.id}`;
                             });
@@ -234,6 +233,9 @@ function video_list(data){
                                 });
                             }
                         });
+                    })
+                    .then(()=>{
+                        insert_related_video_menu();
                     })
                     .catch(error => {
                         console.error("비디오 정보 처리 중 오류 발생:", error);

@@ -32,8 +32,7 @@ body {
     margin-top: 56px;
     z-index: 10; 
     width: 100%;
-    border-bottom: 1px solid var(--bg-highlight); 
-    background-color: var(--bg-bar); 
+    background-color: var(--bg);
 }
 
 /* 상단 버튼 래퍼 */
@@ -48,13 +47,13 @@ body {
 
 /* 좌우 이동 버튼 */
 .left-btn-wrap, .right-btn-wrap {
-    width: 56px; 
+    width: 48px; 
     height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     position: absolute;
-    background-color: var(--bg-highlight);
+    background-color: var(--bg);
 }
 
 /* 왼쪽 버튼 위치 */
@@ -92,14 +91,14 @@ body {
     width: 20px; height: 100%;
     position: absolute; right: -20px;
     content: '';
-    background: linear-gradient(to right, var(--bg-highlight), transparent);
+    background: linear-gradient(to right, var(--bg) 0%, var(--bg) 40%, transparent 100%);
 }
 
 .right-btn-wrap::after {
     width: 20px; height: 100%;
     position: absolute; left: -20px;
     content: '';
-    background: linear-gradient(to left, var(--bg-highlight), transparent);
+    background: linear-gradient(to left, var(--bg) 0%, var(--bg) 40%, transparent 100%);
 }
 
 /* 버튼 안 아이콘 */
@@ -140,7 +139,7 @@ body {
 .scroll-menu-wrap .menu-list li button{
     width: 100%; height: 100%;
     padding: 0 12px;
-    border: 1px solid var(--bt-border);
+    border: none;
     background-color: var(--bg-highlight);
     border-radius: 8px;
     font-size: 14px;
@@ -424,7 +423,7 @@ body {
     border: 1px solid var(--bt-border);
 }
 
-/* 메뉴 리스트 */
+/* 비디오 메뉴 리스트 */
 #contents .menu-list { 
     visibility: hidden;
     position: absolute;

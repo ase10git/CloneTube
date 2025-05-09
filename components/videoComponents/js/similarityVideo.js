@@ -100,7 +100,7 @@ async function similarity_save() {
 
 async function initSimilarity() {
     // localStorage 초기화 완료 후
-    await similarity_save();
+    // await similarity_save();
 }
 initSimilarity();
 

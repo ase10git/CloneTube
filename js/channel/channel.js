@@ -1,4 +1,6 @@
 import timeCalculator from '../util/timeCalculator.js';
+import insert_video_scroll from '../../components/channelComponents/js/insertVideoScroll.js';
+import insert_video_menu from '../../components/channelComponents/js/insertChannelVideoMenu.js';
 
 let subscriberCount = 0;
 let isSubscribed = false;
@@ -93,8 +95,13 @@ function fetchChannelInfo() {
 }
 
 // 메인 비디오
-function renderMainVideo(videoId) {
-    fetch(`http://techfree-oreumi-api.kro.kr:5000/video/getVideoInfo?video_id=${videoId}`)
+function renderMainVideo(video) {
+    if (!video) {
+        console.warn("표시할 메인 비디오가 없습니다.");
+        return;
+    }
+
+    fetch(`http://techfree-oreumi-api.kro.kr:5000/video/getVideoInfo?video_id=${video.id}`)
         .then(response => response.json())
         .then(video => {
             // 영상 소스 삽입
@@ -107,6 +114,7 @@ function renderMainVideo(videoId) {
 
             // 텍스트 정보 삽입
             document.getElementById('video-title').textContent = video.title;
+            document.getElementById('video-title').href = `video.html?video_id=${video.id}`;
             document.getElementById('spectators').textContent = `${video.views} views`;
             document.getElementById('uploaded-time').textContent = formatUploadDate(video.created_dt);
             document.getElementById('video-description').textContent = video.description;
@@ -115,7 +123,6 @@ function renderMainVideo(videoId) {
             console.error('메인 비디오 불러오기 실패:', error);
         });
 }
-renderMainVideo(1);
 
 // 영상 목록
 function fetchVideosAndRender() {
@@ -131,6 +138,11 @@ function fetchVideosAndRender() {
     fetch(`http://techfree-oreumi-api.kro.kr:5000/video/getChannelVideoList?channel_id=${channelId}`)
         .then(response => response.json())
         .then(data => {
+            // 메인 비디오는 최신
+            const sortedVideos = data.sort((a, b) => new Date(b.created_dt) - new Date(a.created_dt));
+            const latestVideo = sortedVideos[0];
+            renderMainVideo(latestVideo);
+
             //  검색어가 있다면 title, description, tags 기준으로 필터링
             const filteredVideos = query
                 ? data.filter(video => {
@@ -143,6 +155,10 @@ function fetchVideosAndRender() {
 
             renderVideos('section1', filteredVideos);
             renderVideos('section2', filteredVideos);
+
+            
+            // 비디오 메뉴와 이벤트 등록
+            insert_video_menu();
         })
         .catch(error => {
             console.error('Fetch error:', error);
@@ -156,30 +172,72 @@ function renderVideos(sectionId, videoList) {
     videoList.forEach((video) => {
         const videoCard = document.createElement("div");
         videoCard.classList.add("video-card");
+        videoCard.dataset.videoId = video.id;
 
         const thumbnailUrl = video.thumbnail || "https://via.placeholder.com/300x200.png?text=No+Thumbnail";
         const uploadText = timeCalculator(video.created_dt);
         const viewsFormatted = formatViews(video.views);
 
+        // 아이콘 이미지 경로
+        const menu_toggle_img = "../../../images/three-dots-vertical.svg";
+        const clock_img = "../../../images/clock.svg";
+        const playlist_img = "../../../images/list-play.svg";
+
         videoCard.innerHTML = `
         <div class="video-thumbnail">
             <img src="${thumbnailUrl}" alt="Video Thumbnail" />
             <div class="video-duration">00:00</div>
+            <div class="hover-overlay-wrap">
+                <div class="hover-overlay-inner-wrap">
+                    <div class="hover-overlay-box">
+                        <img src="${clock_img}" alt="clock-icon" class="hover-icon"></img>
+                    </div>
+                    <div class="hover-overlay-text-box">나중에 보기</div>
+                </div>
+                <div class="hover-overlay-inner-wrap">
+                    <div class="hover-overlay-box">
+                        <img src="${playlist_img}" alt="list-play-icon" class="hover-icon"></img>
+                    </div>
+                    <div class="hover-overlay-text-box">재생목록에 추가</div>
+                </div>
+            </div>
         </div>
         <div class="video-info">
-            <div class="video-title">${video.title}</div>
-            <div class="video-meta">${viewsFormatted} views · ${uploadText}</div>
+            <div class="video-details">
+                <div class="video-title">${video.title}</div>
+                <div class="video-meta">${viewsFormatted} views • ${uploadText}</div>
+            </div>
+            <div class="video-menu">
+                <button class="menu-toggle-btn" data-video-id="${video.id}">
+                    <img src="${menu_toggle_img}" alt="three-dot-icon" class="btn-icon">
+                </button>
+            </div>
         </div>
         `;
 
-        videoCard.addEventListener('click', () => {
-            localStorage.setItem('selectedVideo', JSON.stringify(video));
-            localStorage.setItem('selectedChannelId', video.channel_id);
-            window.location.href = '../html/video.html';
+        // 썸네일과 비디오 정보를 누르면 비디오 페이지 이동
+        videoCard.querySelector(".video-thumbnail").addEventListener('click', () => {
+            move_to_video_page(video)
+        });
+        videoCard.querySelector(".video-details").addEventListener('click', () => {
+            move_to_video_page(video)
         });
 
         container.appendChild(videoCard);
+
+        // 비디오 목록 스크롤 이벤트 추가
+        const video_playlist = document.querySelectorAll(".video-playlist");
+        video_playlist.forEach(playlist => {
+            insert_video_scroll(playlist);
+        })
     });
+}
+
+// 비디오 페이지 이동 및 localStorage 설정
+function move_to_video_page(video) {
+    localStorage.setItem('selectedVideo', JSON.stringify(video));
+    localStorage.setItem('selectedChannelId', video.channel_id);
+    window.location.href = `../html/video.html?video_id=${video.id}`;
 }
 
 // 조회수
@@ -196,20 +254,3 @@ function formatUploadDate(dateStr) {
     const date = new Date(dateStr);
     return `${date.getFullYear()}.${(date.getMonth() + 1).toString().padStart(2, '0')}.${date.getDate().toString().padStart(2, '0')}`;
 }
-
-// 섹션 내 스크롤
-document.querySelectorAll('.video-playlist').forEach(section => {
-    const row = section.querySelector('.video-row');
-    const leftBtn = section.querySelector('.video-button-left');
-    const rightBtn = section.querySelector('.video-button-right');
-
-    const scrollAmount = 1200; // 원하는 만큼 조절 가능
-
-    leftBtn.addEventListener('click', () => {
-        row.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-    });
-
-    rightBtn.addEventListener('click', () => {
-        row.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-    });
-});
