@@ -325,7 +325,7 @@ body {
 
 .hover-overlay-wrap {
     display: none;
-    z-index: 1;
+    z-index: 100;
 }
 
 .video-link:hover .hover-overlay-wrap {
@@ -444,6 +444,10 @@ body {
     gap: 12px;
 }
 
+.video-info {
+    cursor: pointer;
+}
+
 /* 비디오 제목 */
 .video-header-box {
     display: -webkit-box;
@@ -517,7 +521,10 @@ body {
 }
 
 /* 영상 설명 */
-.video-desc-box{ overflow: hidden; }
+.video-desc-box{ 
+    overflow: hidden; 
+    cursor: pointer;
+}
 
 .video-description {
     line-height: 18px;

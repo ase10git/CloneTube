@@ -93,9 +93,12 @@ async function insert_search_results(query, total_info) {
                 const views = viewsCalculator(el.views, "kor");
 
                 // 비디오 링크
-                const video_link = clone.querySelectorAll(".video-link");
-                video_link.forEach(link=>{
-                    link.href = `video.html?video_id=${el.id}`;
+                clone.querySelector(".video-link").href = `video.html?video_id=${el.id}`;
+                clone.querySelector(".video-info").addEventListener("click", () => {
+                    window.location.href = `video.html?video_id=${el.id}`;
+                });
+                clone.querySelector(".video-desc-box").addEventListener("click", () => {
+                    window.location.href = `video.html?video_id=${el.id}`;
                 })
 
                 // 채널 링크
