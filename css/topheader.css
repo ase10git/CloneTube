@@ -344,4 +344,12 @@ input:autofill:active {
 #mini-nav li:last-of-type .icon-box img{
     filter: invert();
 }
+/* 790px 이하일 때 사이드바 완전히 숨김 */
+@media (max-width: 790px) {
+    .side-bar {
+        display: none !important;
+    }
+}
+
+
 }
