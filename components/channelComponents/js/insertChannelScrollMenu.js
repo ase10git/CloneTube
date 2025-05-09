@@ -22,7 +22,6 @@ fetch("../../components/scrollMenu/html/scrollMenuTemplate.html")
     })
     .then(data => {
         temp_div.innerHTML = data;
-
         // 템플릿
         const template = temp_div.querySelector("#scroll-menu").content;
 

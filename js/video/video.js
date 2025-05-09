@@ -109,37 +109,6 @@ document.querySelectorAll(".sort-options button").forEach((btn) => {
     });
 });
 
-
-
-// 댓글 신고 버튼 나타나게
-const buttons = document.querySelectorAll(".comment-icon-box");
-buttons.forEach(button => {
-    button.addEventListener("click", function (e) {
-        // 현재 버튼의 다음 형제 요소 (comment-dropdown)
-        const button = e.currentTarget;
-        const dropdown = button.nextElementSibling;
-    
-        // 드롭다운이 없으면 중단
-        if (!dropdown || !dropdown.classList.contains("comment-dropdown")) {
-            console.error("comment-dropdown이 없음");
-            return;
-        }
-    
-        // 지금 클릭한 드롭다운이 열려 있었는지 확인
-        const isAlreadyOpen = dropdown.style.display === "block";
-    
-        // 모든 드롭다운 닫기
-        document.querySelectorAll(".comment-dropdown").forEach(el => {
-            el.style.display = "none";
-        });
-    
-        // 지금 클릭한 드롭다운이 이전에 닫혀 있었다면 열기
-        if (!isAlreadyOpen) {
-            dropdown.style.display = "block";
-        }
-    });
-});
-
 // 구독 버튼
 document.addEventListener("DOMContentLoaded", () => {
     const subscribeBtn = document.getElementById("subscribe-btn");

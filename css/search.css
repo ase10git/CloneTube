@@ -1,6 +1,7 @@
 /* 전체 영역 */
 body {
-    background-color: var(--bg); 
+    background-color: var(--bg);
+    overflow-x: hidden;
 }
 
 /* 검색 페이지 폰트 지정 */
@@ -144,7 +145,7 @@ body {
 .scroll-menu-wrap .menu-list li button{
     width: 100%; height: 100%;
     padding: 0 12px;
-    border: 1px solid var(--bt-border);
+    border: none;
     background-color: var(--bg-highlight);
     border-radius: 8px;
     font-size: 14px;
@@ -430,10 +431,12 @@ body {
     justify-content: flex-start;
     align-items: flex-start;
     font-size: 12px;
+    position: relative;
 }
 
 /* 비디오 메타데이터 영역 */
 .meta {
+    padding-right: 24px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -525,11 +528,12 @@ body {
 }
 
 /* 동영상 메뉴 */
-.details .menu {
-    position: relative;
+.video-menu {
+    position: absolute;
+    top: 0; right: 0;
 }
 
-.menu-toggle-btn, .details .menu-btn {
+.video-menu .menu-toggle-btn, #contents .menu-btn {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -538,62 +542,64 @@ body {
     cursor: pointer;
 }
 
-.menu-toggle-btn img, .details .menu-btn img{
+.video-menu .menu-toggle-btn img, #contents .menu-btn img{
     width: 24px; height: 24px;
 }
 
-.menu-toggle-btn img, .details .menu-btn-wrap img {
+.video-menu .menu-toggle-btn img, #contents .menu-btn-wrap img {
     filter: invert();
 }
 
-/* 메뉴 리스트 */
-.details .menu-list { display: none; }
+/* 동영상 메뉴 토글 버튼 */
+.video-menu .menu-toggle-btn {
+    padding: 5px;
+    border-radius: 100%;
+    border: none;
+    transition: background-color 0.2s ease-in-out, border 0.2s ease-out;
+}
 
-.details .menu-list.active {
+@keyframes toggle-btn-blink {
+    0% {
+        background-color: var(--bg-highlight);
+        border: 1px solid var(--bt-border);
+    }
+    100% {
+        background-color: transparent;
+        border: none;
+    }
+}
+
+.video-menu .menu-toggle-btn.clicked {
+    animation: toggle-btn-blink forwards 0.5s ease-in-out 1;
+}
+
+.video-menu .menu-toggle-btn.hold {
+    background-color: var(--bg-highlight);
+    border: 1px solid var(--bt-border);
+}
+
+/* 비디오 메뉴 리스트 */
+#contents .menu-list { 
+    visibility: hidden;
+    position: absolute;
     display: block;
-    position: fixed;
-    right: 50px;
+}
+
+#contents .menu-list.active {
+    visibility: visible;
     padding: 8px 0;
     background-color: var(--bg-highlight);
     border-radius: 12px;
     z-index: 2000;
 }
 
-@media (width >= 1340px) {
-    #search-body.sidebar-close main .details .menu-list.active{
-        right: calc((100% - 1280px) / 2 + 50px);
-    }
-}
-
-@media (width >= 1540px) {
-    .details .menu-list.active {
-        right: calc((100% - 1280px) / 2 - 100px);
-    }
-}
-
-/* @media (width <= 792px) {
-    #search-body main {
-        margin: 0;
-    }
-
-    #search-body .side-bar {
-        display: none;
-    }
-    #search-body .side-bar.active {
-        display: block;
-    }
-    #search-body #mini-nav {
-        display: none;
-    }
-} */
-
-.details .menu-items span{
+#contents .menu-items span{
     font-family: "Roboto","Arial",sans-serif;
     line-height: 20px;
     color: var(--font);
 }
 
-.details .menu-item {
+#contents .menu-item {
     margin: 0;
     padding: 0 12px 0 16px;
     height: 36px;
@@ -608,11 +614,11 @@ body {
     border-radius: 0;
 }
 
-.details .menu-item:hover{
+#contents .menu-item:hover{
     background-color: #444;
 }
 
-.details .service-bar {
+#contents .service-bar {
     margin: 8px 0;
     width: 100%; height: 1px;
     content: '';
@@ -621,28 +627,33 @@ body {
     cursor: inherit;
 }
 
-.details .menu-item .menu-btn {
+#contents .menu-item .menu-btn {
     margin: 0;
     background-color: transparent;
     border: none;
 }
 
-.details .menu-item-line {
+#contents .menu-btn img{
+    width: 24px; height: 24px;
+}
+
+#contents .menu-item-line {
     margin-right: 16px;
+    width: 100%;
     background-color: var(--border);
 }
 
-.details .menu-icon-box{
+#contents .menu-icon-box{
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.details .menu-name{
+#contents .menu-name{
     margin-right: 24px;
     flex: 1;
 }
 
-.details .menu-icon-box .menu-icon-img.invert {
+#contents .menu-icon-box .menu-icon-img.invert {
     filter: invert();
 }

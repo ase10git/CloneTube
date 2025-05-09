@@ -2,6 +2,7 @@
 import insert_search_results from "../../components/searchComponents/js/insertSearchVideoList.js";
 import normalize_for_search from "../util/stringNormalizer.js";
 import {getTag} from "./tag_filter.js";
+import add_scroll_menu from "../../components/homeComponents/js/insertHomeScrollMenu.js";
 
 // 검색어
 // 한글 검색을 위한 URI decoding 처리
@@ -13,6 +14,11 @@ document.title = `${query} - YouTube`;
 
 // 가져온 전체 비디오 내용
 let video_total_list = [];
+
+// 비디오 내의 태그 목록
+let video_tags = [];
+// 기본 태그 목록
+const default_tag_menu = ['전체'];
 
 // 검색 결과 비디오 카드
 let video_content_div;
@@ -39,6 +45,13 @@ async function get_video_list() {
                 // 비디오 제목 검색 + 비디오 태그 검색 결과
                 // 전역 변수에 비디오 목록 저장
                 video_total_list = await get_video_query(data, normalized_query);
+
+                // 비디오 전체의 태그 목록을 변수에 저장
+                const tags_set = new Set(data.map(video => video.tags).flat());
+                video_tags = [default_tag_menu[0], ...Array.from(tags_set)];
+
+                // 스크롤 메뉴 생성
+                await add_scroll_menu(video_tags);
             }
 
             // 표시할 결과 생성

@@ -11,7 +11,7 @@ const temp_div = document.createElement("div");
 // 비디오 메뉴 수정
 function edit_menu() {
     // 비디오 메뉴 가져오기
-    let menu = build_video_menu("../images/");
+    let menu = build_video_menu(public_url);
 
     // 구분 바 요소 추가
     const service_bar = document.createElement("li");
@@ -92,9 +92,12 @@ async function insert_video_content(video_info){
         add_button_events(video_card, video_menu_div);
 
         // 문서 클릭 시 메뉴 숨기기
-        document.addEventListener('click', () => {
-            hide_menu(video_menu_div);
-            video_menu_div.dataset.activeButton = '';
+        document.addEventListener('click', (e) => {
+            const is_click_inside_menu = video_menu_div.contains(e.target);
+            if (!is_click_inside_menu) {
+                video_menu_div.classList.remove("active");
+                video_menu_div.dataset.activeButton = '';
+            }
         });
         
         return { video_content: document.querySelectorAll(".content") };
@@ -102,11 +105,6 @@ async function insert_video_content(video_info){
     .catch(err => {
         //console.log(err)
     });
-}
-
-// 메뉴 숨기기
-function hide_menu(video_menu_div) {
-    video_menu_div.classList.remove("active");
 }
 
 // 버튼에 메뉴 관련 이벤트 등록
@@ -124,10 +122,10 @@ function add_button_events(video_card, video_menu_div) {
             if (video_menu_div.classList.contains("active")
                 && active_button === button_video_id) 
             {
-                hide_menu(video_menu_div);
+                video_menu_div.classList.remove("active");
                 video_menu_div.dataset.activeButton = '';
             } else {
-                show_menu(card.dataset.videoId, video_menu_div);
+                show_menu(card.dataset.videoId, video_menu_div, event);
                 video_menu_div.dataset.activeButton = button_video_id;
             }
 
@@ -163,10 +161,10 @@ function add_button_events(video_card, video_menu_div) {
 }
 
 // 메뉴 표시 함수
-function show_menu(card_video_id, video_menu_div) {
+function show_menu(card_video_id, video_menu_div, event) {
     // 비디오 카드 위치 정보 가져오기
     const card = document.querySelector(`.content[data-video-id="${card_video_id}"]`);
-    const toggle_btn = card.querySelector(".menu-toggle-btn");
+    const toggle_btn = event.target;
     const button_rect = toggle_btn.getBoundingClientRect();
     const contents_div = document.querySelector("#contents").getBoundingClientRect();
     const meta_box = card.querySelector(".meta").getBoundingClientRect();
@@ -193,7 +191,7 @@ function show_menu(card_video_id, video_menu_div) {
     
     // 메뉴가 화면 하단을 넘으면 위쪽으로 띄움
     if (top + menu_height >= viewport_height + window.scrollY) {
-        top -= (menu_height + 60);
+        top -= (menu_height + 40);
     }
 
     video_menu_div.style.position = 'absolute';

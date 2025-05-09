@@ -2,28 +2,11 @@
 import addScrollEvent from "../../scrollMenu/js/addScrollEvent.js";
 import { setTag } from "../../../js/search/tag_filter.js";
 
-const home_menu = [
-    {id: 'all', name: 'all', name_ko: '전체'},
-    {id: 'animals', name: 'animals', name_ko: '동물'},
-    {id: 'clone', name: 'clone', name_ko: '복제'},
-    {id: 'innovation', name:'innovation', name_ko: '혁신'},
-    {id: 'medical', name: 'medical', name_ko: '의학',},
-    {id: 'driving', name: 'driving', name_ko: '운전', },
-    {id: 'robots', name: 'robots', name_ko: '로봇', },
-    {id: 'technology', name: 'technology', name_ko: '기술', },
-    {id: 'news', name: 'news', name_ko: '뉴스', },
-    {id: 'delivery', name: 'delivery', name_ko: '배달', },
-    {id: 'doctor', name: 'doctor', name_ko: '의사', },
-    {id: 'recently-uploaded', name: 'Recently uploaded', name_ko: '최근에 업로드된 동영상', },
-    {id: 'watched', name: 'Watched', name_ko: '감상한 동영상', },
-    {id: 'new-to-you', name: 'New to you', name_ko: '새로운 맞춤 동영상', },
-]
-
 // 템플릿 결과를 담을 태그
 const temp_div = document.createElement("div");
 
 // 태그 버튼 메뉴 추가
-async function add_scroll_menu() {
+async function add_scroll_menu(tag_menu) {
     // 템플릿으로 스크롤 메뉴 가져오기
     fetch("../../components/scrollMenu/html/scrollMenuTemplate.html")
         .then(res => {
@@ -48,12 +31,12 @@ async function add_scroll_menu() {
             const menu_list = scroll_wrap.querySelector(".menu-list");
 
             // 태그 버튼 생성 및 등록
-            home_menu.forEach(el => {
+            tag_menu.forEach(el => {
                 // 리스트 아이템
                 const item = document.createElement("li");
                 // 버튼 태그
                 const item_btn =  document.createElement("button");
-                item_btn.textContent = el.name_ko;
+                item_btn.textContent = el;
                 item_btn.classList.add("menu-item-btn");
 
                 // 버튼과 li를 추가
@@ -85,4 +68,4 @@ async function add_scroll_menu() {
         });
 }
 
-add_scroll_menu();
+export default add_scroll_menu;

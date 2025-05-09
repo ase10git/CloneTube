@@ -53,17 +53,16 @@ function commentInsert() {
     }
 
 
-// 정렬 기준 불러오기
-const sortOption = localStorage.getItem("comment_sort") || "popular"; // 기본: 인기 댓글순
+    // 정렬 기준 불러오기
+    const sortOption = localStorage.getItem("comment_sort") || "popular"; // 기본: 인기 댓글순
 
-// 정렬 기준에 따라 정렬
-let sortedComments = [...comments];
-if (sortOption === "popular") {
-    sortedComments.sort((a, b) => b.liked - a.liked);
-} else if (sortOption === "latest") {
-    sortedComments.reverse(); // 최신순
-}
-
+    // 정렬 기준에 따라 정렬
+    let sortedComments = [...comments];
+    if (sortOption === "popular") {
+        sortedComments.sort((a, b) => b.liked - a.liked);
+    } else if (sortOption === "latest") {
+        sortedComments.reverse(); // 최신순
+    }
 
     sortedComments.forEach((comment, index) => {
         const clone = document.importNode(template.content, true);
@@ -72,22 +71,6 @@ if (sortOption === "popular") {
         clone.querySelector(".comment-uploaded").textContent = comment.commented_at;
         clone.querySelector(".comment-body").textContent = comment.body;
         clone.querySelector(".comment-liked-number").textContent = comment.liked;
-        
-        //신고버튼 
-        const menuBtn = clone.querySelector(".comment-icon-box");
-    const dropdown = clone.querySelector(".comment-dropdown");
-    menuBtn.addEventListener("click", (e) => {
-        e.stopPropagation(); // 다른 클릭 이벤트 방지
-        document.querySelectorAll(".comment-dropdown").forEach(el => {
-            if (el !== dropdown) el.style.display = "none";
-        });
-        dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
-        });
-        document.addEventListener("click", (e) => {
-            if (!menuBtn.contains(e.target)) {
-                dropdown.style.display = "none";
-            }
-        });
 
         // 답글 버튼
         const replyBtn = clone.querySelector(".reply-btn");
@@ -120,28 +103,28 @@ if (sortOption === "popular") {
             `;
             repliesContainer.parentNode.insertBefore(replyDiv, repliesContainer);
 
-    const submitBtn = replyDiv.querySelector(".reply-submit-btn");
-    const inputField = replyDiv.querySelector(".reply-input");
+            const submitBtn = replyDiv.querySelector(".reply-submit-btn");
+            const inputField = replyDiv.querySelector(".reply-input");
 
-    submitBtn.addEventListener("click", () => {
-        const text = inputField.value.trim();
-        if (!text) return;
-        if (!comment.replies) comment.replies = [];
+            submitBtn.addEventListener("click", () => {
+                const text = inputField.value.trim();
+                if (!text) return;
+                if (!comment.replies) comment.replies = [];
 
-        comment.replies.push({
-            author: "오르미",
-            commented_at: timeCalculator(new Date()),
-            body: text
+                comment.replies.push({
+                    author: "오르미",
+                    commented_at: timeCalculator(new Date()),
+                    body: text
+                });
+
+                saveComments();
+                commentInsert();
+            });
+
+            replyDiv.querySelector(".reply-cancel-btn").addEventListener("click", () => {
+                replyDiv.remove();
+            });
         });
-
-        saveComments();
-        commentInsert();
-    });
-
-    replyDiv.querySelector(".reply-cancel-btn").addEventListener("click", () => {
-        replyDiv.remove();
-    });
-});
         
         // 답글 목록
         const repliesContainer = clone.querySelector(".replies-container");
@@ -167,18 +150,18 @@ if (sortOption === "popular") {
         const dislikeBtn = clone.querySelectorAll(".comment-feedback button")[1];
 
         likeBtn.addEventListener("click", () => {
-        if (comment.likedActive) {
-            comment.liked -= 1;
-        } else {
-            comment.liked += 1;
-            if (comment.dislikedActive) {
-            comment.dislikedActive = false;
+            if (comment.likedActive) {
+                comment.liked -= 1;
+            } else {
+                comment.liked += 1;
+                if (comment.dislikedActive) {
+                comment.dislikedActive = false;
+                }
             }
-        }
-        comment.likedActive = !comment.likedActive;
-        saveComments();
-        commentInsert();
-    });
+            comment.likedActive = !comment.likedActive;
+            saveComments();
+            commentInsert();
+        });
 
         dislikeBtn.addEventListener("click", () => {
             if (comment.dislikedActive) {
@@ -196,7 +179,36 @@ if (sortOption === "popular") {
         
         container.appendChild(clone);
 
+    });
+
+    // 신고 버튼 이벤트 등록
+    const buttons = document.querySelectorAll(".comment-icon-box");
+    buttons.forEach(button => {
+        button.addEventListener("click", function (e) {
+            // 현재 버튼의 다음 형제 요소 (comment-dropdown)
+            const button = e.currentTarget;
+            const dropdown = button.nextElementSibling;
+
+            // 드롭다운이 없으면 중단
+            if (!dropdown || !dropdown.classList.contains("comment-dropdown")) {
+                console.error("comment-dropdown이 없음");
+                return;
+            }
+            // 지금 클릭한 드롭다운이 열려 있었는지 확인
+            const isAlreadyOpen = dropdown.classList.contains("visible");
+
+            // 모든 드롭다운 닫기
+            document.querySelectorAll(".comment-dropdown").forEach(el => {
+                el.classList.remove("visible");
+            });
+        
+            // 지금 클릭한 드롭다운이 이전에 닫혀 있었다면 열기
+            if (!isAlreadyOpen) {
+                dropdown.classList.add("visible");
+            }
         });
+    });
+
     });
 }
 

@@ -1,11 +1,14 @@
 import insert_video_content from "../../components/homeComponents/js/insertVideoContents.js";
 import { getTag } from "../search/tag_filter.js";
+import add_scroll_menu from "../../components/homeComponents/js/insertHomeScrollMenu.js";
 
 // 가져온 전체 비디오 내용
 let video_total_list = [];
 
 // 비디오 내의 태그 목록
 let video_tags = [];
+// 기본 태그 목록
+const default_tag_menu = ['전체', '최근에 업로드된 동영상'];
 
 // 비디오 카드
 let video_content_div;
@@ -26,7 +29,10 @@ async function get_video_list() {
 
         // 비디오 전체의 태그 목록을 변수에 저장
         const tags_set = new Set(data.map(video => video.tags).flat());
-        video_tags = Array.from(tags_set);
+        video_tags = [default_tag_menu[0], ...Array.from(tags_set), default_tag_menu[1]];
+
+        // 스크롤 메뉴 생성
+        await add_scroll_menu(video_tags);
 
         // 각 비디오의 채널 id만 추출
         const channel_ids = new Set(video_total_list.map(video => video.channel_id));
@@ -79,14 +85,34 @@ async function get_channel_info(channel_id) {
 window.addEventListener('DOMContentLoaded', get_video_list);
 
 // ---------- 검색 결과 태그 필터링 동작 ---------- //
+// 업로드 시간 비교
+function compare_upload_time(created_dt) {
+    const now = new Date();
+    const past = new Date(created_dt).getTime(); // 대상 날짜(밀리초 단위)
+
+    // 두 시간 차이를 계산(초 단위)
+    const diffInSeconds = Math.floor((now - past) / 1000);
+    return diffInSeconds;
+}
+
 // 태그 필터링
 async function filter_tags() {
     // 버튼으로 설정된 태그 가져오기
     const tag_filter = getTag();
-    // 검색 결과에서 태그를 포함하는 동영상의 id만 추출
-    const filtered_video_list = video_total_list.filter(
-        video => video.tags.some(tag => tag.includes(tag_filter))
-    ).map(video => video.id);
+    let filtered_video_list = [];
+
+    if (tag_filter === '최근에 업로드된 동영상') {
+        filtered_video_list = video_total_list.filter(video => {
+                // 업로드가 일주일 이내인 경우만 출력
+                return compare_upload_time(video.created_dt) < 2592000;
+            }
+        ).map(video => video.id);
+    } else {
+        // 검색 결과에서 태그를 포함하는 동영상의 id만 추출
+        filtered_video_list = video_total_list.filter(
+            video => video.tags.some(tag => tag.includes(tag_filter))
+        ).map(video => video.id);
+    }
     // 표시할 결과 생성
     filtered_video_display(filtered_video_list);
 }
@@ -100,7 +126,6 @@ function filtered_video_display(video_list) {
         });
     } else {
         // 태그 필터에 해당하는 항목이 1개 이상일 때 표시
-
         video_content_div.forEach(content => {
             // content div에 있는 비디오 id 가져오기
             const video_id = Number(content.dataset.videoId);
