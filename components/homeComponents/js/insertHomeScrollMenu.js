@@ -1,6 +1,7 @@
 // ------ 스크롤형식의 메뉴 생성 및 추가 -------
 import addScrollEvent from "../../scrollMenu/js/addScrollEvent.js";
 import { setTag } from "../../../js/search/tag_filter.js";
+import { build_error_message } from "../../../js/util/buildErrorMessage.js";
 
 // 템플릿 결과를 담을 태그
 const temp_div = document.createElement("div");
@@ -64,7 +65,8 @@ async function add_scroll_menu(tag_menu) {
             addScrollEvent(scroll_wrap);
         })
         .catch(err => {
-            // console.error(err);
+            const message = "비디오 템플릿 파일을 가져오는데 실패했습니다. 네트워크 연결 상태를 확인하거나 파일의 위치를 다시 확인해주세요";
+            build_error_message(message, document.querySelector("main"));
         });
 }
 
