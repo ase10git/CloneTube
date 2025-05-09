@@ -103,7 +103,7 @@ async function insert_video_content(video_info){
         return { video_content: document.querySelectorAll(".content") };
     })
     .catch(err => {
-        //console.log(err)
+        throw err;
     });
 }
 

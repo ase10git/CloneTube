@@ -1,6 +1,7 @@
 import insert_video_content from "../../components/homeComponents/js/insertVideoContents.js";
 import { getTag } from "../search/tag_filter.js";
 import add_scroll_menu from "../../components/homeComponents/js/insertHomeScrollMenu.js";
+import { build_error_message } from "../util/buildErrorMessage.js";
 
 // 가져온 전체 비디오 내용
 let video_total_list = [];
@@ -13,6 +14,7 @@ const default_tag_menu = ['전체', '최근에 업로드된 동영상'];
 // 비디오 카드
 let video_content_div;
 
+
 // API에서 비디오 목록 가져오기
 async function get_video_list() {
     // api 요청
@@ -24,12 +26,20 @@ async function get_video_list() {
         return res.json();
     })
     .then(async data => {
+        if (data === null || data.length === 0) {
+            throw new Error("Video list 불러오기 실패");
+        }
+
         // 변수에 전체 비디오 목록 저장
         video_total_list = data;
 
         // 비디오 전체의 태그 목록을 변수에 저장
         const tags_set = new Set(data.map(video => video.tags).flat());
-        video_tags = [default_tag_menu[0], ...Array.from(tags_set), default_tag_menu[1]];
+        if (tags_set.size === 0) {
+            video_tags = default_tag_menu;
+        } else {
+            video_tags = [default_tag_menu[0], ...Array.from(tags_set), default_tag_menu[1]];
+        }
 
         // 스크롤 메뉴 생성
         await add_scroll_menu(video_tags);
@@ -38,16 +48,27 @@ async function get_video_list() {
         const channel_ids = new Set(video_total_list.map(video => video.channel_id));
 
         // 채널 id로 채널 정보 가져오기
-        const channel_info = await Promise.all(
-            Array.from(channel_ids).map(async id => {
-                return await get_channel_info(id);
-            })
-        );
+        let channel_info = [];
+        try {
+            const channel_info_results = await Promise.allSettled(
+                Array.from(channel_ids).map(id => get_channel_info(id))
+            );
+
+            // 성공한 요청만 필터링
+            channel_info = channel_info_results
+                .filter(result => result.status === "fulfilled")
+                .map(result => result.value);
+        } catch (error) {
+            const error_message = "채널 정보를 가져오는데 실패했습니다. 네트워크 연결 상태를 확인해주세요";
+            build_error_message(error_message, document.querySelector("main"));
+            return;
+        }
 
         // 비디오 정보와 채널 정보를 담은 새 배열 생성
         const total_info = video_total_list.map(video => {
             // 비디오 정보의 채널 id와 채널 정보의 채널 id가 같은 채널 정보 찾기
             let channel_data = channel_info.find(channel => channel.id == video.channel_id);
+            if (channel_data === undefined || channel_data === null) return;
             // id = channel.id, 그 외에는 각 대응되는 변수 이름에 저장
             const {id, ...rest_channel_data} = channel_data || {};
             // 채널 데이터의 key를 가공한 새 채널 데이터 객체 생성
@@ -61,7 +82,8 @@ async function get_video_list() {
         video_content_div = video_content;
     })
     .catch(error => {
-        // console.error("Error:", error);
+        const error_message = "비디오 목록을 가져오는데 실패했습니다. 네트워크 연결 상태를 확인해주세요";
+        build_error_message(error_message, document.querySelector("main"));
     });
 }
 
@@ -76,9 +98,7 @@ async function get_channel_info(channel_id) {
             return res.json();
         })
         .then(data => data)
-        .catch(error => {
-            //console.error("Error:", error);
-        });
+        .catch(error => { throw error; });
 }
 
 // 비디오 가져오기
