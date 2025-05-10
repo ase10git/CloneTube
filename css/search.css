@@ -34,6 +34,7 @@ body {
 
 /* 상단 버튼 헤더 */
 #search-header {
+    visibility: hidden;
     display: flex;
     align-items: center;
     width: 100%;
@@ -42,6 +43,11 @@ body {
     z-index: 10; 
     /* border-bottom: 1px solid var(--bg-highlight);  */
     background-color: var(--bg);
+}
+
+/* 데이터 로딩 전까지 숨기기 */
+#search-header.visible {
+    visibility: visible;
 }
 
 /* 상단 버튼 영역 */
@@ -251,6 +257,7 @@ body {
 
 /* 동영상 리스트 영역 */
 #contents {
+    visibility: hidden;
     width: 100%;
     margin-top: 20px;
     max-width : 1280px;
@@ -260,6 +267,11 @@ body {
     justify-content: center;
     align-items: center;
     gap: 20px;
+}
+
+/* 데이터 로딩 전까지 숨기기 */
+#contents.visible {
+    visibility: visible;
 }
 
 /* 검색 결과가 없을 때 처리 박스 */

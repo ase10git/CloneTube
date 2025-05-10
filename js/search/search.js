@@ -3,6 +3,7 @@ import insert_search_results from "../../components/searchComponents/js/insertSe
 import normalize_for_search from "../util/stringNormalizer.js";
 import {getTag} from "./tag_filter.js";
 import add_scroll_menu from "../../components/homeComponents/js/insertHomeScrollMenu.js";
+import { build_error_message, build_network_error } from "../errorHandling/buildErrorMessage.js";
 
 // 검색어
 // 한글 검색을 위한 URI decoding 처리
@@ -30,9 +31,7 @@ async function get_video_list() {
     // api 요청
     fetch("http://techfree-oreumi-api.kro.kr:5000/video/getVideoList")
         .then(res => {
-            if (!res.ok) {
-                throw new Error("Video list 불러오기 실패");
-            }
+            if (!res.ok) build_network_error(res.status);
             return res.json();
         })
         .then(async data => {
@@ -60,15 +59,17 @@ async function get_video_list() {
             no_result_div = no_result;
         })
         .catch(error => {
-            // console.error("Error:", error);
+            if (error.name === "NetworkError") {
+                build_error_message(error.message, document.querySelector("main"));
+            } else {
+                build_error_message("서버에서 에러가 발생했습니다.", document.querySelector("main"));
+            }
         });
 }
 
 // 비디오 제목과 태그 검색
 async function get_video_query(data, normalized_query) {
-    // 비디오 제목에 검색어를 포함하는 경우만 추출
-
-    
+    // 비디오 제목에 검색어를 포함하는 경우만 추출    
     const video_title_query = data.filter(video => {
         // 비디오 제목의 공백 무시, 소문자 치환, 부분 문자열 검사 준비
         const normalized_title = normalize_for_search(video.title);
@@ -122,19 +123,38 @@ async function get_channel_list(channel_id) {
     // api 요청
     return fetch(`http://techfree-oreumi-api.kro.kr:5000/channel/getChannelInfo?id=${channel_id}`)
         .then(res => {
-            if (!res.ok) {
-                throw new Error("Channel 정보 불러오기 실패");
-            }
+            if (!res.ok) build_network_error(res.status);
             return res.json();
         })
         .then(data => data)
         .catch(error => {
-            //console.error("Error:", error);
+            if (error.name === "NetworkError") {
+                build_error_message(error.message, document.querySelector("main"));
+            } else {
+                build_error_message("서버에서 에러가 발생했습니다.", document.querySelector("main"));
+            }
         });
 }
 
 // 웹 페이지 로드 시 이벤트 처리
-window.addEventListener('DOMContentLoaded', get_video_list);
+window.addEventListener('DOMContentLoaded', async function() {
+    try {
+        await get_video_list();
+
+        // 검색 작업 완료 시 메인 표시, 로딩중 숨김
+        document.querySelector("#search-header").classList.add("visible");
+        document.querySelector("#contents").classList.add("visible");
+        
+    } catch(error) {
+        if (error.name === "NetworkError") {
+            build_error_message(error.message, document.querySelector("main"));
+        } else {
+            build_error_message("서버에서 에러가 발생했습니다.", document.querySelector("main"));
+        }
+    } finally {
+        document.querySelector(".loading").classList.add("hidden");
+    }
+});
 
 // ---------- 검색 결과 태그 필터링 동작 ---------- //
 // 검색 결과 리스트에서 태그 필터링
@@ -185,7 +205,7 @@ function filtered_video_display(video_list) {
 
 // 필터 없을 때 전체 표시
 function display_all_video() {
-     // -----> 필터 결과 없을 때 출력하는 div 숨기기
+    // 필터 결과 없을 때 출력하는 div 숨기기
     no_result_div.style.display = "none";
     // 비디오 카드 전체 표시
     video_content_div.forEach(content => {
@@ -203,7 +223,6 @@ document.addEventListener('tagChanged', function () {
         display_all_video();
     }
 });
-
 
 // ---------- 날짜 필터링 동작 ---------- //
 // 클릭 시 필터 조건 나타나게

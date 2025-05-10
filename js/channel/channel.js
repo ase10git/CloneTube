@@ -1,32 +1,51 @@
 import timeCalculator from '../util/timeCalculator.js';
 import insert_video_scroll from '../../components/channelComponents/js/insertVideoScroll.js';
 import insert_video_menu from '../../components/channelComponents/js/insertChannelVideoMenu.js';
+import { build_error_message, build_network_error } from "../errorHandling/buildErrorMessage.js";
+import NetworkError from '../errorHandling/NetworkError.js';
 
 let subscriberCount = 0;
 let isSubscribed = false;
 
-document.addEventListener("DOMContentLoaded", function () {
-    console.log("DOM fully loaded and parsed");
-    setupSubscribeButton(); // 구독 버튼
-    fetchChannelInfo(); // 채널 정보
-    fetchVideosAndRender(); // 영상 목록
-    setupVideoButton(); // 동영상 버튼 설정
+document.addEventListener("DOMContentLoaded", async function () {
+    try {
+        //console.log("DOM fully loaded and parsed");
+        setupSubscribeButton(); // 구독 버튼
 
-    // 해시(#)에 따라 body 클래스 조절
-    function updateBodySectionClass() {
-        const hash = window.location.hash.substring(1); // URL 해시 가져오기
-        document.body.classList.remove("section-home", "section-videos");
+        // 채널 정보를 가져온 뒤 동영상 정보 가져오기
+        await fetchChannelInfo(); // 채널 정보
+        fetchVideosAndRender(); // 영상 목록
 
-        if (hash === "videos") {
-            document.body.classList.add("section-videos");
-        } else {
-            document.body.classList.add("section-home");
+        // 채널 정보 작업 완료 시 메인 표시, 로딩중 숨김
+        document.querySelector("#channel-header").classList.add("visible");
+        document.querySelector("#channel-section").classList.add("visible");
+
+        setupVideoButton(); // 동영상 버튼 설정
+
+        // 해시(#)에 따라 body 클래스 조절
+        function updateBodySectionClass() {
+            const hash = window.location.hash.substring(1); // URL 해시 가져오기
+            document.body.classList.remove("section-home", "section-videos");
+
+            if (hash === "videos") {
+                document.body.classList.add("section-videos");
+            } else {
+                document.body.classList.add("section-home");
+            }
         }
-    }
 
-    // 이벤트 등록
-    window.addEventListener("load", updateBodySectionClass);
-    window.addEventListener("hashchange", updateBodySectionClass);
+        // 이벤트 등록
+        window.addEventListener("load", updateBodySectionClass);
+        window.addEventListener("hashchange", updateBodySectionClass);
+    } catch (error) {
+        if (error.name === "NetworkError") {
+            build_error_message(error.message, document.querySelector("main"));
+        } else {
+            build_error_message("서버에서 에러가 발생했습니다.", document.querySelector("main"));
+        }
+    } finally {
+        document.querySelector(".loading").classList.add("hidden");
+    }
 });
 
 // 동영상 버튼 클릭 시 동영상 목록 표시/숨기기
@@ -63,35 +82,41 @@ function setupSubscribeButton() {
             subscribeButton.textContent = "SUBSCRIBED";
             isSubscribed = true;
         }
-        document.getElementById('subscribers').textContent = `${subscriberCount} subscribers`;
     });
 }
 
 // 채널 정보
-function fetchChannelInfo() {
+async function fetchChannelInfo() {
     const urlParams = new URLSearchParams(window.location.search);
     const channelId = urlParams.get('channel_id');
 
     if (!channelId) {
-        console.error('채널 ID가 URL에 없습니다!');
-        return;
+        throw new NetworkError(404, '잘못된 요청입니다');
     }
 
     fetch(`http://techfree-oreumi-api.kro.kr:5000/channel/getChannelInfo?id=${channelId}`)
-        .then(response => response.json())
-        .then(channelData => {
-            subscriberCount = channelData.subscribers;
-            document.getElementById('channel-name').textContent = channelData.channel_name;
-            document.getElementById('subscribers').textContent = `${subscriberCount} subscribers`;
-            document.getElementById('channel-profile-img').src = channelData.channel_profile;
-            setupSubscribeButton();
-
-            // 문서 title을 채널 이름으로 변경
-            document.title = channelData.channel_name;
-        })
-        .catch(error => {
-            console.error('채널 정보 가져오기 실패:', error);
-        });
+    .then(response => {
+        if (!response.ok) build_network_error(response.status);
+        return response.json();
+    })
+    .then(channelData => {
+        subscriberCount = channelData.subscribers;
+        document.getElementById('channel-name').textContent = channelData.channel_name;
+        document.getElementById('subscribers').textContent = `${subscriberCount} subscribers`;
+        document.getElementById('channel-cover-img').src = channelData.channel_banner;
+        document.getElementById('channel-profile-img').src = channelData.channel_profile;
+        setupSubscribeButton();
+    
+        // 문서 title을 채널 이름으로 변경
+        document.title = channelData.channel_name;
+    })
+    .catch(error=>{
+        if (error.name === "NetworkError") {
+            build_error_message(error.message, document.querySelector("main"));
+        } else {
+            build_error_message("서버에서 에러가 발생했습니다.", document.querySelector("main"));
+        }
+    });
 }
 
 // 메인 비디오
@@ -101,27 +126,20 @@ function renderMainVideo(video) {
         return;
     }
 
-    fetch(`http://techfree-oreumi-api.kro.kr:5000/video/getVideoInfo?video_id=${video.id}`)
-        .then(response => response.json())
-        .then(video => {
-            // 영상 소스 삽입
-            const source = document.querySelector('#main-video video source');
-            source.src = `https://storage.googleapis.com/youtube-clone-video/${video.id}.mp4`;
+    // 영상 소스 삽입
+    const source = document.querySelector('#main-video video source');
+    source.src = `https://storage.googleapis.com/youtube-clone-video/${video.id}.mp4`;
 
-            // video 태그 재로드 (src 변경 시 필요)
-            const videoElement = document.querySelector('#main-video video');
-            videoElement.load();
+    // video 태그 재로드 (src 변경 시 필요)
+    const videoElement = document.querySelector('#main-video video');
+    videoElement.load();
 
-            // 텍스트 정보 삽입
-            document.getElementById('video-title').textContent = video.title;
-            document.getElementById('video-title').href = `video.html?video_id=${video.id}`;
-            document.getElementById('spectators').textContent = `${video.views} views`;
-            document.getElementById('uploaded-time').textContent = formatUploadDate(video.created_dt);
-            document.getElementById('video-description').textContent = video.description;
-        })
-        .catch(error => {
-            console.error('메인 비디오 불러오기 실패:', error);
-        });
+    // 텍스트 정보 삽입
+    document.getElementById('video-title').textContent = video.title;
+    document.getElementById('video-title').href = `video.html?video_id=${video.id}`;
+    document.getElementById('spectators').textContent = `${video.views} views`;
+    document.getElementById('uploaded-time').textContent = formatUploadDate(video.created_dt);
+    document.getElementById('video-description').textContent = video.description;
 }
 
 // 영상 목록
@@ -136,7 +154,10 @@ function fetchVideosAndRender() {
     }
 
     fetch(`http://techfree-oreumi-api.kro.kr:5000/video/getChannelVideoList?channel_id=${channelId}`)
-        .then(response => response.json())
+        .then(response => {
+            if(!response.ok) build_network_error(response.status);
+            return response.json();
+        })
         .then(data => {
             // 메인 비디오는 최신
             const sortedVideos = data.sort((a, b) => new Date(b.created_dt) - new Date(a.created_dt));
@@ -161,7 +182,11 @@ function fetchVideosAndRender() {
             insert_video_menu();
         })
         .catch(error => {
-            console.error('Fetch error:', error);
+            if (error.name === "NetworkError") {
+                build_error_message(error.message, document.querySelector("main"));
+            } else {
+                build_error_message("서버에서 에러가 발생했습니다.", document.querySelector("main"));
+            }
         });
 }
 

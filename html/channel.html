@@ -11,8 +11,7 @@
 <body>
     <!-- 상단 메뉴바 자리 -->
     <header id="top-header"></header>
-    <!-- 사이드바 자리 -->
-    <!-- <nav id="menu-nav"></nav> -->
+
     <main id="channel-main">
         <!-- 상단 -->
         <header id="channel-header">
@@ -106,11 +105,19 @@
             </div>
         </section>
     </main>
+
+    <!-- 로딩중 박스 -->
+    <div class="loading">
+        <div class="loading-content">
+            <span class="loader"></span>
+            <span>로딩중</span>
+        </div>
+    </div>
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="../js/includeHtml.js"></script>
+    <script defer src="../js/includeHtml.js"></script>
+    <script src="../js/topheader/topheader.js"></script>
     <script type="module" src="../js/channel/channel.js"></script>
-    <script src="../js/topheader/topheader.js" defer></script>
     <script type="module" src="../components/channelComponents/js/insertChannelScrollMenu.js"></script>
 </body>
 </html>

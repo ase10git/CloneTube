@@ -100,7 +100,21 @@ async function get_channel_info(channel_id) {
 }
 
 // 비디오 가져오기
-window.addEventListener('DOMContentLoaded', get_video_list);
+window.addEventListener('DOMContentLoaded', async function () {
+    try {    // 로딩중 표시, 메인 내용은 안보이게 설정
+        // 비디오 목록 가져오기
+        await get_video_list();
+
+        // 채널 정보 작업 완료 시 메인 표시, 로딩중 숨김
+        document.querySelector("#btn-header").classList.add("visible");
+        document.querySelector("#contents").classList.add("visible");
+    }
+    catch (error) {
+        build_error_message("서버에서 에러가 발생했습니다.", document.querySelector("main"));
+    } finally {
+        document.querySelector(".loading").classList.add("hidden");
+    }
+});
 
 // ---------- 검색 결과 태그 필터링 동작 ---------- //
 // 업로드 시간 비교

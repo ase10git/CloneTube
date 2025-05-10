@@ -25,6 +25,7 @@ body {
 }
 
 #primary {
+    visibility: hidden;
     display: flex;
     flex-direction: column;
     margin-left: 24px;
@@ -32,6 +33,11 @@ body {
     align-items: center;
     max-width: 1296px;
     min-width: 437px;
+}
+
+/* 데이터 로딩 전까지 숨김 처리 */
+#primary.visible {
+    visibility: visible;
 }
 
 #video-player {
@@ -656,10 +662,17 @@ body {
 }
 
 #secondary {
+    visibility: hidden;
     width: 402px;
     min-width: 300px;
     padding: 24px 24px 0 0;
 }
+
+/*데이터 로딩 전까지 숨김 처리 */
+#secondary.visible{
+    visibility: visible;
+}
+
 @media (min-width: 1029px) {
     #secondary {
         min-width: 402px;
