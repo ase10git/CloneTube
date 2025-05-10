@@ -1,7 +1,7 @@
 // ------ 스크롤형식의 메뉴 생성 및 추가 -------
 import addScrollEvent from "../../scrollMenu/js/addScrollEvent.js";
 import { setTag } from "../../../js/search/tag_filter.js";
-import { build_error_message } from "../../../js/util/buildErrorMessage.js";
+import { build_error_message } from "../../../js/errorHandling/buildErrorMessage.js";
 
 // 템플릿 결과를 담을 태그
 const temp_div = document.createElement("div");

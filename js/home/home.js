@@ -1,7 +1,7 @@
 import insert_video_content from "../../components/homeComponents/js/insertVideoContents.js";
 import { getTag } from "../search/tag_filter.js";
 import add_scroll_menu from "../../components/homeComponents/js/insertHomeScrollMenu.js";
-import { build_error_message } from "../util/buildErrorMessage.js";
+import { build_error_message, build_network_error } from "../errorHandling/buildErrorMessage.js";
 
 // 가져온 전체 비디오 내용
 let video_total_list = [];
@@ -20,14 +20,12 @@ async function get_video_list() {
     // api 요청
     fetch("http://techfree-oreumi-api.kro.kr:5000/video/getVideoList")
     .then(res => {
-        if (!res.ok) {
-            throw new Error("Video list 불러오기 실패");
-        }
+        if (!res.ok) build_network_error(res.status);
         return res.json();
     })
     .then(async data => {
         if (data === null || data.length === 0) {
-            throw new Error("Video list 불러오기 실패");
+            throw new Error("server error");
         }
 
         // 변수에 전체 비디오 목록 저장
@@ -50,18 +48,11 @@ async function get_video_list() {
         // 채널 id로 채널 정보 가져오기
         let channel_info = [];
         try {
-            const channel_info_results = await Promise.allSettled(
+            channel_info = await Promise.all(
                 Array.from(channel_ids).map(id => get_channel_info(id))
             );
-
-            // 성공한 요청만 필터링
-            channel_info = channel_info_results
-                .filter(result => result.status === "fulfilled")
-                .map(result => result.value);
         } catch (error) {
-            const error_message = "채널 정보를 가져오는데 실패했습니다. 네트워크 연결 상태를 확인해주세요";
-            build_error_message(error_message, document.querySelector("main"));
-            return;
+            throw error;
         }
 
         // 비디오 정보와 채널 정보를 담은 새 배열 생성
@@ -78,12 +69,20 @@ async function get_video_list() {
         });
         
         // 비디오 목록을 화면에 추가
-        const {video_content} = await insert_video_content(total_info);
-        video_content_div = video_content;
+        try {
+            const {video_content} = await insert_video_content(total_info);
+            video_content_div = video_content;
+        } catch (error) {
+            throw error;
+        }
+        
     })
     .catch(error => {
-        const error_message = "비디오 목록을 가져오는데 실패했습니다. 네트워크 연결 상태를 확인해주세요";
-        build_error_message(error_message, document.querySelector("main"));
+        if (error.name === "NetworkError") {
+            build_error_message(error.message, document.querySelector("main"));
+        } else {
+            build_error_message("서버에서 에러가 발생했습니다.", document.querySelector("main"));
+        }
     });
 }
 
@@ -92,13 +91,12 @@ async function get_channel_info(channel_id) {
     // api 요청
     return fetch(`http://techfree-oreumi-api.kro.kr:5000/channel/getChannelInfo?id=${channel_id}`)
         .then(res => {
-            if (!res.ok) {
-                throw new Error("Channel 정보 불러오기 실패");
-            }
+            if (!res.ok) build_network_error(res.status);
             return res.json();
         })
         .then(data => data)
-        .catch(error => { throw error; });
+        .catch(error => { 
+            throw error; });
 }
 
 // 비디오 가져오기
@@ -168,11 +166,16 @@ function display_all_video() {
 
 // 태그 버튼 이벤트로 태그 변동 시 검색 결과에 필터링 적용
 document.addEventListener('tagChanged', function () {
-    const tag_filter = getTag();
-    if (tag_filter && tag_filter !== '전체') { 
-        filter_tags();
-    } else {
-        // 표시할 결과 생성
-        display_all_video();
+    try {
+        const tag_filter = getTag();
+        if (tag_filter && tag_filter !== '전체') { 
+            filter_tags();
+        } else {
+            // 표시할 결과 생성
+            display_all_video();
+        }
+    } catch (error) {
+        const error_message = "서버에서 에러가 발생했습니다";
+        build_error_message(error_message, document.querySelector("main"));
     }
 });
