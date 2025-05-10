@@ -21,7 +21,9 @@
             <!-- 동영상 플레이어 -->
             <div class="primary-top">
                 <div id="video-container">
-                    <video id="video-player" src="https://storage.googleapis.com/youtube-clone-video/1.mp4" controls></video>
+                    <video id="video-player" src="https://storage.googleapis.com/youtube-clone-video/1.mp4" muted autoplay></video>
+                    <div id="custom-video-ui"></div>
+                </div>
                 </div>
             </div>
             <!-- 비디오 정보 -->
@@ -62,17 +64,14 @@
                             </div>
                         </div>
                         <div id="video-desc">
-                            
-                            <!-- 조회수 + 날짜 -->
                             <div id="video-info">
                                 <span id="viewerships">조회수 10101010회</span>
                                 <span id="upload-date">2024.01.22</span>
                             </div>
-
-                            <p id="description">
+                            <div id="description">
                                 Chris Fisher, also known as the Blind Woodturner, learned his craft by listening to hundreds of hours of YouTube videos and experimenting in his workshop. Now he’s a YouTube creator himself, sells his products worldwide, and does demonstrations all around the country.
-                                <span><button id="description-btn">more</button></span>
-                            </p>
+                            </div>
+                            <button id="description-btn">더보기</button>
                         </div>
                     </div>
                 </div>
@@ -153,5 +152,12 @@
     <script type="module" src="../components/videoComponents/js/insertRelatedVideoList.js"></script>
     <script type="module" src="../components/videoComponents/js/insertVideoScrollMenu.js"></script>
     <script type="module" src="../js/video/video.js"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        includeHTML("custom-video-ui", "../components/videoComponents/html/videoUI.html");
+    });
+
+    </script>
+
 </body>
 </html>

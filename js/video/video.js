@@ -95,6 +95,7 @@ sortbutton.addEventListener('click', function click_report(e) {
         dropbox.style.display = "flex";
     };
 });
+
 // 정렬 버튼 클릭 시 정렬 기준 설정하고 댓글 다시 로드
 document.querySelectorAll(".sort-options button").forEach((btn) => {
     btn.addEventListener("click", (e) => {
@@ -108,19 +109,6 @@ document.querySelectorAll(".sort-options button").forEach((btn) => {
     });
 });
 
-// 구독 버튼
-document.addEventListener("DOMContentLoaded", () => {
-    const subscribeBtn = document.getElementById("subscribe-btn");
-    let subscribed = false;
-
-    if (subscribeBtn) {
-        subscribeBtn.addEventListener("click", () => {
-            subscribed = !subscribed;
-            subscribeBtn.textContent = subscribed ? "SUBSCRIBED" : "SUBSCRIBE";
-        });
-    }
-});
-
 // 인기 댓글순
 document.querySelector(".sort-options button:nth-child(1)").addEventListener("click", () => {
     localStorage.setItem("comment_sort", "popular");
@@ -132,3 +120,149 @@ document.querySelector(".sort-options button:nth-child(2)").addEventListener("cl
     localStorage.setItem("comment_sort", "latest");
     commentInsert();
 });
+
+// 설명 더보기 토글
+document.addEventListener("DOMContentLoaded", () => {
+    const descriptionEl = document.getElementById("description");
+    const toggleBtn = document.getElementById("description-btn");
+    const descBox = document.getElementById("video-desc");
+
+    if (descriptionEl && toggleBtn && descBox) {
+        let expanded = false;
+
+        toggleBtn.addEventListener("click", () => {
+            expanded = !expanded;
+
+            if (expanded) {
+                descriptionEl.classList.remove("collapsed");
+                descBox.classList.remove("collapsed");
+                toggleBtn.textContent = "간략히";
+            } else {
+                descriptionEl.classList.add("collapsed");
+                descBox.classList.add("collapsed");
+                toggleBtn.textContent = "더보기";
+            }
+        });
+
+        // 기본은 접힌 상태
+        descriptionEl.classList.add("collapsed");
+        descBox.classList.add("collapsed");
+        }
+        });
+
+
+let hideUITimer;
+
+document.addEventListener("DOMContentLoaded", () => {
+    fetchVideoinfo();
+    fetchChannelinfo();
+
+    // 구독 버튼
+    const subscribeBtn = document.getElementById("subscribe-btn");
+    let subscribed = false;
+    if (subscribeBtn) {
+        subscribeBtn.addEventListener("click", () => {
+            subscribed = !subscribed;
+            subscribeBtn.textContent = subscribed ? "SUBSCRIBED" : "SUBSCRIBE";
+        });
+    }
+
+    // UI 연결
+    const observer = new MutationObserver(() => {
+        const video = document.getElementById("video-player");
+        const playToggle = document.getElementById("play-toggle");
+        const playIcon = document.getElementById("play-icon");
+        const volumeBar = document.getElementById("volume-bar");
+        const fullscreenBtn = document.getElementById("fullscreen-btn");
+        const timeCurrent = document.getElementById("current-time");
+        const timeTotal = document.getElementById("duration");
+        const progressBar = document.getElementById("progress-bar");
+        const videoContainer = document.getElementById("video-container");
+        const progressContainer = document.getElementById("progress-container");
+        const volumeWrapper = document.getElementById("volume-control");
+        const volumeToggle = document.getElementById("volume-toggle");
+
+        if (
+            video && playToggle && playIcon && volumeBar &&
+            fullscreenBtn && progressBar && videoContainer &&
+            progressContainer && volumeWrapper && volumeToggle
+        ) {
+            observer.disconnect();
+
+            // 초기 상태 세팅
+            video.volume = 1;
+            video.muted = false;
+
+            // 아이콘 상태: play / pause 자동 반영
+            video.addEventListener("play", () => {
+                playIcon.src = "/images/icon-pause.svg";
+            });
+            video.addEventListener("pause", () => {
+                playIcon.src = "/images/icon-play.svg";
+            });
+
+            // 재생 / 일시정지
+            playToggle.addEventListener("click", (e) => {
+                e.preventDefault();
+                if (video.paused) {
+                    video.play();
+                } else {
+                    video.pause();
+                }
+            });
+
+            // 볼륨 조절
+            volumeBar.addEventListener("input", () => {
+                video.volume = volumeBar.value;
+            });
+
+            // 볼륨 토글 확장
+            volumeToggle.addEventListener("click", (e) => {
+                e.stopPropagation();
+                volumeWrapper.classList.toggle("active");
+            });
+
+            // 외부 클릭 시 닫힘
+            document.addEventListener("click", (e) => {
+                if (!volumeWrapper.contains(e.target)) {
+                    volumeWrapper.classList.remove("active");
+                }
+            });
+
+            // 전체화면
+            fullscreenBtn.addEventListener("click", () => {
+                if (video.requestFullscreen) video.requestFullscreen();
+            });
+
+            // 시간 표시
+            video.addEventListener("loadedmetadata", () => {
+                timeTotal.textContent = formatTime(video.duration);
+            });
+            video.addEventListener("timeupdate", () => {
+                timeCurrent.textContent = formatTime(video.currentTime);
+                const percent = (video.currentTime / video.duration) * 100;
+                progressBar.style.width = `${percent}%`;
+            });
+
+            // 영상 바 클릭 이동
+            progressContainer.addEventListener("click", (e) => {
+                const rect = progressContainer.getBoundingClientRect();
+                const clickX = e.clientX - rect.left;
+                const percent = clickX / rect.width;
+                video.currentTime = percent * video.duration;
+            });
+        }
+    });
+
+    observer.observe(document.getElementById("custom-video-ui"), {
+        childList: true,
+        subtree: true,
+    });
+});
+
+// 시간 포맷 함수
+function formatTime(seconds) {
+    const m = Math.floor(seconds / 60);
+    const s = Math.floor(seconds % 60).toString().padStart(2, "0");
+    return `${m}:${s}`;
+}

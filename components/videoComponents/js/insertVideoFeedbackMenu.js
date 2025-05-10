@@ -2,8 +2,8 @@
 
 // 상시 표시용 메뉴 목록
 const feedback_list = [
-    {id: "like", name: "좋아요", img_src: "liked-videos.svg", need_invert: false, count: 100, liked: false},
-    {id: "dislike", name: "싫어요", img_src: "/DisLiked.svg", need_invert: false},
+    {id: "like", name: "", img_src: "liked-videos.svg", need_invert: false, count: 100, liked: false},
+    {id: "dislike", name: "", img_src: "/DisLiked.svg", need_invert: false},
     {id: "share", name: "공유", img_src: "share_arrow.svg", need_invert: false},
 ]
 

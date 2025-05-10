@@ -1,0 +1,29 @@
+<div id="progress-container">
+    <div id="progress-bar"></div>
+</div> <!-- 영상 재생바 -->
+
+<div id="custom-controls">
+    <div class="controls-left">
+        <button id="play-toggle" class="icon-btn">
+            <img src="/images/icon-play.svg" alt="Play" id="play-icon">
+        </button>
+        <button class="icon-btn"><img src="/images/icon-nextvideo.svg" alt="Next Video"></button>
+        <div class="volume-control" id="volume-control">
+            <button id="volume-toggle">
+                <img src="/images/icon-sound.svg" alt="Sound">
+            </button>
+            <input type="range" id="volume-bar" min="0" max="1" step="0.01" value="1">
+        </div>
+        <span id="current-time">0:00</span> / <span id="duration">0:00</span>
+    </div>
+
+    <div class="controls-right">
+        <button class="icon-btn"><img src="/images/icon-titles.svg" alt="Captions"></button>
+        <button class="icon-btn"><img src="/images/icon-gear.svg" alt="HD"></button>
+        <button class="icon-btn"><img src="/images/icon-theater.svg" alt="Theater Mode"></button>
+        <button class="icon-btn"><img src="/images/icon-tv.svg" alt="Cast to TV"></button>
+        <button id="fullscreen-btn" class="icon-btn">
+            <img src="/images/icon-fullscreen.svg" alt="Fullscreen">
+        </button>
+    </div>
+</div>

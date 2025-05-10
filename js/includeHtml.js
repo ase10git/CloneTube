@@ -20,3 +20,13 @@ function setFavicon(url, type = "image/x-icon") {
 };
 
 setFavicon("/images/youtube-favicon.svg");
+
+
+function includeHTML(targetId, url) {
+    fetch(url)
+        .then(res => res.text())
+        .then(html => {
+        document.getElementById(targetId).innerHTML = html;
+        })
+        .catch(err => console.error("UI include error:", err));
+}
