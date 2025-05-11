@@ -170,12 +170,14 @@ input:autofill:active {
     height: calc(100vh - 56px); /* 헤더 제외한 높이로 설정 */
     background-color: var(--bg-color);
     overflow-y: auto;
+
+    
 }
 
 /* topheader.css */
 .side-bar {
     scrollbar-color: var(--bg-highlight) transparent;
-    display: block;
+
 }
 
 /* 사이드바가 active일 때 */
@@ -344,12 +346,5 @@ input:autofill:active {
 #mini-nav li:last-of-type .icon-box img{
     filter: invert();
 }
-/* 790px 이하일 때 사이드바 완전히 숨김 */
-@media (max-width: 790px) {
-    .side-bar {
-        display: none !important;
-    }
-}
-
 
 }

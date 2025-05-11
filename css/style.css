@@ -21,3 +21,89 @@ ul, li, ol{list-style-type: none;}
 html {
     scrollbar-color: var(--bt-border) var(--bg);
 }
+
+/* 추가된 부분: 반응형 미디어 쿼리 */
+
+/* 1990px 이상일 때: 사이드바와 동영상 리스트 한 줄에 4개씩 */
+@media (min-width: 1990px) {
+    .side-bar {
+        display: block; /* 사이드바가 표시되도록 */
+    }
+
+    .video-list {
+        grid-template-columns: repeat(4, 1fr); /* 한 줄에 4개씩 표시 */
+    }
+
+}
+
+/* 1990px 미만, 1312px 이상일 때: 사이드바와 동영상 리스트 한 줄에 3개씩 */
+@media (max-width: 1990px) and (min-width: 1313px) {
+    .side-bar {
+        display: block;
+
+    }
+
+    .video-list {
+        grid-template-columns: repeat(3, 1fr); /* 한 줄에 3개씩 표시 */
+    }
+
+}
+
+/* 1312px 이하, 973px 이상일 때: mini-nav가 보여지고, 동영상 리스트 한 줄에 3개씩 */
+@media (max-width: 1312px) and (min-width: 973px) {
+    .side-bar {
+        display: none; /* 사이드바 숨기기 */
+    }
+
+    .mini-nav {
+        display: block; /* mini-nav 보이기 */
+    }
+
+    .video-list {
+        grid-template-columns: repeat(3, 1fr); /* 한 줄에 3개씩 표시 */
+    }
+
+    #home-body main {
+        margin-left: 70px;
+    }
+}
+
+/* 973px 이하, 791px 이상일 때: mini-nav가 보여지고, 동영상 리스트 한 줄에 2개씩 */
+@media (max-width: 972px) and (min-width: 792px) {
+    .side-bar {
+        display: none; /* 사이드바 숨기기 */
+    }
+
+    .mini-nav {
+        display: block; /* mini-nav 보이기 */
+    }
+
+    .video-list {
+        grid-template-columns: repeat(2, 1fr); /* 한 줄에 2개씩 표시 */
+    }
+
+    #home-body main {
+        margin-left: 70px;
+    }
+}
+
+/* 791px 이하일 때: 사이드바가 보이지 않으며, 동영상 리스트 한 줄에 1개씩 */
+@media (max-width: 791px) {
+    .side-bar {
+        display: none; /* 사이드바 숨기기 */
+    }
+
+    #mini-nav {
+        display: none !important; /* mini-nav 숨기기 */
+    }
+
+    .video-list {
+        grid-template-columns: 1fr; /* 한 줄에 1개씩 표시 */
+    }
+
+    #home-body main {
+        margin-left: 0 !important;
+    }
+}
+
+
