@@ -29,10 +29,16 @@ body {
 
 /* 상단 버튼 영역 */
 #btn-header {
+    visibility: hidden;
     margin-top: 56px;
     z-index: 10; 
     width: 100%;
     background-color: var(--bg);
+}
+
+/* 로딩 끝나기 전까지 숨김*/
+#btn-header.visible {
+    visibility: visible;
 }
 
 /* 상단 버튼 래퍼 */
@@ -162,11 +168,16 @@ body {
 
 /* 비디오 콘텐츠 전체 */
 #contents {
+    visibility: hidden;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* 반응형 그리드 */
     gap: 20px;
     padding: 20px;
     position: relative;
+}
+
+#contents.visible{
+    visibility: visible
 }
 
 /* 비디오 개별 카드 */

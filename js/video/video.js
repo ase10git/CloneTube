@@ -1,23 +1,40 @@
 import timeCalculator from "../../js/util/timeCalculator.js";
 import {subscribersUnit, viewsUnit} from "../../components/videoComponents/js/formUnit.js";
+import { build_error_message, build_network_error } from "../errorHandling/buildErrorMessage.js";
 
-document.addEventListener("DOMContentLoaded", function () {
-    fetchVideoinfo();
-    fetchChannelinfo();
+document.addEventListener("DOMContentLoaded", async function () {
+    try {
+        await fetchVideoinfo();
+        await fetchChannelinfo();
+
+        // 비디오 정보 작업 완료 시 메인 표시, 로딩중 숨김
+        document.querySelector("#primary").classList.add("visible");
+        document.querySelector("#secondary").classList.add("visible");
+    } catch (error) {
+        if (error.name === "NetworkError") {
+            build_error_message(error.message, document.querySelector("main"));
+        } else {
+            build_error_message("서버에서 에러가 발생했습니다.", document.querySelector("main"));
+        }
+    } finally {
+        document.querySelector(".loading").classList.add("hidden");
+    }
 });
 
 // 비디오 정보 가져오기
-function fetchVideoinfo() {
+async function fetchVideoinfo() {
     const urlParams = new URLSearchParams(window.location.search);
     const videoId = urlParams.get('video_id');
 
     if (!videoId) {
-        console.error('비디오 ID가 URL에 없습니다!');
-        return;
+        build_network_error(404);
     }
 
     fetch(`http://techfree-oreumi-api.kro.kr:5000/video/getVideoInfo?video_id=${videoId}`)
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) build_error_message(response.status);
+            return response.json();
+        })
         .then(videoData => {
             document.getElementById('video-player').src = `https://storage.googleapis.com/youtube-clone-video/${videoData.id}.mp4`;
             document.getElementById('videopage-title').textContent = videoData.title;
@@ -29,27 +46,36 @@ function fetchVideoinfo() {
             document.title = videoData.title;
         })
         .catch(error => {
-            console.error('비디오 정보 가져오기 실패:', error);
+            if (error.name === "NetworkError") {
+                build_error_message(error.message, document.querySelector("main"));
+            } else {
+                build_error_message("서버에서 에러가 발생했습니다.", document.querySelector("main"));
+            }
         });
 }
 
 //채널 정보 가져오기
-function fetchChannelinfo() {
+async function fetchChannelinfo() {
     const urlParams = new URLSearchParams(window.location.search);
     const videoId = urlParams.get('video_id');
 
     if (!videoId) {
-        console.error('비디오 ID가 URL에 없습니다!');
-        return;
+        build_network_error(404);
     }
 
     fetch(`http://techfree-oreumi-api.kro.kr:5000/video/getVideoInfo?video_id=${videoId}`)
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) build_error_message(response.status);
+            return response.json();
+        })
         .then(videoData => {
             const channelId = videoData.channel_id;
 
             fetch(`http://techfree-oreumi-api.kro.kr:5000/channel/getChannelInfo?id=${channelId}`)
-                .then(res => res.json())
+                .then(res => {
+                    if (!res.ok) build_error_message(res.status);
+                    return res.json();
+                })
                 .then(channelInfo => {
                     document.getElementById('channel-img').src = channelInfo.channel_profile;
                     document.getElementById('channel-name').textContent = channelInfo.channel_name;
@@ -62,11 +88,19 @@ function fetchChannelinfo() {
                     });
                 })
                 .catch(error => {
-                    console.error('채널 정보 가져오기 실패:', error);
+                    if (error.name === "NetworkError") {
+                        build_error_message(error.message, document.querySelector("main"));
+                    } else {
+                        build_error_message("서버에서 에러가 발생했습니다.", document.querySelector("main"));
+                    }
                 });
         })
         .catch(error => {
-            console.error('비디오 정보 가져오기 실패:', error);
+            if (error.name === "NetworkError") {
+                build_error_message(error.message, document.querySelector("main"));
+            } else {
+                build_error_message("서버에서 에러가 발생했습니다.", document.querySelector("main"));
+            }
         });
 }
 

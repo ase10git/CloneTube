@@ -11,21 +11,20 @@
 <body>
     <!-- 상단 메뉴바 자리 -->
     <header id="top-header"></header>
-    <!-- 사이드바 자리 -->
-    <!-- <nav id="menu-nav"></nav> -->
+
     <main id="channel-main">
         <!-- 상단 -->
         <header id="channel-header">
-            <img src="../images/Channel-Cover.svg" alt="채널페이지 이미지" id="channel-cover-img">
+            <img src="" alt="채널페이지 이미지" id="channel-cover-img">
             <!--채널 프로필-->
             <div id="channel-profile">
                 <div id="channel-id">
                     <div id="channel-profile-box">
-                        <img src="../images/marcus.svg" alt="프로필 이미지" id="channel-profile-img">
+                        <img src="" alt="프로필 이미지" id="channel-profile-img">
                     </div>
                     <div id="channel-name-box"> <!--채널 이름과 구독자 수를 받는 방식으로 나중에 바꿔야 함-->
-                        <div id="channel-name">Marcus Levin</div>
-                        <div id="subscribers">1.2M subscribers</div>
+                        <div id="channel-name"></div>
+                        <div id="subscribers"></div>
                     </div>
                 </div>
                 <button id="button-subscribe">SUBSCRIBE</button>
@@ -47,14 +46,12 @@
                     </video>
                     <div id="video-info-box">
                         <div id="video-meta">
-                            <a href="#" id="video-title">Blinc Woodturner: Turning passion info fine art</a>
-                            <span id="spectators">576.969 views.</span>
-                            <span id="uploaded-time">3 weeks ago</span>
+                            <a href="#" id="video-title"></a>
+                            <span id="spectators"></span>
+                            <span id="uploaded-time"></span>
                         </div>
                         <div id="video-desc-box">
-                            <p id="video-description">
-                                Morbi sollicitudin cursus consequat. Maecenas commodo nunc ligula, et accumsan augue lobortis in. Sed sapien arcu, vehicula non euismod eu, suscipit sed sapien. Morbi maximus maximus sapien, nec pellentesque augue elementum eu. Curabitur arcu odio, facilisis vestibulum rhoncus sit amet, laoreet non enim. Nulla egestas euismod dui. Suspendisse quis orci neque.
-                            </p>
+                            <p id="video-description"></p>
                             <a href="#" id="video-show-more">자세히 알아보기</a>
                         </div>
                     </div>
@@ -67,7 +64,7 @@
                 <div class="playlist-section">
                     <div class="video-scroll-wrapper">
                         <div class="section-header">
-                            <div class="section-title">Search On ‘21</div>
+                            <div class="section-title"></div>
                             <button class="play-all">
                             <img class="play-icon" src="../images/Group.svg" alt="플레이아이콘">
                             Play all
@@ -90,7 +87,7 @@
                 <div class="playlist-section">
                     <div class="video-scroll-wrapper">
                         <div class="section-header">
-                            <div class="section-title">Search On ‘22</div>
+                            <div class="section-title"></div>
                             <button class="play-all">
                             <img class="play-icon" src="../images/Group.svg" alt="플레이아이콘">
                             Play all
@@ -108,11 +105,19 @@
             </div>
         </section>
     </main>
+
+    <!-- 로딩중 박스 -->
+    <div class="loading">
+        <div class="loading-content">
+            <span class="loader"></span>
+            <span>로딩중</span>
+        </div>
+    </div>
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="../js/includeHtml.js"></script>
+    <script defer src="../js/includeHtml.js"></script>
+    <script src="../js/topheader/topheader.js"></script>
     <script type="module" src="../js/channel/channel.js"></script>
-    <script src="../js/topheader/topheader.js" defer></script>
     <script type="module" src="../components/channelComponents/js/insertChannelScrollMenu.js"></script>
 </body>
 </html>

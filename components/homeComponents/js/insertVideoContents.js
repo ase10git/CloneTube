@@ -2,6 +2,7 @@
 import build_video_menu from "../../videoComponents/js/insertVideoMenu.js";
 import timeCalculator from "../../../js/util/timeCalculator.js";
 import formatViews from "./insertVideoFormatViews.js"
+import {build_network_error} from "../../../js/errorHandling/buildErrorMessage.js";
 
 // 이미지 경로
 const public_url = '../images/';
@@ -27,9 +28,7 @@ function edit_menu() {
 async function insert_video_content(video_info){
     return fetch("../../components/homeComponents/html/videoContent.html")
     .then(res => {
-        if (!res.ok) {
-            throw new Error("HTML template 불러오기 실패");
-        }
+        if (!res.ok) build_network_error(res.status);
         return res.text();
     })
     .then(data => {
@@ -63,7 +62,7 @@ async function insert_video_content(video_info){
             clone.querySelector(".channel-name").textContent = el.channel_name;
             clone.querySelector(".avatar-img").src = el.channel_profile; // 아바타 이미지 설정
             clone.querySelector(".btn-icon").src = public_url + "three-dots-vertical.svg"; // 메뉴 버튼 아이콘 이미지 설정
-            clone.querySelector(".btn-icon").alt = "dot-three-icon"; // 메뉴 버튼 아이콘의 대체 텍스트
+            clone.querySelector(".btn-icon").alt = "dot-three-icon-video-menu"; // 메뉴 버튼 아이콘의 대체 텍스트
             clone.querySelector(".video-link").href = `/html/video.html?video_id=${el.id}`; // 비디오 링크 설정
             clone.querySelector(".menu-toggle-btn").dataset.videoId = el.id; // 메뉴 버튼에 id 지정
 
@@ -89,8 +88,11 @@ async function insert_video_content(video_info){
         const video_card = contents.querySelectorAll('.content');
         
         // 버튼에 이벤트 등록
-        add_button_events(video_card, video_menu_div);
-
+        try {
+            add_button_events(video_card, video_menu_div);
+        } catch {
+            throw new Error("서버에서 문제가 발생했습니다.");
+        }
         // 문서 클릭 시 메뉴 숨기기
         document.addEventListener('click', (e) => {
             const is_click_inside_menu = video_menu_div.contains(e.target);
@@ -125,7 +127,7 @@ function add_button_events(video_card, video_menu_div) {
                 video_menu_div.classList.remove("active");
                 video_menu_div.dataset.activeButton = '';
             } else {
-                show_menu(card.dataset.videoId, video_menu_div, event);
+                show_menu(video_menu_div, event);
                 video_menu_div.dataset.activeButton = button_video_id;
             }
 
@@ -161,13 +163,11 @@ function add_button_events(video_card, video_menu_div) {
 }
 
 // 메뉴 표시 함수
-function show_menu(card_video_id, video_menu_div, event) {
+function show_menu(video_menu_div, event) {
     // 비디오 카드 위치 정보 가져오기
-    const card = document.querySelector(`.content[data-video-id="${card_video_id}"]`);
     const toggle_btn = event.target;
     const button_rect = toggle_btn.getBoundingClientRect();
     const contents_div = document.querySelector("#contents").getBoundingClientRect();
-    const meta_box = card.querySelector(".meta").getBoundingClientRect();
 
     // contents의 문서 내 왼쪽 좌표
     const contents_div_left = contents_div.left;
@@ -177,7 +177,7 @@ function show_menu(card_video_id, video_menu_div, event) {
     const menu_height = video_menu_div.offsetHeight;
 
     // 기준 위치 (스크롤 포함 절대좌표)
-    let top = meta_box.top + window.scrollY - (58 + 12);
+    let top = button_rect.top + window.scrollY - 112 + 24;
     let left = button_rect.left - contents_div_left;
 
     // 뷰포트 크기

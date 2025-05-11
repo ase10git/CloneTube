@@ -146,7 +146,7 @@ async function insert_search_results(query, total_info) {
         };
     })
     .catch(error => {
-        // console.error("Error:", error);
+        build_error_message("서버에서 에러가 발생했습니다.", document.querySelector("main"));
     });
 }
 
