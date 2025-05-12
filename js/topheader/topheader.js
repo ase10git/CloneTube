@@ -1,3 +1,6 @@
+// 상단 헤더 및 사이드바
+import {build_error_message, build_network_error} from "../errorHandling/buildErrorMessage.js";
+
 // 이벤트 리스너 등록
 function form_event() {
     const search_form = document.querySelector("#search-form");
@@ -82,6 +85,9 @@ document.addEventListener("DOMContentLoaded", async function () {
         a_tag.prepend(img_tag);
     })
 
+    // 현재 nav를 가져온 페이지
+    const is_video_page = window.location.pathname.split("/").pop() === "video.html";
+
     // nav 요소가 로딩될 때까지 탐색 
     const interval = setInterval(() => {
         // 이벤트를 넣을 대상 요소 선택
@@ -94,25 +100,37 @@ document.addEventListener("DOMContentLoaded", async function () {
             let prev_is_wide = window.innerWidth > 1312;
 
             // 새로고침 시 초기상태 설정
-            if (prev_is_wide) {
-                sidebar.classList.remove("hidden", "overlay-open", "small_wide");
-                document.body.classList.remove("sidebar-close");
-                navOverlay.classList.remove("visible");
-            } else {
+            if (is_video_page) {
                 sidebar.classList.add("hidden", "small_wide");
                 sidebar.classList.remove("overlay-open");
                 document.body.classList.add("sidebar-close");
                 navOverlay.classList.remove("visible");
+            } else {
+                if (prev_is_wide) {
+                    sidebar.classList.remove("hidden", "overlay-open", "small_wide");
+                    document.body.classList.remove("sidebar-close");
+                    navOverlay.classList.remove("visible");
+                } else {
+                    sidebar.classList.add("hidden", "small_wide");
+                    sidebar.classList.remove("overlay-open");
+                    document.body.classList.add("sidebar-close");
+                    navOverlay.classList.remove("visible");
+                }
             }
 
             // 토글 버튼 이벤트
             toggleButton.addEventListener("click", function () {
-                if (prev_is_wide) {
-                    sidebar.classList.toggle("hidden");
-                    document.body.classList.toggle("sidebar-close"); 
-                } else {
+                if (is_video_page) {
                     sidebar.classList.toggle("overlay-open");
                     navOverlay.classList.toggle("visible");
+                } else {
+                    if (prev_is_wide) {
+                        sidebar.classList.toggle("hidden");
+                        document.body.classList.toggle("sidebar-close"); 
+                    } else {
+                        sidebar.classList.toggle("overlay-open");
+                        navOverlay.classList.toggle("visible");
+                    }
                 }
             });
 
@@ -120,6 +138,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             window.addEventListener("resize", function () {
                 const is_wide = window.innerWidth > 1312;
 
+                if (is_video_page) return;
                 if (is_wide !== prev_is_wide) {
                     if (is_wide) {
                         sidebar.classList.remove("hidden", "small_wide", "overlay-open");
