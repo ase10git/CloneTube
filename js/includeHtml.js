@@ -1,12 +1,3 @@
-// top_header와 menu_nav 추가
-$(document).ready(function () {
-    $("#top-header").load("./topheader.html", function () {
-        // load 완료 후 자식 추가
-        const nav_overlay = $("<div>").addClass("nav-overlay");
-        $("#top-header").append(nav_overlay);
-    });
-});
-
 // 파비콘 등록
 // <link rel="icon" href="/path/to/favicon.svg" type="image/svg+xml">
 function setFavicon(url, type = "image/x-icon") {
