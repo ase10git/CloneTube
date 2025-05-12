@@ -99,10 +99,10 @@ header {
 }
 
 /* input 자동완성 스타일 */
-input:-webkit-autofill, 
-input:-webkit-autofill:hover, 
-input:-webkit-autofill:focus,
-input:-webkit-autofill:active {
+.search-bar input:-webkit-autofill, 
+.search-bar input:-webkit-autofill:hover, 
+.search-bar input:-webkit-autofill:focus,
+.search-bar input:-webkit-autofill:active {
 	border : none;
 	-webkit-text-fill-color: var(--font);
 	-webkit-box-shadow: 0 0 0px 1000px var(--search) inset;
@@ -110,10 +110,10 @@ input:-webkit-autofill:active {
 	transition: background-color 5000x ease-in-out 0s;
 }
 
-input:autofill,
-input:autofill:hover,
-input:autofill:focus,
-input:autofill:active {
+.search-bar input:autofill,
+.search-bar input:autofill:hover,
+.search-bar input:autofill:focus,
+.search-bar input:autofill:active {
 	-webkit-text-fill-color: var(--font);
     -webkit-box-shadow: 0 0 0px 1000px var(--search) inset;
     box-shadow: 0 0 0px 1000px var(--search) inset;
@@ -163,6 +163,8 @@ input:autofill:active {
 
 /* 사이드바 네비게이션 영역 */
 .side-bar {
+    visibility: visible;
+    display: block;
     position: fixed;
     top: 0;
     left: 0;
@@ -172,7 +174,6 @@ input:autofill:active {
     height: calc(100vh - 56px); /* 헤더 제외한 높이로 설정 */
     background-color: var(--bg-color);
     overflow-y: auto;
-<<<<<<< HEAD
     scrollbar-gutter: stable;
     /* 스크롤바 숨기기용*/
     scrollbar-width: none;
@@ -181,21 +182,28 @@ input:autofill:active {
 /* 사이드바 hover시 스크롤바 보이게 */
 .side-bar:hover {
     scrollbar-width: thin;
-=======
-
-    
->>>>>>> channel_js_kim
 }
 
 /* topheader.css */
 .side-bar {
     scrollbar-color: var(--bg-highlight) transparent;
-
 }
 
-/* 사이드바가 active일 때 */
-.side-bar.active {
-    display: none;
+/* 사이드바가 안보일 때 */
+.side-bar.hidden {
+    visibility: hidden;
+}
+
+/* 1312px 이하일 때 오버레이 */
+.side-bar.small_wide {
+    transform: translateX(-100%);
+    transition: transform 0.2s ease, visibility 0.2s ease;
+}
+
+.side-bar.overlay-open {
+    visibility: visible;
+    transform: translateX(0);
+    transition: transform 0.2s ease, visibility 0.2s ease;
 }
 
 /* 사이드바 안의 각 섹션 간격 */
@@ -256,6 +264,10 @@ input:autofill:active {
     color: var(--font);
     width: 100%;
     font-size: 14px;
+}
+
+.side-bar a img{
+    border-radius: 50%;
 }
 
 /* 섹션 타이틀 (SUBSCRIPTIONS 등) */
@@ -410,4 +422,20 @@ input:autofill:active {
     font-size: 12px;
     color: var(--font-gr-l);
 }
+}
+
+/* 1312px 이하일 때 side-bar 클릭 시 메인 영역 흐릿한 효과 */
+.nav-overlay{
+    width:100%; height:100vh;
+    position: absolute;
+    top:0; left:0;
+    background-color: var(--bg);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.nav-overlay.visible{
+    opacity: 0.8;
+    z-index: 800;
+    transition: opacity 0.2s ease;
 }
