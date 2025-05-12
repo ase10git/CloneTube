@@ -137,8 +137,8 @@ body.sidebar-close #channel-main {
 .scroll-menu-wrap {
     width: 100%;
     height: 100%;
-    display: flex; 
-    justify-content: space-between; 
+    display: flex;
+    justify-content: space-between;
     align-items: center; 
     position: relative;
 }
@@ -362,8 +362,12 @@ body.sidebar-close #channel-main {
 
 /* 비디오 영역 */
 #channel-section {
-    width: 100%; max-width: 1284px;
+    width: 100%;
+    max-width: 1284px;
     visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 /* 로딩 끝나기 전까지 숨김 */
@@ -373,14 +377,13 @@ body.sidebar-close #channel-main {
 
 /* 메인 비디오 */
 #main-video {
-    margin: 30px 0;
+    margin: 30px 0 0 0;
     width: 100%;
     padding: 24px auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border-bottom: 1px solid var(--bt-border);
     container-name: top-video-box;
     container-type: inline-size;
 }
@@ -404,6 +407,17 @@ body.sidebar-close #channel-main {
         scrollbar-color: var(--bt-border) transparent;
         scroll-padding: 1px;
     }
+}
+
+#playlist-main {
+    margin-top: 0;
+}
+
+.playlist-section {
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 /* #main-video 폭에 따라 하위 박스 사이즈 최대 길이 변경 */
