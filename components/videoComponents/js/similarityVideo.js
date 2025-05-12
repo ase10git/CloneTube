@@ -7,7 +7,7 @@ const similarityMap = saved ? new Map(Object.entries(JSON.parse(saved))) : new M
 // const allvideo_tags = [];
 // localStorage.setItem('tags_local', JSON.stringify(allvideo_tags));
 
-console.log(similarityMap);
+//console.log(similarityMap);
 
 //비디오 태그 정보 가져오기
 async function video_tags_info () {
@@ -46,7 +46,7 @@ async function similarity_tag(firstWord, secondWord, retryCount = 0) {
     const key = makeKey(firstWord, secondWord);
 
     if (similarityMap.has(key)) {
-        console.log("similarity-이미 있음");
+        //console.log("similarity-이미 있음");
         return similarityMap.get(key);
         // 이미 저장된 유사도 사용
     } else {
@@ -58,7 +58,7 @@ async function similarity_tag(firstWord, secondWord, retryCount = 0) {
             }
         };
         try {
-            console.log("similarity-없음");
+            //console.log("similarity-없음");
             await delayRequest(10);  // 0.01초 대기, 너무 빠르면 오류(Too Many Request)
             const response = await fetch(openApiURL, {
                 method: 'POST',
