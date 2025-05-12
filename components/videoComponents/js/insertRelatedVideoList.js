@@ -14,7 +14,7 @@ async function Current_video_tags_info () {
     }
 
     try {
-        const response = await fetch(`http://techfree-oreumi-api.kro.kr:5000/video/getVideoInfo?video_id=${videoId}`);
+        const response = await fetch(`https://www.techfree-oreumi-api.ai.kr/video/getVideoInfo?video_id=${videoId}`);
         const videoData = await response.json();
         return Array.from(videoData.tags);
     }
@@ -28,7 +28,7 @@ async function Current_video_tags_info () {
 // HTTPRequest 객체 생성
 const xhr = new XMLHttpRequest();
 // get 요청 설정 - 비디오 리스트를 비동기로 가져오기
-xhr.open("GET", "http://techfree-oreumi-api.kro.kr:5000/video/getVideoList", true);
+xhr.open("GET", "https://www.techfree-oreumi-api.ai.kr/video/getVideoList", true);
 // 요청 전송 후 상태 변화 시 콜백 함수
 xhr.onreadystatechange = function () {
     if (xhr.readyState === 4) {
@@ -162,7 +162,7 @@ function video_list(data){
                 // 비디오에 대한 채널 정보를 비동기적으로 가져오기
                 const videoPromises = video.map(el => {
                     // 채널 정보 가져오기
-                    return fetch(`http://techfree-oreumi-api.kro.kr:5000/channel/getChannelInfo?id=${el.channel_id}`)
+                    return fetch(`https://www.techfree-oreumi-api.ai.kr/channel/getChannelInfo?id=${el.channel_id}`)
                         .then(res => res.json())
                         .then(channelData => {
                             const clone = video_template.cloneNode(true);

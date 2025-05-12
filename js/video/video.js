@@ -30,7 +30,7 @@ async function fetchVideoinfo() {
         build_network_error(404);
     }
 
-    fetch(`http://techfree-oreumi-api.kro.kr:5000/video/getVideoInfo?video_id=${videoId}`)
+    fetch(`https://www.techfree-oreumi-api.ai.kr/video/getVideoInfo?video_id=${videoId}`)
         .then(response => {
             if (!response.ok) build_error_message(response.status);
             return response.json();
@@ -63,7 +63,7 @@ async function fetchChannelinfo() {
         build_network_error(404);
     }
 
-    fetch(`http://techfree-oreumi-api.kro.kr:5000/video/getVideoInfo?video_id=${videoId}`)
+    fetch(`https://www.techfree-oreumi-api.ai.kr/video/getVideoInfo?video_id=${videoId}`)
         .then(response => {
             if (!response.ok) build_error_message(response.status);
             return response.json();
@@ -71,7 +71,7 @@ async function fetchChannelinfo() {
         .then(videoData => {
             const channelId = videoData.channel_id;
 
-            fetch(`http://techfree-oreumi-api.kro.kr:5000/channel/getChannelInfo?id=${channelId}`)
+            fetch(`https://www.techfree-oreumi-api.ai.kr/channel/getChannelInfo?id=${channelId}`)
                 .then(res => {
                     if (!res.ok) build_error_message(res.status);
                     return res.json();
