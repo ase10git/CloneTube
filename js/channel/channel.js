@@ -3,9 +3,17 @@ import {subscribersUnit, viewsUnit} from "../../components/videoComponents/js/fo
 import insert_video_scroll from '../../components/channelComponents/js/insertVideoScroll.js';
 import insert_video_menu from '../../components/channelComponents/js/insertChannelVideoMenu.js';
 import { build_error_message, build_network_error } from "../errorHandling/buildErrorMessage.js";
-import NetworkError from '../errorHandling/NetworkError.js';
 
 let subscriberCount = 0;
+
+// 동영상 목록
+let video_list = [];
+let filtered_list = [];
+let video_tags = {};
+
+const urlParams = new URLSearchParams(window.location.search);
+const channelId = urlParams.get('channel_id');
+const query = urlParams.get('query')?.toLowerCase(); // 검색어 소문자 처리
 
 document.addEventListener("DOMContentLoaded", async function () {
     try {
@@ -20,23 +28,47 @@ document.addEventListener("DOMContentLoaded", async function () {
         document.querySelector("#channel-header").classList.add("visible");
         document.querySelector("#channel-section").classList.add("visible");
 
-        setupVideoButton(); // 동영상 버튼 설정
-
-        // 해시(#)에 따라 body 클래스 조절
-        function updateBodySectionClass() {
+        // 해시(#)와 검색(?query) 따라 탭에 맞는 출력 조절
+        function handleSectionDisplay() {
             const hash = window.location.hash.substring(1); // URL 해시 가져오기
-            document.body.classList.remove("section-home", "section-videos");
 
-            if (hash === "videos") {
-                document.body.classList.add("section-videos");
+            const video_section = document.querySelector("#video-section");
+            const main_video = document.querySelector("#main-video");
+            const playlist_main = document.querySelector("#playlist-main");
+
+            if (hash === "home" || !hash) {
+                main_video.classList.remove("hidden");
+                video_section.classList.remove("visible");
+                playlist_main.classList.remove("hidden", "playlist-tab");
+            } else if (hash === "videos") {
+                main_video.classList.add("hidden");
+                video_section.classList.add("visible");
+                playlist_main.classList.add("hidden");
+                playlist_main.classList.remove("playlist-tab");
+            } else if (hash === "playlists") {
+                main_video.classList.add("hidden");
+                video_section.classList.remove("visible");
+                playlist_main.classList.remove("hidden");
+                playlist_main.classList.add("playlist-tab");
             } else {
-                document.body.classList.add("section-home");
+                main_video.classList.add("hidden");
+                video_section.classList.remove("visible");
+                playlist_main.classList.add("hidden");
+                playlist_main.classList.remove("playlist-tab");
+            }
+
+            if (query) {
+                main_video.classList.add("hidden");
+                video_section.classList.add("visible");
+                playlist_main.classList.add("hidden");
+                playlist_main.classList.remove("playlist-tab");
             }
         }
 
+
         // 이벤트 등록
-        window.addEventListener("load", updateBodySectionClass);
-        window.addEventListener("hashchange", updateBodySectionClass);
+        window.addEventListener("load", handleSectionDisplay);
+        window.addEventListener("hashchange", handleSectionDisplay);
     } catch (error) {
         if (error.name === "NetworkError") {
             build_error_message(error.message, document.querySelector("main"));
@@ -47,27 +79,6 @@ document.addEventListener("DOMContentLoaded", async function () {
         document.querySelector(".loading").classList.add("hidden");
     }
 });
-
-// 동영상 버튼 클릭 시 동영상 목록 표시/숨기기
-function setupVideoButton() {
-    const videoButton = document.getElementById('video-button'); // 동영상 버튼
-    const mainVideo = document.getElementById('main-video'); // 메인 비디오 영역
-    const videoList = document.getElementById('video-list'); // 동영상 목록 영역
-
-    if (!videoButton) {
-        console.error('video-button 요소를 찾을 수 없습니다!');
-        return;
-    }
-
-    videoButton.addEventListener('click', () => {
-        console.log('Video button clicked');
-        // 메인 비디오 영역 숨기기
-        mainVideo.style.display = 'none';
-
-        // 동영상 목록 영역 표시하기
-        videoList.style.display = 'block';
-    });
-}
 
 let isSubscribed = false;
 
@@ -93,7 +104,7 @@ async function fetchChannelInfo() {
     const channelId = urlParams.get('channel_id');
 
     if (!channelId) {
-        throw new NetworkError(404, '잘못된 요청입니다');
+        build_network_error(404);
     }
 
     fetch(`https://www.techfree-oreumi-api.ai.kr/channel/getChannelInfo?id=${channelId}`)
@@ -146,13 +157,8 @@ function renderMainVideo(video) {
 
 // 영상 목록
 function fetchVideosAndRender() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const channelId = urlParams.get('channel_id');
-    const query = urlParams.get('query')?.toLowerCase(); // 검색어 소문자 처리
-
     if (!channelId) {
-        console.error('채널 ID가 URL에 없습니다!');
-        return;
+        build_network_error(404);
     }
 
     fetch(`https://www.techfree-oreumi-api.ai.kr/video/getChannelVideoList?channel_id=${channelId}`)
@@ -166,6 +172,12 @@ function fetchVideosAndRender() {
             const latestVideo = sortedVideos[0];
             renderMainVideo(latestVideo);
 
+            // 동영상 목록 저장 - 최신순
+            video_list = sortedVideos;
+
+            // 태그 빈도 계산
+            const best_tags = getFrequentTag(data);
+
             //  검색어가 있다면 title, description, tags 기준으로 필터링
             const filteredVideos = query
                 ? data.filter(video => {
@@ -176,12 +188,21 @@ function fetchVideosAndRender() {
                 })
                 : data;
 
-            renderVideos('section1', filteredVideos);
-            renderVideos('section2', filteredVideos);
+            filtered_list = filteredVideos;
 
-            
+            // 태그를 포함하는 동영상들 목록 생성
+            const tag_videos_first = video_list.filter(el=>el.tags.some(tag=> tag === best_tags[0].value));
+            const tag_videos_second = video_list.filter(el=>el.tags.some(tag=> tag === best_tags[1].value));
+
+            renderVideos('section1', best_tags[0].value, tag_videos_first);
+            renderVideos('section2', best_tags[1].value, tag_videos_second);
+            renderVideos('all-video-section', '', (query ? filteredVideos : sortedVideos));
+
             // 비디오 메뉴와 이벤트 등록
             insert_video_menu();
+            
+            // 정렬 기능 추가
+            sort_video_query();
         })
         .catch(error => {
             if (error.name === "NetworkError") {
@@ -192,8 +213,14 @@ function fetchVideosAndRender() {
         });
 }
 
-function renderVideos(sectionId, videoList) {
+function renderVideos(sectionId, playlistName, videoList) {
     const container = document.getElementById(sectionId);
+
+    if (container.parentNode.closest(".video-scroll-wrapper")) {
+        const title_div = container.parentNode.closest(".video-scroll-wrapper")?.querySelector(".section-title");
+    
+        title_div.textContent = `${playlistName} 태그 재생목록`;
+    }
     container.innerHTML = '';
 
     videoList.forEach((video) => {
@@ -258,6 +285,48 @@ function renderVideos(sectionId, videoList) {
             insert_video_scroll(playlist);
         })
     });
+}
+
+// 태그 빈도수 계산
+function getFrequentTag(data) {
+    // 비디오 태그와 빈도 수 저장
+    data.forEach(el=>{
+        el.tags.forEach(tag=>{
+            // 해당 속성값이 있으면 1을 더하고, 없으면 새로 0을 추가
+            video_tags[tag] = ((video_tags[tag]) || 0) + 1;
+        });
+    });
+
+    const sorted_tags = Object.entries(video_tags)
+    .sort((a, b)=> b[1] - a[1]);
+
+    return sorted_tags.slice(0, 2).map(([value, count]) => ({value, count}));
+}
+
+// 정렬
+function sort_video_query() {
+    const sort_btn = document.querySelectorAll(".video-sort");
+    let origin_list = query ? filtered_list : video_list;
+    let sorted_list = [];
+
+    sort_btn.forEach(button=>{
+        button.addEventListener("click", function() {
+            switch(button.textContent) {
+                case("최신순"):
+                sorted_list = [...origin_list].sort((a, b) => new Date(b.created_dt) - new Date(a.created_dt));
+                break;
+                case("인기순"):
+                sorted_list = [...origin_list].sort((a, b) => Number(b.views) - Number(a.views));
+                break;
+                case("날짜순"):
+                sorted_list = [...origin_list].sort((a, b) => new Date(a.created_dt) - new Date(b.created_dt));
+                break;
+            }
+            renderVideos('all-video-section', '', sorted_list);
+            sort_btn.forEach(el=>el.classList.remove("selected"));
+            button.classList.add("selected");
+        })
+    })
 }
 
 // 비디오 페이지 이동 및 localStorage 설정

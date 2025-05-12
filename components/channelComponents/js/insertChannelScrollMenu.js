@@ -1,4 +1,5 @@
 // 스크롤 메뉴 스크롤 효과 추가 함수 임포트
+import { build_network_error } from "../../../js/errorHandling/buildErrorMessage.js";
 import addScrollEvent from "../../scrollMenu/js/addScrollEvent.js";
 
 // 메뉴 구성 정의
@@ -80,40 +81,29 @@ fetch("../../components/scrollMenu/html/scrollMenuTemplate.html")
         // 스크롤 이벤트 연결
         addScrollEvent(scroll_wrap);
 
-        // 현재 해시를 기준으로 섹션 보이기/숨기기 처리
-        handleSectionDisplay(); // ★ 여기가 핵심
-        window.addEventListener("hashchange", handleSectionDisplay);
+        // 현재 해시를 기준으로 메뉴 탭 스타일 설정
+        handleSelectedMenu();
+        window.addEventListener("load", handleSelectedMenu);
+        window.addEventListener("hashchange", handleSelectedMenu);
     });
 
 /**
- * 현재 해시에 따라 섹션 보여줄지 결정
+ * 현재 해시에 따라 li 표시 변경
  */
-function handleSectionDisplay() {
-    const hash = window.location.hash.substring(1);
+function handleSelectedMenu() {
+    const hash = location.hash.split("#")[1];
+    const item_btns = Array.from(document.querySelector("#channel-nav").querySelectorAll("li"));
+    item_btns.pop();
+    const menu_item = channel_menu.filter(el=> el.id === hash)[0];
+    
+    if (!menu_item) return;
 
-    const mainVideo = document.getElementById("main-video");
-    const mainContent = document.querySelector(".main-content");
-
-    const section1 = document.getElementById("section1")?.closest(".playlist-section");
-    const section2 = document.getElementById("section2")?.closest(".playlist-section");
-
-    if (hash === "home" || hash === "") {
-        // 홈 탭일 경우
-        if (mainVideo) mainVideo.style.display = "flex";
-        if (mainContent) mainContent.style.display = "flex";
-        if (section1) section1.style.display = "flex";
-        if (section2) section2.style.display = "flex";
-    } else if (hash === "videos") {
-        // 동영상 탭일 경우
-        if (mainVideo) mainVideo.style.display = "none";
-        if (mainContent) mainContent.style.display = "flex";
-        if (section1) section1.style.display = "flex";
-        if (section2) section2.style.display = "none";
-    } else {
-        // 그 외 탭일 경우
-        if (mainVideo) mainVideo.style.display = "none";
-        if (mainContent) mainContent.style.display = "none";
-    }
+    item_btns.forEach(el=>{
+        if (menu_item.name_ko === el.textContent) {
+            item_btns.forEach(item => item.classList.remove("select"));
+            el.classList.add("select");
+        }
+    })
 }
 
 /**
@@ -163,7 +153,12 @@ function build_search_form() {
 
     // 외부 클릭 시 입력창 비활성화
     document.addEventListener("click", function (e) {
+        const right_scroll_btn = document.querySelector(".nav-right-btn");
+        const left_scroll_btn = document.querySelector(".nav-left-btn");
+
         if (!search_form.contains(e.target)) {
+            // 스크롤 버튼은 예외처리
+            if (right_scroll_btn.contains(e.target) || left_scroll_btn.contains(e.target)) return;
             search_input_box.classList.remove("active");
             search_input.classList.remove("active");
             search_underbar.classList.remove("visible");
@@ -178,11 +173,9 @@ function build_search_form() {
         const urlParams = new URLSearchParams(window.location.search);
         const channelId = urlParams.get('channel_id');
 
-        if (channelId) {
-            window.location.href = `channel.html?channel_id=${channelId}&query=${encodeURIComponent(query)}`;
-        } else {
-            window.location.href = `channel.html?query=${encodeURIComponent(query)}`;
-        }
+        if (!channelId) build_network_error(404);
+
+        window.location.href = `channel.html?channel_id=${channelId}&query=${encodeURIComponent(query)}`;
     });
 
     return search_form;

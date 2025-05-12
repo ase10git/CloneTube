@@ -41,7 +41,6 @@ body {
     padding: 0 calc((100% - 1280px) / 2);
     margin-top: 56px;
     z-index: 10; 
-    /* border-bottom: 1px solid var(--bg-highlight);  */
     background-color: var(--bg);
 }
 
