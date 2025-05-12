@@ -172,6 +172,7 @@ input:autofill:active {
     height: calc(100vh - 56px); /* 헤더 제외한 높이로 설정 */
     background-color: var(--bg-color);
     overflow-y: auto;
+<<<<<<< HEAD
     scrollbar-gutter: stable;
     /* 스크롤바 숨기기용*/
     scrollbar-width: none;
@@ -180,12 +181,16 @@ input:autofill:active {
 /* 사이드바 hover시 스크롤바 보이게 */
 .side-bar:hover {
     scrollbar-width: thin;
+=======
+
+    
+>>>>>>> channel_js_kim
 }
 
 /* topheader.css */
 .side-bar {
     scrollbar-color: var(--bg-highlight) transparent;
-    display: block;
+
 }
 
 /* 사이드바가 active일 때 */

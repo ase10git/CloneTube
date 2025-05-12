@@ -61,4 +61,22 @@ document.addEventListener("DOMContentLoaded", function () {
         // form 이벤트 등록
         form_event();
     }, 100);
+    
+});
+document.addEventListener('DOMContentLoaded', () => {
+    const hamburger = document.querySelector('.side-button');
+    const body = document.body;
+
+    hamburger.addEventListener('click', () => {
+        body.classList.toggle('sidebar-open');
+    });
+
+    // 오버레이 클릭 시 닫기
+    const overlay = document.createElement('div');
+    overlay.className = 'sidebar-overlay';
+    document.body.appendChild(overlay);
+
+    overlay.addEventListener('click', () => {
+        body.classList.remove('sidebar-open');
+    });
 });

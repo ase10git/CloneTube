@@ -470,6 +470,9 @@ body {
     border-radius: 0;
 }
 
+/* 
+통합 중 충돌 발생
+확인 후 수정 예정
 #contents .menu-item:hover{
     background-color: #444;
 }
@@ -512,4 +515,5 @@ body {
 
 #contents .menu-icon-box .menu-icon-img.invert {
     filter: invert();
-}
+} */
+
