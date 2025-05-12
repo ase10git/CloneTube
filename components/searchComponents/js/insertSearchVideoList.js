@@ -24,15 +24,30 @@ function edit_menu() {
     return menu;
 }
 
+// Utility function to escape HTML special characters
+function escapeHTML(str) {
+    return str.replace(/[&<>"']/g, function(match) {
+        const escapeMap = {
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#39;'
+        };
+        return escapeMap[match];
+    });
+}
+
 // 검색 결과가 없을 때 출력 내용 생성
 function no_result_html(query) {
+    const sanitizedQuery = escapeHTML(query);
     const html_template = 
     `
     <div class="no-search-result-img-box">
         <img src="../../images/search-no-result.svg" alt="no-search-result">
     </div>
     <div>
-        <span class="no-result-message">${query} 검색결과가 없습니다.</span>
+        <span class="no-result-message">${sanitizedQuery} 검색결과가 없습니다.</span>
     </div>
     <div>
         <span class="no-result-recommend">다른 검색어를 시도해 보거나 검색 필터를 삭제하세요.</span>
