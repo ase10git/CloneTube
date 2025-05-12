@@ -33,7 +33,7 @@ function form_event(search_form, search_input, reset_button) {
         const search_query = search_input.value;
         if (!search_query || search_query.trim().length === 0) return;
         // 검색 페이지로 이동
-        window.location.href = `search.html?query=${search_query}`;
+        window.location.href = `search.html?query=${encodeURIComponent(search_query)}`;
         // 로컬 저장소에 검색했던 값 저장
         localStorage.setItem("query", search_query);
     });
