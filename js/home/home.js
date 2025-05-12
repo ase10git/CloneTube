@@ -18,7 +18,7 @@ let video_content_div;
 // API에서 비디오 목록 가져오기
 async function get_video_list() {
     // api 요청
-    fetch("http://techfree-oreumi-api.kro.kr:5000/video/getVideoList")
+    fetch("https://www.techfree-oreumi-api.ai.kr/video/getVideoList")
     .then(res => {
         if (!res.ok) build_network_error(res.status);
         return res.json();
@@ -89,7 +89,7 @@ async function get_video_list() {
 // 채널 정보 요청
 async function get_channel_info(channel_id) {
     // api 요청
-    return fetch(`http://techfree-oreumi-api.kro.kr:5000/channel/getChannelInfo?id=${channel_id}`)
+    return fetch(`https://www.techfree-oreumi-api.ai.kr/channel/getChannelInfo?id=${channel_id}`)
         .then(res => {
             if (!res.ok) build_network_error(res.status);
             return res.json();
