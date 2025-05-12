@@ -2,8 +2,13 @@
     font-family: Arial, sans-serif; /* 글꼴 설정 */
 }
 
+/* 페이지 전체 기본 레이아웃 설정 */
 body {
-    background-color: var(--bg);
+    background-color: var(--bg); /* 배경색 검정 */
+    color: var(--font); /* 텍스트 기본 색상 흰색 */
+    display: flex; /* 플렉스 컨테이너로 설정 */
+    flex-direction: column; /* 수직 방향 정렬 */
+    height: 100vh; /* 전체 뷰포트 높이 채움 */
 }
 
 /* 사이드바 열려있을 때 기본 */
@@ -27,6 +32,7 @@ body.sidebar-close #channel-main {
 }
 
 #channel-main {
+    padding: 0;
     margin-top: 56px;
     display: flex;
     flex-direction: column;
@@ -43,7 +49,7 @@ body.sidebar-close #channel-main {
 #channel-header {
     width: 100%;
     visibility: hidden;
-    max-width: calc(210px * 6 + 4px * 5);
+    max-width: 1284px;
     padding: 0;
     display: flex;
     flex-direction: column; 
@@ -356,7 +362,7 @@ body.sidebar-close #channel-main {
 
 /* 비디오 영역 */
 #channel-section {
-    width: 100%;
+    width: 100%; max-width: 1284px;
     visibility: hidden;
 }
 
@@ -367,8 +373,9 @@ body.sidebar-close #channel-main {
 
 /* 메인 비디오 */
 #main-video {
+    margin: 30px 0;
     width: 100%;
-    padding: 24px 0;
+    padding: 24px auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -380,7 +387,6 @@ body.sidebar-close #channel-main {
 
 .main-video-box {
     width: 100%;
-    max-width: calc(210px * 6 + 4px * 5);
     display: flex;
     justify-content: flex-start;
     gap: 24px;

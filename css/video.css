@@ -576,7 +576,27 @@ body {
     border-color: var(--bg-bar);
     padding-bottom: 4px; 
     width: 100%;
-    outline: none;
+}
+
+/* 댓글 input 자동 입력 스타일 제거 */
+#comment:-webkit-autofill, 
+#comment:-webkit-autofill:hover, 
+#comment:-webkit-autofill:focus,
+#comment:-webkit-autofill:active {
+	-webkit-text-fill-color: var(--font);
+	-webkit-box-shadow: 0 0 0px 1000px var(--ch-profile) inset;
+    box-shadow: 0 0 0px 1000px var(--ch-profile) inset;
+	transition: background-color 5000x ease-in-out 0s;
+}
+
+#comment:autofill,
+#comment:autofill:hover,
+#comment:autofill:focus,
+#comment:autofill:active {
+	-webkit-text-fill-color: var(--font);
+    -webkit-box-shadow: 0 0 0px 1000px var(--ch-profile) inset;
+    box-shadow: 0 0 0px 1000px var(--ch-profile) inset;
+    transition: background-color 5000s ease-in-out 0s;
 }
 
 #comment-form input::placeholder {
