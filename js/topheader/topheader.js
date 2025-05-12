@@ -41,20 +41,107 @@ function form_event() {
     update_reset_button();
 }
 
+// 구독한 채널 정보 가져오기(1 ~ 3)
+async function get_subscribe_channel() {
+    
+    // api 요청
+    async function get_channel_info(channel_id) {
+        return fetch(`https://www.techfree-oreumi-api.ai.kr/channel/getChannelInfo?id=${channel_id}`)
+        .then(res => {
+            if (!res.ok) build_network_error(res.status);
+            return res.json();
+        })
+        .then(data => data)
+        .catch(error => { 
+            if (error.name === "NetworkError") {
+                build_error_message(error.message, document.querySelector("main"));
+            } else {
+                build_error_message("서버에서 에러가 발생했습니다.", document.querySelector("main"));
+            } 
+        });
+    }
+    
+    return Promise.all([get_channel_info(1), get_channel_info(2), get_channel_info(3)]);
+}
+
 // side nav의 버튼 동작을 제어
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", async function () {
+    // 구독한 채널 정보 가져와서 넣기
+    const subscribe_channel= await get_subscribe_channel();
+
+    document.querySelectorAll(".subscription").forEach((el, idx) => {
+        const img_tag = document.createElement("img");
+        img_tag.src = subscribe_channel[idx].channel_profile;
+        img_tag.alt = subscribe_channel[idx].channel_name;
+        img_tag.width = "24";
+        img_tag.height = "24";
+
+        const a_tag = el.querySelector("a");
+        a_tag.href = `channel.html?channel_id=${subscribe_channel[idx].id}`;
+        a_tag.textContent = subscribe_channel[idx].channel_name;
+        a_tag.prepend(img_tag);
+    })
+
     // nav 요소가 로딩될 때까지 탐색 
     const interval = setInterval(() => {
         // 이벤트를 넣을 대상 요소 선택
         const sidebar = document.querySelector("#side-bar");
         const toggleButton = document.querySelector("#side-button");
+        const navOverlay = document.querySelector(".nav-overlay");
 
         // 요소가 있을 때 이벤트 추가
         if (sidebar && toggleButton) {
+            let prev_is_wide = window.innerWidth > 1312;
+
+            // 새로고침 시 초기상태 설정
+            if (prev_is_wide) {
+                sidebar.classList.remove("hidden", "overlay-open", "small_wide");
+                document.body.classList.remove("sidebar-close");
+                navOverlay.classList.remove("visible");
+            } else {
+                sidebar.classList.add("hidden", "small_wide");
+                sidebar.classList.remove("overlay-open");
+                document.body.classList.add("sidebar-close");
+                navOverlay.classList.remove("visible");
+            }
+
+            // 토글 버튼 이벤트
             toggleButton.addEventListener("click", function () {
-                sidebar.classList.toggle("active");
-                document.body.classList.toggle("sidebar-close"); 
+                if (prev_is_wide) {
+                    sidebar.classList.toggle("hidden");
+                    document.body.classList.toggle("sidebar-close"); 
+                } else {
+                    sidebar.classList.toggle("overlay-open");
+                    navOverlay.classList.toggle("visible");
+                }
             });
+
+            // 화면 사이즈에 따른 사이드바 이벤트
+            window.addEventListener("resize", function () {
+                const is_wide = window.innerWidth > 1312;
+
+                if (is_wide !== prev_is_wide) {
+                    if (is_wide) {
+                        sidebar.classList.remove("hidden", "small_wide", "overlay-open");
+                        document.body.classList.remove("sidebar-close");
+                        navOverlay.classList.remove("visible");
+                    } else {
+                        sidebar.classList.add("hidden", "small_wide");
+                        sidebar.classList.remove("overlay-open");
+                        document.body.classList.add("sidebar-close"); 
+                        navOverlay.classList.remove("visible");
+                    }
+                }
+                prev_is_wide = is_wide;
+            });
+
+            document.addEventListener(("click"), function(e) {
+                if (e.target.contains(navOverlay)) {
+                    sidebar.classList.remove("overlay-open");
+                    navOverlay.classList.remove("visible");
+                }
+            });
+
             clearInterval(interval); // 이벤트 연결 후 멈춤
         }
 
@@ -62,21 +149,4 @@ document.addEventListener("DOMContentLoaded", function () {
         form_event();
     }, 100);
     
-});
-document.addEventListener('DOMContentLoaded', () => {
-    const hamburger = document.querySelector('.side-button');
-    const body = document.body;
-
-    hamburger.addEventListener('click', () => {
-        body.classList.toggle('sidebar-open');
-    });
-
-    // 오버레이 클릭 시 닫기
-    const overlay = document.createElement('div');
-    overlay.className = 'sidebar-overlay';
-    document.body.appendChild(overlay);
-
-    overlay.addEventListener('click', () => {
-        body.classList.remove('sidebar-open');
-    });
 });
