@@ -3,7 +3,6 @@ import {subscribersUnit, viewsUnit} from "../../components/videoComponents/js/fo
 import { build_error_message, build_network_error } from "../errorHandling/buildErrorMessage.js";
 import { commentInsert } from "../../components/videoComponents/js/insertComments.js";
 
-
 document.addEventListener("DOMContentLoaded", async function () {
     try {
         await fetchVideoinfo();
@@ -44,6 +43,7 @@ async function fetchVideoinfo() {
             document.getElementById('upload-date').textContent = timeCalculator(videoData.created_dt);
             document.getElementById('description').textContent = videoData.description;
             document.querySelector('.like-count').textContent = viewsUnit(videoData.likes);
+            document.querySelector('.like-count').dataset.likes = videoData.likes;
 
             // 문서 title을 비디오 제목으로 설정
             document.title = videoData.title;
@@ -109,19 +109,6 @@ async function fetchChannelinfo() {
             }
         });
 }
-
-// 비디오 메뉴버튼 더보기 클릭 시 나타나게
-const dotsbutton = document.getElementById("menu-show-more");
-
-dotsbutton.addEventListener('click', function click_report(e) {
-    const dropbox = document.getElementById("video-menu-dropbox")
-    
-    if (dropbox.style.display === "flex") {
-        dropbox.style.display = "none";
-    } else {
-        dropbox.style.display = "flex";
-    };
-});
 
 // 댓글 정렬기준 클릭 시 나타나게
 const sortbutton = document.querySelector(".dropdown");
