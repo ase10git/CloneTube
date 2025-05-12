@@ -6,16 +6,6 @@ body {
 /* 비디오 페이지에선 미니 사이드바 숨김 */
 #video-body #mini-nav{display: none;}
 
-#video-body .side-bar {
-    scrollbar-color: var(--bg-highlight) transparent;
-    display: none;
-}
-
-/* 사이드바가 active일 때 */
-#video-body .side-bar.active {
-    display: block;
-}
-
 #video-main {
     display: flex;
     justify-content: center;
