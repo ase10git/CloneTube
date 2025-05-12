@@ -1,4 +1,5 @@
 // ------ 동영상의 메뉴 리스트(좋아요, 공유 등) 생성 ------
+import { viewsUnit } from "./formUnit.js";
 
 // 상시 표시용 메뉴 목록
 const feedback_list = [
@@ -48,15 +49,15 @@ function append_element(element, parentElement) {
     } else {
         item.querySelector(".icon-img").classList.add('no-invert');
     }  
+
     // 좋아요 버튼 토글 기능
     if (element.id === "like") {
         item.addEventListener("click", function () {
             const countSpan = item.querySelector(".like-count");
-            let current = parseInt(countSpan.textContent);
+            let current = parseInt(countSpan.dataset.likes);
             
             element.liked = !element.liked;
-            countSpan.textContent = element.liked ? current + 1 : current - 1;
-
+            countSpan.textContent = element.liked ? viewsUnit(current+1) : viewsUnit(current);
         });
     }
 
@@ -78,6 +79,18 @@ function append_show_more_btn() {
 
     // 버튼을 부모 요소에 추가
     video_menu.appendChild(show_more_btn);
+
+
+    // 비디오 메뉴버튼 더보기 클릭 시 나타나게
+    show_more_btn.addEventListener('click', function () {
+        const dropbox = document.getElementById("video-menu-dropbox");
+        
+        if (dropbox.style.display === "flex") {
+            dropbox.style.display = "none";
+        } else {
+            dropbox.style.display = "flex";
+        };
+    });
 }
 
 // 비디오 메뉴 버튼을 생성하여 HTML에 추가
@@ -114,4 +127,4 @@ function build_menu() {
     video_menu.appendChild(drop_menu);
 }
 
-build_menu();
+document.addEventListener("DOMContentLoaded", build_menu);
