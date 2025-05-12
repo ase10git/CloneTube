@@ -346,6 +346,7 @@ body {
     display: flex;
     gap: 16px;
     align-items: center;
+    justify-content: center;
 }
 /* 채널 프로필 이미지 */
 .channel-profile-box img{
@@ -353,12 +354,16 @@ body {
     width: 48px;
     border: none;
     border-radius: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 /* 채널 정보 구조 */
-.channel-info {
+#channel-info {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    gap: 3px;
 }
 /* 채널 이름 구조 */
 .channel-name-box {
@@ -369,16 +374,21 @@ body {
 /* 채널 이름 */
 #channel-name {
     font-weight: 400;
-    font-size: 14px;
+    font-size: 16px;
     line-height: 100%;
     letter-spacing: 0%;
 }
 /* 채널 인증 뱃지 */
+#badge {
+    display: flex;
+    align-items: center;
+}
 #badge img{
     background-color: var(--bt-border-d);
     border-radius: 14px;
     height: 14px;
     width: 14px;
+    object-fit: cover;
 }
 /* 채널 구독자 */
 #subscribers {
