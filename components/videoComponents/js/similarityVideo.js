@@ -27,6 +27,7 @@ async function video_tags_info () {
 
 // 유사도 계산을 위한 API
 var openApiURL = 'https://www.techfree-oreumi-api.ai.kr/WiseWWN/WordRel';
+var access_key = ai_api_key;
 
 async function delayRequest(time) {
     return new Promise(resolve => setTimeout(resolve, time));
@@ -63,6 +64,7 @@ async function similarity_tag(firstWord, secondWord, retryCount = 0) {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': access_key
                 },
                 body: JSON.stringify(requestJson)
             });
@@ -90,7 +92,7 @@ async function similarity_tag(firstWord, secondWord, retryCount = 0) {
                 return 0;
             }
         } catch(error) {
-            console.error('Error occurred:', error.message);
+            console.error('fetch불가 Error occurred:', error.message);
             return 0;
         }
     }
