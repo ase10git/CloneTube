@@ -377,19 +377,22 @@ body.sidebar-close #channel-main {
 
 /* 메인 비디오 */
 #main-video {
-    margin: 30px 0 0 0;
+    margin: 24px 0 0 0;
     width: 100%;
-    padding: 24px auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    container-name: top-video-box;
-    container-type: inline-size;
+}
+
+#main-video.hidden{
+    display: none;
+    visibility: hidden;
 }
 
 .main-video-box {
     width: 100%;
+    padding-left: 65px;
     display: flex;
     justify-content: flex-start;
     gap: 24px;
@@ -413,37 +416,19 @@ body.sidebar-close #channel-main {
     margin-top: 0;
 }
 
+#playlist-main.hidden {
+    display:none;
+}
+
+#playlist-main.playlist-tab{
+    margin-top: 24px;
+}
+
 .playlist-section {
     display:flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-}
-
-/* #main-video 폭에 따라 하위 박스 사이즈 최대 길이 변경 */
-@container top-video-box (max-width: calc(210px * 6 + 4px * 5 - 1px))
-{
-  .main-video-box {
-    max-width: calc(210px * 5 + 4px * 4);
-  }
-}
-@container top-video-box (max-width: calc(210px * 5 + 4px * 4 - 1px))
-{
-  .main-video-box {
-    max-width: calc(210px * 4 + 4px * 3);
-  }
-}
-@container top-video-box (max-width: calc(210px * 4 + 4px * 3 - 1px))
-{
-  .main-video-box {
-    max-width: calc(210px * 3 + 4px * 2);
-  }
-}
-@container top-video-box (max-width: calc(210px * 3 + 4px * 2 - 1px))
-{
-  .main-video-box {
-    max-width: calc(210px * 2 + 4px * 1);
-  }
 }
 
 /* 비디오 플레이어 */
@@ -512,23 +497,3 @@ body.sidebar-close #channel-main {
     #video-desc-box { display: none; }
     #video-title { margin-bottom : 0;}
 }
-
-/* video 탭 설정 시 스타일 */
-/* #videos에서는 여러 줄로 자동 줄바꿈 */
-/* body.section-videos .video-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 16px;
-    overflow-x: unset;
-    justify-content: flex-start;
-} */
-
-/* 두 번째 세션도 보이도록 설정 (필요시 조건에 맞게 변경 가능) */
-/* body.section-videos .playlist-section:nth-child(2) {
-    display: block;
-} */
-
-/* 첫 번째 세션만 보이도록 하는 스타일 */
-/* body.section-home .playlist-section:nth-child(2) {
-    display: none;
-} */

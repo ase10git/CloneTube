@@ -2,11 +2,7 @@
 import {build_error_message, build_network_error} from "../errorHandling/buildErrorMessage.js";
 
 // 이벤트 리스너 등록
-function form_event() {
-    const search_form = document.querySelector("#search-form");
-    const search_input = document.querySelector("#search-input");
-    const reset_button = document.querySelector(".reset-button");
-
+function form_event(search_form, search_input, reset_button) {
     // 검색 폼에서 유효성 검사
     search_form.addEventListener("submit", function (e) {
         e.preventDefault();
@@ -94,6 +90,10 @@ document.addEventListener("DOMContentLoaded", async function () {
         const sidebar = document.querySelector("#side-bar");
         const toggleButton = document.querySelector("#side-button");
         const navOverlay = document.querySelector(".nav-overlay");
+        // 폼 요소
+        const search_form = document.querySelector("#search-form");
+        const search_input = document.querySelector("#search-input");
+        const reset_button = document.querySelector(".reset-button");
 
         // 요소가 있을 때 이벤트 추가
         if (sidebar && toggleButton) {
@@ -160,12 +160,14 @@ document.addEventListener("DOMContentLoaded", async function () {
                     navOverlay.classList.remove("visible");
                 }
             });
-
-            clearInterval(interval); // 이벤트 연결 후 멈춤
         }
 
-        // form 이벤트 등록
-        form_event();
+        if (search_form && search_input && reset_button) {
+            // form 이벤트 등록
+            form_event(search_form, search_input, reset_button);
+            
+            clearInterval(interval); // 이벤트 연결 후 멈춤
+        }
     }, 100);
     
 });

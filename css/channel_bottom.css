@@ -88,19 +88,6 @@
     }
   }
 
-  /* 792이하되면 메뉴사이드바 없애기 */
-  @media (max-width: 792px) {
-    #side-bar {
-      display: none;
-    }
-    .main-content {
-      width: 100%;
-    }
-    #channel-main {
-      margin-left: 0px;
-    }
-  }
-
   /* 섹션 상단 제목 영역 */
   .section-header {
     display: flex;
@@ -470,4 +457,65 @@
 
 #channel-main .video-menu-list .menu-icon-box .menu-icon-img.invert {
   filter: invert();
+}
+
+/* 채널 전체 동영상 */
+#video-section{
+  margin-top: 24px;
+  display: none;
+  width: 100%;
+  max-width: 1284px;
+  padding: 0 65px;
+}
+
+#video-section.visible{
+  display: block;
+}
+
+/* 동영상 정렬 버튼 */
+.video-sort-btn-wrap {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  gap: 10px;
+}
+
+.video-sort{
+  padding: 5px 14px;
+  background-color: var(--bg-highlight);
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  color: var(--font);
+  cursor: pointer;
+  transition: background-color 0.1s ease;
+}
+
+.video-sort:hover{
+  background-color: #424242;
+}
+
+.video-sort.selected{
+  background-color: var(--bt-border);
+  color: var(--bg);
+}
+
+#all-video-section {
+  width: 100%;
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(269px, 1fr)); /* 반응형 그리드 */
+  gap: 20px;
+}
+
+#all-video-section .video-card,
+#all-video-section .img
+{
+  width: 100%;
+  height: 100%;
+}
+
+#all-video-section .video-thumbnail {
+  width: 100%; height: initial;
+  aspect-ratio: 16 / 9;
 }

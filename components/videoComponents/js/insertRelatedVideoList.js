@@ -77,7 +77,7 @@ async function wait_SimMap(timeout = 100000, interval = 200) {
             if (ready === 'true') {
                 //준비완료 -> promise 성공
                 resolve();
-                console.log('similarityMap 준비 완료');
+                //console.log('similarityMap 준비 완료');
             } else if (Date.now() - start > timeout) {
                 // 기다리다 타임아웃 → 에러
                 reject('similarityMap_ready timeout');
