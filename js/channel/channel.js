@@ -1,16 +1,16 @@
 import timeCalculator from '../util/timeCalculator.js';
+import {subscribersUnit, viewsUnit} from "../../components/videoComponents/js/formUnit.js";
 import insert_video_scroll from '../../components/channelComponents/js/insertVideoScroll.js';
 import insert_video_menu from '../../components/channelComponents/js/insertChannelVideoMenu.js';
 import { build_error_message, build_network_error } from "../errorHandling/buildErrorMessage.js";
 import NetworkError from '../errorHandling/NetworkError.js';
 
 let subscriberCount = 0;
-let isSubscribed = false;
 
 document.addEventListener("DOMContentLoaded", async function () {
     try {
         //console.log("DOM fully loaded and parsed");
-        setupSubscribeButton(); // 구독 버튼
+        // setupSubscribeButton(); // 구독 버튼
 
         // 채널 정보를 가져온 뒤 동영상 정보 가져오기
         await fetchChannelInfo(); // 채널 정보
@@ -69,21 +69,23 @@ function setupVideoButton() {
     });
 }
 
+let isSubscribed = false;
+
 // 구독 버튼
-function setupSubscribeButton() {
+// function setupSubscribeButton() {
     const subscribeButton = document.getElementById('button-subscribe');
     subscribeButton.addEventListener('click', () => {
         if (isSubscribed) {
-            subscriberCount -= 1;
-            subscribeButton.textContent = "SUBSCRIBE";
+            // subscriberCount -= 1;
+            subscribeButton.textContent = "구독";
             isSubscribed = false;
         } else {
-            subscriberCount += 1;
-            subscribeButton.textContent = "SUBSCRIBED";
+            // subscriberCount += 1;
+            subscribeButton.textContent = "구독중";
             isSubscribed = true;
         }
     });
-}
+// }
 
 // 채널 정보
 async function fetchChannelInfo() {
@@ -102,10 +104,10 @@ async function fetchChannelInfo() {
     .then(channelData => {
         subscriberCount = channelData.subscribers;
         document.getElementById('channel-name').textContent = channelData.channel_name;
-        document.getElementById('subscribers').textContent = `${subscriberCount} subscribers`;
+        document.getElementById('subscribers').textContent = `구독자 ${subscribersUnit(subscriberCount)}명`;
         document.getElementById('channel-cover-img').src = channelData.channel_banner;
         document.getElementById('channel-profile-img').src = channelData.channel_profile;
-        setupSubscribeButton();
+        // setupSubscribeButton();
     
         // 문서 title을 채널 이름으로 변경
         document.title = channelData.channel_name;
@@ -137,8 +139,8 @@ function renderMainVideo(video) {
     // 텍스트 정보 삽입
     document.getElementById('video-title').textContent = video.title;
     document.getElementById('video-title').href = `video.html?video_id=${video.id}`;
-    document.getElementById('spectators').textContent = `${video.views} views`;
-    document.getElementById('uploaded-time').textContent = formatUploadDate(video.created_dt);
+    document.getElementById('spectators').textContent = `조회수 ${viewsUnit(video.views)}회`;
+    document.getElementById('uploaded-time').textContent = timeCalculator(video.created_dt);
     document.getElementById('video-description').textContent = video.description;
 }
 
@@ -201,7 +203,7 @@ function renderVideos(sectionId, videoList) {
 
         const thumbnailUrl = video.thumbnail || "https://via.placeholder.com/300x200.png?text=No+Thumbnail";
         const uploadText = timeCalculator(video.created_dt);
-        const viewsFormatted = formatViews(video.views);
+        const viewsFormatted = viewsUnit(video.views);
 
         // 아이콘 이미지 경로
         const menu_toggle_img = "../../../images/three-dots-vertical.svg";
@@ -230,7 +232,7 @@ function renderVideos(sectionId, videoList) {
         <div class="video-info">
             <div class="video-details">
                 <div class="video-title">${video.title}</div>
-                <div class="video-meta">${viewsFormatted} views • ${uploadText}</div>
+                <div class="video-meta">조회수 ${viewsFormatted}회 • ${uploadText}</div>
             </div>
             <div class="video-menu">
                 <button class="menu-toggle-btn" data-video-id="${video.id}">
