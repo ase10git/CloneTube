@@ -1,6 +1,8 @@
 import timeCalculator from "../../js/util/timeCalculator.js";
 import {subscribersUnit, viewsUnit} from "../../components/videoComponents/js/formUnit.js";
 import { build_error_message, build_network_error } from "../errorHandling/buildErrorMessage.js";
+import { commentInsert } from "../../components/videoComponents/js/insertComments.js";
+
 
 document.addEventListener("DOMContentLoaded", async function () {
     try {
@@ -41,6 +43,7 @@ async function fetchVideoinfo() {
             document.getElementById('viewerships').textContent = `조회수 ${viewsUnit(videoData.views)}회`;
             document.getElementById('upload-date').textContent = timeCalculator(videoData.created_dt);
             document.getElementById('description').textContent = videoData.description;
+            document.querySelector('.like-count').textContent = viewsUnit(videoData.likes);
 
             // 문서 title을 비디오 제목으로 설정
             document.title = videoData.title;
@@ -77,6 +80,9 @@ async function fetchChannelinfo() {
                     return res.json();
                 })
                 .then(channelInfo => {
+                    if (channelInfo.subscribers <= 1000000) {
+                        document.getElementById("badge").style.display = "none";
+                    }
                     document.getElementById('channel-img').src = channelInfo.channel_profile;
                     document.getElementById('channel-name').textContent = channelInfo.channel_name;
                     document.getElementById('subscribers').textContent = `구독자 ${subscribersUnit(channelInfo.subscribers)}명`;
@@ -130,28 +136,17 @@ sortbutton.addEventListener('click', function click_report(e) {
     };
 });
 
-// 정렬 버튼 클릭 시 정렬 기준 설정하고 댓글 다시 로드
-document.querySelectorAll(".sort-options button").forEach((btn) => {
-    btn.addEventListener("click", (e) => {
-        const selected = e.target.textContent.trim();
-        if (selected === "인기 댓글순") {
-            localStorage.setItem("comment_sort", "popular");
-        } else if (selected === "최신순") {
-            localStorage.setItem("comment_sort", "latest");
-        }
-        location.reload();
-    });
-});
-
 // 인기 댓글순
 document.querySelector(".sort-options button:nth-child(1)").addEventListener("click", () => {
     localStorage.setItem("comment_sort", "popular");
+    document.querySelector(".sort-options").style.display = "none";
     commentInsert();
 });
 
 // 최신순
 document.querySelector(".sort-options button:nth-child(2)").addEventListener("click", () => {
     localStorage.setItem("comment_sort", "latest");
+    document.querySelector(".sort-options").style.display = "none";
     commentInsert();
 });
 
@@ -197,7 +192,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (subscribeBtn) {
         subscribeBtn.addEventListener("click", () => {
             subscribed = !subscribed;
-            subscribeBtn.textContent = subscribed ? "SUBSCRIBED" : "SUBSCRIBE";
+            subscribeBtn.textContent = subscribed ? "구독중" : "구독";
         });
     }
 
