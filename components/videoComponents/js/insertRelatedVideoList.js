@@ -35,7 +35,6 @@ xhr.onreadystatechange = function () {
         if(xhr.status === 200) {
             // 결과 데이터 파싱
             const data = JSON.parse(xhr.response);
-            console.log(data);
             (async () => {
                 const Current_video_tags = await Current_video_tags_info();
                 let Related_video_list = await tags_count(data, Current_video_tags);
@@ -52,10 +51,42 @@ xhr.onreadystatechange = function () {
     // 요청 전송
 xhr.send(); 
 
-//-----현재 비디오랑 같은 태그 개수 세는 함수-----//
+//---------유사도 준비 완료 기다리는 함수 ----------//
+async function wait_SimMap(timeout = 100000, interval = 200) {
+    const start = Date.now();
+    return new Promise((resolve, reject) => {   //promise를 리턴해서 외부에서 await으로 기다림
+        const checkReady = () => {
+            const ready = localStorage.getItem('similarityMap_ready');
+            if (ready === 'true') {
+                //준비완료 -> promise 성공
+                resolve();
+                console.log('similarityMap 준비 완료');
+            } else if (Date.now() - start > timeout) {
+                // 기다리다 타임아웃 → 에러
+                reject('similarityMap_ready timeout');
+            } else {
+                // interval 간격마다 다시 체크
+                setTimeout(checkReady, interval);
+            }
+        };
+        checkReady();
+    });
+}
+
+//-----현재 비디오랑 같은 태그 개수 세기 및 유사도 합산 함수-----//
 async function tags_count(list, tags) {
     const urlParams = new URLSearchParams(window.location.search);
     const videoId = Number(urlParams.get('video_id'));
+
+    // 유사도 로딩 완료까지 기다리기
+    await wait_SimMap();
+    const saved = localStorage.getItem('similarityMap_local');
+    const similarityMap = new Map(Object.entries(JSON.parse(saved)));
+    // 유사도 가져오는 함수
+    function similarity_tag(a, b) {
+        const key = [a, b].sort().join(',');
+        return similarityMap.get(key) ?? 0;
+    };
 
      // videoId와 일치하는 data.id를 가진 항목 제거
     const filteredList = Array.from(list).filter(data => data.id !== videoId);
@@ -72,8 +103,7 @@ async function tags_count(list, tags) {
                         count++;
                     else {
                         //같은 태그가 아닐경우 유사도 계산해서 넣기
-                        //sim_sum += await similarity_tag(tags[i], data.tags[j]);
-                        sim_sum = 1
+                        sim_sum += await similarity_tag(tags[i], data.tags[j]);
                     }
                     j++;
                 }
@@ -86,78 +116,11 @@ async function tags_count(list, tags) {
             data['count'] = -1;
         }
     }
-    console.log(similarityMap);
-    return(sort_count_sim(filteredList));
+    //count도 0이고 sim_sum도 0인 동영상은 제거
+    const cleanedList = filteredList.filter(data => !(data.count === 0 && data.simSum === 0));
+    return sort_count_sim(cleanedList);
 }
 
-// function similarity_tag(a, b) {
-//     const key = [a, b].sort().join(',');
-//     return similarityMap.get(key) ?? 0;
-// };
-
-// 유사도 계산을 위한 API
-var openApiURL = 'http://aiopen.etri.re.kr:8000/WiseWWN/WordRel';
-var access_key = 'my-key';
-
-const saved = localStorage.getItem('similarityMap_local');
-const similarityMap = saved ? new Map(Object.entries(JSON.parse(saved))) : new Map();
-// let similarityMap = new Map();
-
-async function delayRequest(time) {
-    return new Promise(resolve => setTimeout(resolve, time));
-}
-
-//------유사도 계산하는 함수-------//
-async function similarity_tag(firstWord, secondWord) {
-
-    const key = [firstWord, secondWord].sort().join(',');
-
-    if (similarityMap.has(key)) {
-        console.log("related-이미 있음");
-        return similarityMap.get(key);
-        // 이미 저장된 유사도 사용
-    } else {
-        // fetch로 API 요청해서 유사도 받기
-        const requestJson = {
-            'argument': {
-                'first_word': firstWord,
-                'second_word': secondWord,
-            }
-        };
-
-        try {
-            console.log("related-없음");
-            await delayRequest(10);  // 0.01초 대기, 너무 빠르면 오류
-            const response = await fetch(openApiURL, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': access_key
-                },
-                body: JSON.stringify(requestJson)
-            });
-
-            const result = await response.json();
-            // lin 알고리즘 유사도 받아옴
-            if (result && result.return_object && result.return_object['WWN WordRelInfo']) {
-                const simArray = result.return_object['WWN WordRelInfo'].WordRelInfo.Similarity;
-                const linScore = Array.from(simArray).find(item => item.Algorithm === "Lin").SimScore;
-                similarityMap.set(key, linScore);
-                return linScore;
-            } else {
-                console.error('유효한 유사도 정보가 없습니다.', result);
-                return 0;
-            }
-        } catch(error) {
-            console.error('Error occurred:', error.message);
-            return 0;
-        }
-    }
-}
-// 페이지 닫기 직전에 저장
-window.addEventListener('beforeunload', () => {
-    localStorage.setItem('similarityMap_local', JSON.stringify(Object.fromEntries(similarityMap)));
-});
 //-----정렬해서 재배치하는 함수-----//
 function sort_count_sim (list) {
     let sorted_list = [];
