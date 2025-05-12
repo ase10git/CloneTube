@@ -94,7 +94,7 @@ async function fetchChannelInfo() {
         throw new NetworkError(404, '잘못된 요청입니다');
     }
 
-    fetch(`http://techfree-oreumi-api.kro.kr:5000/channel/getChannelInfo?id=${channelId}`)
+    fetch(`https://www.techfree-oreumi-api.ai.kr/channel/getChannelInfo?id=${channelId}`)
     .then(response => {
         if (!response.ok) build_network_error(response.status);
         return response.json();
@@ -153,7 +153,7 @@ function fetchVideosAndRender() {
         return;
     }
 
-    fetch(`http://techfree-oreumi-api.kro.kr:5000/video/getChannelVideoList?channel_id=${channelId}`)
+    fetch(`https://www.techfree-oreumi-api.ai.kr/video/getChannelVideoList?channel_id=${channelId}`)
         .then(response => {
             if(!response.ok) build_network_error(response.status);
             return response.json();
