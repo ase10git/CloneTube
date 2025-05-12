@@ -2,6 +2,19 @@
 import timeCalculator from "../../../js/util/timeCalculator.js";
 import { viewsUnit } from "./formUnit.js";
 import insert_related_video_menu from "./insertRelatedVideoMenu.js";
+import { build_error_message, build_network_error } from "../../../js/errorHandling/buildErrorMessage.js";
+
+// 추천 비디오 목록 에러 처리 함수
+function video_list_error(error) {
+    const recommend_box = document.querySelectorAll(".recommend-box");
+    if (error.name === "NetworkError") {
+        build_error_message(error.message, recommend_box[0]);
+        build_error_message(error.message, recommend_box[1]);
+    } else {
+        build_error_message("서버에서 에러가 발생했습니다.", recommend_box[0]);
+        build_error_message("서버에서 에러가 발생했습니다.", recommend_box[1]);
+    }
+}
 
 //-----현재 비디오 태그 정보 가져오기------//
 async function Current_video_tags_info () {
@@ -9,17 +22,21 @@ async function Current_video_tags_info () {
     const videoId = urlParams.get('video_id');
 
     if (!videoId) {
-        console.error('비디오 ID가 URL에 없습니다!');
-        return;
+        build_network_error(404);
     }
 
     try {
         const response = await fetch(`https://www.techfree-oreumi-api.ai.kr/video/getVideoInfo?video_id=${videoId}`);
+        if (response.status !== 200) build_network_error(response.status);
         const videoData = await response.json();
         return Array.from(videoData.tags);
     }
     catch(error) {
-        console.error('비디오 정보 가져오기 실패:', error);
+        if (error.name === "NetworkError") {
+            build_error_message(error.message, document.querySelector("main"));
+        } else {
+            build_error_message("서버에서 에러가 발생했습니다.", document.querySelector("main"));
+        }
         return [];
     }
 }
@@ -38,17 +55,17 @@ xhr.onreadystatechange = function () {
             (async () => {
                 const Current_video_tags = await Current_video_tags_info();
                 let Related_video_list = await tags_count(data, Current_video_tags);
-                console.log(Related_video_list);
+                // console.log(Related_video_list);
                 video_list(Related_video_list); // 비디오 목록에 데이터 추가
             })();
             
         } else {
-            // 에러 처리
-            console.error("Error:", xhr.status);
+            build_network_error(xhr.status);
         }
     }
 };
-    // 요청 전송
+
+// 요청 전송
 xhr.send(); 
 
 //---------유사도 준비 완료 기다리는 함수 ----------//
@@ -163,9 +180,15 @@ function video_list(data){
                 const videoPromises = video.map(el => {
                     // 채널 정보 가져오기
                     return fetch(`https://www.techfree-oreumi-api.ai.kr/channel/getChannelInfo?id=${el.channel_id}`)
-                        .then(res => res.json())
+                        .then(res => {
+                            if (!res.ok) build_network_error(res.status);
+                            return res.json();
+                        })
                         .then(channelData => {
                             const clone = video_template.cloneNode(true);
+                            if (channelData.subscribers <= 1000000) {
+                                clone.querySelector(".channel-badge-box").style.display = "none";
+                            }
                             clone.querySelector(".related-video-content").dataset.videoId = el.id;
                             clone.querySelector(".video-thumbnail-img").src = el.thumbnail;
                             clone.querySelector(".video-title").textContent = el.title;
@@ -175,12 +198,12 @@ function video_list(data){
                             clone.querySelector(".btn-icon").src = public_url + 'three-dots-vertical.svg';
                             clone.querySelector(".menu-toggle-btn").dataset.videoId = el.id; // 메뉴 버튼에 id 지정
                             clone.querySelectorAll(".video-link").forEach(link => {
-                                link.href = `http://127.0.0.1:5500/html/video.html?video_id=${el.id}`;
+                                link.href = `/html/video.html?video_id=${el.id}`;
                             });
                             return clone;
                         })
                         .catch(error => {
-                            console.error("채널 정보 가져오기 실패:", error);
+                            video_list_error(error);
                             return null; // 오류가 발생해도 null 반환하여 Promise.all()에서 처리할 수 있게 함
                         });
                 });
@@ -200,13 +223,9 @@ function video_list(data){
                     .then(()=>{
                         insert_related_video_menu();
                     })
-                    .catch(error => {
-                        console.error("비디오 정보 처리 중 오류 발생:", error);
-                    });
+                    .catch(error => video_list_error(error));
             })
-            .catch(error => {
-                console.error("HTML 템플릿을 불러오는 중 오류 발생:", error);
-            });
+            .catch(error => video_list_error(error));
     }
     insert_video_list();
 }
