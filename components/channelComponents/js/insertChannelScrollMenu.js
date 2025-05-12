@@ -74,7 +74,7 @@ fetch("../../components/scrollMenu/html/scrollMenuTemplate.html")
         search_form_li.appendChild(search_form);
         menu_list.appendChild(search_form_li);
 
-        scroll_wrap.querySelector(".scroll-menu-box").appendChild(search_form);
+        scroll_wrap.querySelector(".menu-list").appendChild(search_form_li);
         target.appendChild(scroll_wrap);
 
         // 스크롤 이벤트 연결
@@ -99,15 +99,15 @@ function handleSectionDisplay() {
 
     if (hash === "home" || hash === "") {
         // 홈 탭일 경우
-        if (mainVideo) mainVideo.style.display = "block";
-        if (mainContent) mainContent.style.display = "block";
-        if (section1) section1.style.display = "block";
-        if (section2) section2.style.display = "block";
+        if (mainVideo) mainVideo.style.display = "flex";
+        if (mainContent) mainContent.style.display = "flex";
+        if (section1) section1.style.display = "flex";
+        if (section2) section2.style.display = "flex";
     } else if (hash === "videos") {
         // 동영상 탭일 경우
         if (mainVideo) mainVideo.style.display = "none";
-        if (mainContent) mainContent.style.display = "block";
-        if (section1) section1.style.display = "block";
+        if (mainContent) mainContent.style.display = "flex";
+        if (section1) section1.style.display = "flex";
         if (section2) section2.style.display = "none";
     } else {
         // 그 외 탭일 경우
