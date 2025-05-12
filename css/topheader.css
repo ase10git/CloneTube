@@ -20,7 +20,6 @@
         --bg-color: #0f0f0f; /* 누락된 변수 보완 */
     }
 
-
 /* 기본 문서 스타일 */
 #header-nav-container {
     height: 100%;
@@ -70,6 +69,10 @@ header {
     display: flex;
     align-items: center;
     gap: 16px;
+}
+
+.right-section span{
+    cursor: pointer;
 }
 
 /* 햄버거 메뉴 버튼 */
@@ -344,6 +347,7 @@ header {
 
 #mini-nav li {
     border-radius: 10px;
+    cursor: pointer;
 }
 #mini-nav li:hover{
     background-color: var(--bg-highlight);
