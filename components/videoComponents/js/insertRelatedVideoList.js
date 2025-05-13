@@ -99,11 +99,24 @@ async function tags_count(list, tags) {
     await wait_SimMap();
     const saved = localStorage.getItem('similarityMap_local');
     // const similarityMap = new Map(Object.entries(JSON.parse(saved)));
-    const parsed = saved ? JSON.parse(saved) : null;
-    const similarityMap = parsed && typeof parsed === 'object'
-    ? new Map(Object.entries(parsed))
-    : new Map();
-    console.log(similarityMap);
+    let similarityMap = new Map();
+
+    try {
+        const saved = localStorage.getItem('similarityMap_local');
+        const parsed = JSON.parse(saved);
+        console.log('saved:', saved);
+        console.log('parsed:', parsed);
+
+        if (parsed && typeof parsed === 'object') {
+            similarityMap = new Map(Object.entries(parsed));
+        } else {
+            console.warn('similarityMap_local 값이 null이거나 객체 아님:', parsed);
+        }
+    } catch (e) {
+        console.error('similarityMap_local 파싱 중 오류:', e);
+        similarityMap = new Map();
+    }
+
     // 유사도 가져오는 함수
     function similarity_tag(a, b) {
         if (!similarityMap || similarityMap.size === 0) {
