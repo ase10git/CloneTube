@@ -1,6 +1,7 @@
 # CloneTube - YouTube 클론 프로젝트
 
 - 🔗 배포 : [배포링크](https://clonetube-g7lt.onrender.com)
+- 프로젝트 Wiki : [CloneTube Wiki](https://github.com/ase10git/CloneTube/wiki)
 - 📌 참고 사이트 : YouTube
 
 ## 🚀 프로젝트 소개
@@ -80,6 +81,3 @@ CloneTube는 YouTube의 주요 기능을 참고하여 개발된 클론 프로젝
 ## 프로젝트 담당 파트 및 후기
 - 📝 [개발 담당 파트](https://github.com/ase10git/CloneTube/wiki/%EA%B0%9C%EB%B0%9C%EB%8B%B4%EB%8B%B9-%ED%8C%8C%ED%8A%B8)
 - 📖 [멤버별 프로젝트 후기](https://github.com/ase10git/CloneTube/wiki/%EB%A9%A4%EB%B2%84-%EC%86%8C%EA%B0%90)
-
-## 팀 Wiki
-[CloneTube Wiki](https://github.com/ase10git/CloneTube/wiki)
