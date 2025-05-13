@@ -16,8 +16,6 @@ CloneTube는 YouTube의 주요 기능을 참고하여 개발된 클론 프로젝
 - [이수윤](https://github.com/suyunlee) (팀원)
 - [임효진](https://github.com/hyonize) (팀원)
 
-📝 [개발 담당 파트](https://github.com/ase10git/CloneTube/wiki/%EA%B0%9C%EB%B0%9C%EB%8B%B4%EB%8B%B9-%ED%8C%8C%ED%8A%B8)
-
 ## 🛠️ 사용 기술
 - HTML 5
 - CSS 3
@@ -78,6 +76,10 @@ CloneTube는 YouTube의 주요 기능을 참고하여 개발된 클론 프로젝
   - *서버 없이 클라이언트로만 구현했기에 AI API KEY가 외부에 노출되는 문제가 있어 AI 추천영상 기능은 배포 환경에서 제외했습니다.*
 
 ![clonetube_video](https://github.com/user-attachments/assets/44f484a3-11f7-4011-beaa-23bf2fc4522f)
+
+## 프로젝트 담당 파트 및 후기
+- 📝 [개발 담당 파트](https://github.com/ase10git/CloneTube/wiki/%EA%B0%9C%EB%B0%9C%EB%8B%B4%EB%8B%B9-%ED%8C%8C%ED%8A%B8)
+- 📖 [멤버별 프로젝트 후기](https://github.com/ase10git/CloneTube/wiki/%EB%A9%A4%EB%B2%84-%EC%86%8C%EA%B0%90)
 
 ## 팀 Wiki
 [CloneTube Wiki](https://github.com/ase10git/CloneTube/wiki)
