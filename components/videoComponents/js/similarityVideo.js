@@ -27,7 +27,7 @@ async function video_tags_info () {
 
 // 유사도 계산을 위한 API
 var openApiURL = 'https://www.techfree-oreumi-api.ai.kr/WiseWWN/WordRel';
-var access_key = ai_api_key;
+var access_key;
 
 async function delayRequest(time) {
     return new Promise(resolve => setTimeout(resolve, time));
@@ -165,10 +165,18 @@ async function processBatch(promises) {
 }
 
 async function initSimilarity() {
-    // 먼저 준비 완료 플래그 초기화
-    localStorage.setItem('similarityMap_ready', 'false');
-    // localStorage 초기화 완료 후
-    await similarity_save();
+    // // 먼저 준비 완료 플래그 초기화
+    // localStorage.setItem('similarityMap_ready', 'false');
+    // // localStorage 초기화 완료 후
+    // await similarity_save();
+    if (typeof ai_api_key !== "undefined") {
+        localStorage.setItem('similarityMap_ready', 'false');
+        access_key = ai_api_key;
+        await similarity_save();
+    } else {
+        localStorage.setItem('similarityMap_ready', 'true');
+        console.error("API KEY 없음");
+    }
 }
 initSimilarity();
 
