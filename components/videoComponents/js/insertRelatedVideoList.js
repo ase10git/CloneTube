@@ -99,10 +99,16 @@ async function tags_count(list, tags) {
     await wait_SimMap();
     const saved = localStorage.getItem('similarityMap_local');
     // const similarityMap = new Map(Object.entries(JSON.parse(saved)));
-    const similarityMap = saved ? new Map(Object.entries(JSON.parse(saved))) : new Map();
+    const parsed = saved ? JSON.parse(saved) : null;
+    const similarityMap = parsed && typeof parsed === 'object'
+    ? new Map(Object.entries(parsed))
+    : new Map();
     console.log(similarityMap);
     // 유사도 가져오는 함수
     function similarity_tag(a, b) {
+        if (!similarityMap || similarityMap.size === 0) {
+        return 0;
+        }
         const key = [a, b].sort().join(',');
         return similarityMap.get(key) ?? 0;
     };
