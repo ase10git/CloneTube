@@ -98,7 +98,8 @@ async function tags_count(list, tags) {
     // 유사도 로딩 완료까지 기다리기
     await wait_SimMap();
     const saved = localStorage.getItem('similarityMap_local');
-    const similarityMap = new Map(Object.entries(JSON.parse(saved)));
+    // const similarityMap = new Map(Object.entries(JSON.parse(saved)));
+    const similarityMap = saved ? new Map(Object.entries(JSON.parse(saved))) : new Map();
     // 유사도 가져오는 함수
     function similarity_tag(a, b) {
         const key = [a, b].sort().join(',');
