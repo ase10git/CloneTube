@@ -3,12 +3,12 @@ import build_video_menu from "../../videoComponents/js/insertVideoMenu.js";
 import timeCalculator from "../../../js/util/timeCalculator.js";
 import viewsCalculator from "../../../js/util/viewsCalculator.js";
 
-const public_url = '../../images/';
+const public_url = '../../images/icon/';
 
 // 비디오 메뉴 수정
 function edit_menu() {
     // 비디오 메뉴 가져오기
-    let menu = build_video_menu("../images/");
+    let menu = build_video_menu(public_url);
 
     // 메뉴 아이템 제거(추천 관련 옵션 2개 제거)
     menu.removeChild(menu.childNodes[7]);
@@ -44,7 +44,7 @@ function no_result_html(query) {
     const html_template = 
     `
     <div class="no-search-result-img-box">
-        <img src="../../images/search-no-result.svg" alt="no-search-result">
+        <img src="../../../images/default/searchnoresult.svg" alt="no-search-result">
     </div>
     <div>
         <span class="no-result-message">${sanitizedQuery} 검색결과가 없습니다.</span>
@@ -129,7 +129,7 @@ async function insert_search_results(query, total_info) {
                 clone.querySelector(".upload-time").textContent = uploaded_time;
                 clone.querySelector(".avatar-img").src = el.channel_profile;
                 clone.querySelector(".video-description").textContent = el.description;
-                clone.querySelector(".btn-icon").src = public_url + "three-dots-vertical.svg";
+                clone.querySelector(".btn-icon").src = public_url + "threedotsvertical.svg";
                 clone.querySelector(".btn-icon").alt = "dot-three-icon";
                 clone.querySelector(".menu-toggle-btn").dataset.videoId = el.id; // 메뉴 버튼에 id 지정
 

@@ -6,7 +6,7 @@ const videoId = urlParams.get("video_id");
 let comments = JSON.parse(localStorage.getItem(`comments_${videoId}`)) || [
     {
     author: "kim",
-    profile: "../../../images/marcus.svg",
+    profile: "../../../images/profile/marcusprofile.svg",
     commented_at: "1년 전",
     body: "댓글 추가했습니다",
     liked: 100,
@@ -17,7 +17,7 @@ let comments = JSON.parse(localStorage.getItem(`comments_${videoId}`)) || [
     },
     {
     author: "park",
-    profile: "../../../images/marcus.svg",
+    profile: "../../../images/profile/marcusprofile.svg",
     commented_at: "2달 전",
     body: "영상 잘 봤습니다",
     liked: 1,
@@ -78,7 +78,7 @@ function commentInsert() {
             const replyDiv = document.createElement("div");
             replyDiv.classList.add("reply-input-box");
             replyDiv.innerHTML = `
-                <img src="../../../images/icon4.svg" alt="my-profile" style="width: 36px; height: 36px; border-radius: 50%;">
+                <img src="../../../images/profile/userprofile.svg" alt="my-profile" style="width: 36px; height: 36px; border-radius: 50%;">
                 <input type="text" class="reply-input" placeholder="답글을 입력하세요" />
                 <div class="reply-action-buttons">
                     <button class="reply-cancel-btn">취소</button>
@@ -94,7 +94,7 @@ function commentInsert() {
                 const replyDiv = document.createElement("div");
                 replyDiv.classList.add("reply-input-box");
                 replyDiv.innerHTML = `
-                    <img src="../../../images/icon4.svg" alt="my-profile" style="width: 36px; height: 36px; border-radius: 50%;">
+                    <img src="../../../images/profile/userprofile.svg" alt="my-profile" style="width: 36px; height: 36px; border-radius: 50%;">
                     <input type="text" class="reply-input" />
                     <div class="reply-action-buttons">
                         <button class="reply-cancel-btn">취소</button>
@@ -134,7 +134,7 @@ function commentInsert() {
                 const replyEl = document.createElement("div");
                 replyEl.className = "reply-item";
                 replyEl.innerHTML = `
-                    <img src="../../../images/icon4.svg" alt="reply-profile">
+                    <img src="../../../images/profile/userprofile.svg" alt="reply-profile">
                     <div class="reply-body">
                         <div class="reply-author">${reply.author} <span class="reply-date">${reply.commented_at}</span></div>
                         <div class="reply-text">${reply.body}</div>

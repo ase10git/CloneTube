@@ -5,7 +5,7 @@ import formatViews from "./insertVideoFormatViews.js"
 import {build_network_error} from "../../../js/errorHandling/buildErrorMessage.js";
 
 // 이미지 경로
-const public_url = '../images/';
+const public_url = '../images/icon/';
 
 const temp_div = document.createElement("div");
 
@@ -61,7 +61,7 @@ async function insert_video_content(video_info){
             clone.querySelector(".upload-time").textContent = timeCalculator(el.created_dt); // 업로드 시간 → '몇 분 전' 형태로 표시
             clone.querySelector(".channel-name").textContent = el.channel_name;
             clone.querySelector(".avatar-img").src = el.channel_profile; // 아바타 이미지 설정
-            clone.querySelector(".btn-icon").src = public_url + "three-dots-vertical.svg"; // 메뉴 버튼 아이콘 이미지 설정
+            clone.querySelector(".btn-icon").src = public_url + "threedotsvertical.svg"; // 메뉴 버튼 아이콘 이미지 설정
             clone.querySelector(".btn-icon").alt = "dot-three-icon-video-menu"; // 메뉴 버튼 아이콘의 대체 텍스트
             clone.querySelector(".video-link").href = `/html/video.html?video_id=${el.id}`; // 비디오 링크 설정
             clone.querySelector(".menu-toggle-btn").dataset.videoId = el.id; // 메뉴 버튼에 id 지정

@@ -163,7 +163,7 @@ function sort_count_sim (list) {
 function video_list(data){
     const video = data;
 
-    const public_url = "../../images/";
+    const public_url = "../../images/icon/";
 
     const temp_div = document.createElement("div");
 
@@ -203,7 +203,7 @@ function video_list(data){
                             clone.querySelector(".channel-name").textContent = channelData.channel_name;
                             clone.querySelector(".spectator-number").textContent = `조회수 ${viewsUnit(el.views)}회`;
                             clone.querySelector(".uploaded-time").textContent = timeCalculator(el.created_dt);
-                            clone.querySelector(".btn-icon").src = public_url + 'three-dots-vertical.svg';
+                            clone.querySelector(".btn-icon").src = public_url + 'threedotsvertical.svg';
                             clone.querySelector(".menu-toggle-btn").dataset.videoId = el.id; // 메뉴 버튼에 id 지정
                             clone.querySelectorAll(".video-link").forEach(link => {
                                 link.href = `/html/video.html?video_id=${el.id}`;

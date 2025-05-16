@@ -2,7 +2,7 @@
 import build_video_menu from "../../videoComponents/js/insertVideoMenu.js";
 
 // 이미지 경로
-const public_url = '../images/';
+const public_url = '../images/icon/';
 
 // 비디오 메뉴 수정
 function edit_menu() {

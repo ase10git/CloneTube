@@ -211,10 +211,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
             // 아이콘 상태: play / pause 자동 반영
             video.addEventListener("play", () => {
-                playIcon.src = "/images/icon-pause.svg";
+                playIcon.src="../../images/icon/pauseicon.svg";
             });
             video.addEventListener("pause", () => {
-                playIcon.src = "/images/icon-play.svg";
+                playIcon.src="../../images/icon/play.svg";
             });
 
             // 재생 / 일시정지

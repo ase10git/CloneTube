@@ -233,9 +233,6 @@ function renderVideos(sectionId, playlistName, videoList) {
         const viewsFormatted = viewsUnit(video.views);
 
         // 아이콘 이미지 경로
-        const menu_toggle_img = "../../../images/three-dots-vertical.svg";
-        const clock_img = "../../../images/clock.svg";
-        const playlist_img = "../../../images/list-play.svg";
 
         videoCard.innerHTML = `
         <div class="video-thumbnail">
@@ -244,13 +241,13 @@ function renderVideos(sectionId, playlistName, videoList) {
             <div class="hover-overlay-wrap">
                 <div class="hover-overlay-inner-wrap">
                     <div class="hover-overlay-box">
-                        <img src="${clock_img}" alt="clock-icon" class="hover-icon"></img>
+                        <img src="../../../images/icon/clock.svg" alt="clock-icon" class="hover-icon"></img>
                     </div>
                     <div class="hover-overlay-text-box">나중에 보기</div>
                 </div>
                 <div class="hover-overlay-inner-wrap">
                     <div class="hover-overlay-box">
-                        <img src="${playlist_img}" alt="list-play-icon" class="hover-icon"></img>
+                        <img src="../../../images/icon/listplay.svg" alt="list-play-icon" class="hover-icon"></img>
                     </div>
                     <div class="hover-overlay-text-box">재생목록에 추가</div>
                 </div>
@@ -263,7 +260,7 @@ function renderVideos(sectionId, playlistName, videoList) {
             </div>
             <div class="video-menu">
                 <button class="menu-toggle-btn" data-video-id="${video.id}">
-                    <img src="${menu_toggle_img}" alt="three-dot-icon" class="btn-icon">
+                    <img src="../../../images/icon/threedotsvertical.svg" alt="three-dot-icon" class="btn-icon">
                 </button>
             </div>
         </div>

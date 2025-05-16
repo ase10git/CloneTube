@@ -1,7 +1,7 @@
 // ----- 비디오 페이지에 Video 메뉴 추가 -----
 import build_video_menu from "./insertVideoMenu.js";
 
-const public_url = '../images/';
+const public_url = '../images/icon/';
 
 // 비디오 메뉴 수정
 function edit_menu() {

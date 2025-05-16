@@ -112,7 +112,7 @@ function handleSelectedMenu() {
 function build_search_form() {
     const form_tag = `
     <div id="search-icon">
-        <img src="../images/search.svg" alt="검색돋보기이미지">
+        <img src="../../../images/icon/search.svg" alt="검색돋보기이미지">
     </div>
     <div class="search-input-box">
         <input type="search" name="query" placeholder="SEARCH">

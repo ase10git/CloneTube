@@ -2,14 +2,14 @@
 
 // 비디오 메뉴 정보
 const menu_titles = [
-    {title: '현재 재생목록에 추가', img_name: 'list-play.svg', need_invert: true},
+    {title: '현재 재생목록에 추가', img_name: 'listplay.svg', need_invert: true},
     {title: '나중에 볼 동영상에 저장', img_name: 'clock.svg', need_invert: true},
     {title: '재생목록에 저장', img_name: 'bookmark.svg', need_invert: true},
     {title: '오프라인 저장', img_name: 'download.svg', need_invert: true},
-    {title: '공유', img_name: 'share_arrow.svg', need_invert: false},
-    {title: '관심 없음', img_name: 'ban.svg', need_invert: true},
-    {title: '채널 추천 안함', img_name: 'dash-circle.svg', need_invert: true},
-    {title: '신고', img_name: 'report-history.svg', need_invert: false},
+    {title: '공유', img_name: 'sharearrow.svg', need_invert: false},
+    {title: '관심 없음', img_name: 'banicon.svg', need_invert: true},
+    {title: '채널 추천 안함', img_name: 'dashcircle.svg', need_invert: true},
+    {title: '신고', img_name: 'reporthistory.svg', need_invert: false},
 ];
 
 // 비디오 메뉴 태그

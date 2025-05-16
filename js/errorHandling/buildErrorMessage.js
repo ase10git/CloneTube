@@ -27,7 +27,7 @@ function build_error_message(message, parent_node) {
     const error_img_div = document.createElement("div");
     error_img_div.classList.add("error-img-box");
     const error_img = document.createElement("img");
-    error_img.src = "../../images/x-octagon-fill.svg";
+    error_img.src="../../images/icon/xoctagonfill.svg";
     error_img.alt = "error";
     error_img_div.appendChild(error_img);
 

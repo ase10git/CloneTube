@@ -14,7 +14,7 @@ function setFavicon(url, type = "image/x-icon") {
     document.head.appendChild(link);
 };
 
-setFavicon("/images/youtube-favicon.svg");
+setFavicon("/images/favicon/youtubeFavicon.svg");
 
 
 function includeHTML(targetId, url) {
