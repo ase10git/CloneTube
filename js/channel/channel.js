@@ -208,7 +208,7 @@ function renderVideos(sectionId, playlistName, videoList) {
             <div class="hover-overlay-wrap">
                 <div class="hover-overlay-inner-wrap">
                     <div class="hover-overlay-box">
-                        <img src="../../../images/icon/clock.svg" alt="clock-icon" class="hover-icon"></img>
+                        <img src="../../images/icon/clock.svg" alt="clock-icon" class="hover-icon"></img>
                     </div>
                     <div class="hover-overlay-text-box">나중에 보기</div>
                 </div>
