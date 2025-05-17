@@ -4,7 +4,6 @@ let tag = '전체';
 // 태그 새로 지정
 export function setTag(newTag) { 
     tag = newTag;
-    // 커스텀 이벤트 지정
     document.dispatchEvent(new CustomEvent('tagChanged', {detail: tag}));
 }
 
