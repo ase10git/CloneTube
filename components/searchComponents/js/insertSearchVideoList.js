@@ -106,7 +106,7 @@ async function insert_search_results(query, total_info) {
                 clone.querySelector(".upload-time").textContent = uploaded_time;
                 clone.querySelector(".avatar-img").src = el.channel_profile;
                 clone.querySelector(".video-description").textContent = el.description;
-                clone.querySelector(".btn-icon").src = public_url + "threedotsvertical.svg";
+                clone.querySelector(".btn-icon").src = public_url + "threeDotsVertical.svg";
                 clone.querySelector(".btn-icon").alt = "dot-three-icon";
                 clone.querySelector(".menu-toggle-btn").dataset.videoId = el.id;
 

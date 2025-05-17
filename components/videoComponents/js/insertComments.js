@@ -77,7 +77,7 @@ function commentInsert() {
             const replyDiv = document.createElement("div");
             replyDiv.classList.add("reply-input-box");
             replyDiv.innerHTML = `
-                <img src="../../../images/profile/userprofile.svg" alt="my-profile" style="width: 36px; height: 36px; border-radius: 50%;">
+                <img src="../../../images/profile/userProfile.svg" alt="my-profile" style="width: 36px; height: 36px; border-radius: 50%;">
                 <input type="text" class="reply-input" placeholder="답글을 입력하세요" />
                 <div class="reply-action-buttons">
                     <button class="reply-cancel-btn">취소</button>
@@ -93,7 +93,7 @@ function commentInsert() {
                 const replyDiv = document.createElement("div");
                 replyDiv.classList.add("reply-input-box");
                 replyDiv.innerHTML = `
-                    <img src="../../../images/profile/userprofile.svg" alt="my-profile" style="width: 36px; height: 36px; border-radius: 50%;">
+                    <img src="../../../images/profile/userProfile.svg" alt="my-profile" style="width: 36px; height: 36px; border-radius: 50%;">
                     <input type="text" class="reply-input" />
                     <div class="reply-action-buttons">
                         <button class="reply-cancel-btn">취소</button>
@@ -133,7 +133,7 @@ function commentInsert() {
                 const replyEl = document.createElement("div");
                 replyEl.className = "reply-item";
                 replyEl.innerHTML = `
-                    <img src="../../../images/profile/userprofile.svg" alt="reply-profile">
+                    <img src="../../../images/profile/userProfile.svg" alt="reply-profile">
                     <div class="reply-body">
                         <div class="reply-author">${reply.author} <span class="reply-date">${reply.commented_at}</span></div>
                         <div class="reply-text">${reply.body}</div>
