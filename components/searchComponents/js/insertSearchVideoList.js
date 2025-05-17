@@ -38,7 +38,7 @@ function no_result_html(query) {
     const html_template = 
     `
     <div class="no-search-result-img-box">
-        <img src="../../../images/default/searchnoresult.svg" alt="no-search-result">
+        <img src="../../../images/default/searchNoResult.svg" alt="no-search-result">
     </div>
     <div>
         <span class="no-result-message">${sanitizedQuery} 검색결과가 없습니다.</span>

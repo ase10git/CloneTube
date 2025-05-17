@@ -4,13 +4,13 @@ import { viewsUnit } from "./formUnit.js";
 // 상시 표시용 메뉴 목록
 const feedback_list = [
     {id: "like", name: "", img_src: "thumbsUp.svg", need_invert: false, count: 100, liked: false},
-    {id: "dislike", name: "", img_src: "DisLiked.svg", need_invert: false},
+    {id: "dislike", name: "", img_src: "thumbsDown.svg", need_invert: false},
     {id: "share", name: "공유", img_src: "shareArrow.svg", need_invert: false},
 ]
 
 // 반응형에 따라 다르게 표시되는 메뉴 목록
 const feedback_list_dynamic = [
-    {id: "save", name: "저장", img_src: "listsave.svg", need_invert: false},
+    {id: "save", name: "저장", img_src: "listSave.svg", need_invert: false},
     {id: "clip", name: "클립", img_src: "scissors.svg", need_invert: true},
 ]
 
@@ -68,7 +68,7 @@ function append_show_more_btn() {
     
     show_more_btn.innerHTML = 
     `<div class="menu-icon-box">
-        <img src="../../../images/icon/threedots.svg" alt="show-more-three-dots" class="icon-img-dots">
+        <img src="../../../images/icon/threeDots.svg" alt="show-more-three-dots" class="icon-img-dots">
     </div>`;
     video_menu.appendChild(show_more_btn);
 
