@@ -6,7 +6,7 @@ const videoId = urlParams.get("video_id");
 let comments = JSON.parse(localStorage.getItem(`comments_${videoId}`)) || [
     {
     author: "kim",
-    profile: "../../../images/profile/marcusprofile.svg",
+    profile: "../../../images/profile/marcusProfile.svg",
     commented_at: "1년 전",
     body: "댓글 추가했습니다",
     liked: 100,
@@ -17,7 +17,7 @@ let comments = JSON.parse(localStorage.getItem(`comments_${videoId}`)) || [
     },
     {
     author: "park",
-    profile: "../../../images/profile/marcusprofile.svg",
+    profile: "../../../images/profile/marcusProfile.svg",
     commented_at: "2달 전",
     body: "영상 잘 봤습니다",
     liked: 1,

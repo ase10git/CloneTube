@@ -26,6 +26,20 @@ let video_content_div;
 // 검색 결과 없을 때 표시용 div
 let no_result_div;
 
+// sanitizer
+function escape_HTML(str) {
+    return str.replace(/[&<>"']/g, function(match) {
+        const escapeMap = {
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#39;'
+        };
+        return escapeMap[match];
+    });
+}
+
 // 비디오 전체 목록 가져오기
 async function get_video_list() {
     // api 요청
@@ -37,6 +51,7 @@ async function get_video_list() {
         .then(async data => {
             // 검색 키워드 가공
             const normalized_query = normalize_for_search(query);
+            document.querySelector("h1").textContent = `${escape_HTML(query)} 검색 결과`;
 
             // 검색어가 있을 때만 검색 요청 처리
             if (query) {
