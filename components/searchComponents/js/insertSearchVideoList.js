@@ -38,7 +38,7 @@ function no_result_html(query) {
     const html_template = 
     `
     <div class="no-search-result-img-box">
-        <img src="../../../images/default/searchnoresult.svg" alt="no-search-result">
+        <img src="../../../images/default/searchNoResult.svg" alt="no-search-result">
     </div>
     <div>
         <span class="no-result-message">${sanitizedQuery} 검색결과가 없습니다.</span>
@@ -106,7 +106,7 @@ async function insert_search_results(query, total_info) {
                 clone.querySelector(".upload-time").textContent = uploaded_time;
                 clone.querySelector(".avatar-img").src = el.channel_profile;
                 clone.querySelector(".video-description").textContent = el.description;
-                clone.querySelector(".btn-icon").src = public_url + "threedotsvertical.svg";
+                clone.querySelector(".btn-icon").src = public_url + "threeDotsVertical.svg";
                 clone.querySelector(".btn-icon").alt = "dot-three-icon";
                 clone.querySelector(".menu-toggle-btn").dataset.videoId = el.id;
 

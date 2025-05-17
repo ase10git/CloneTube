@@ -187,7 +187,7 @@ function video_list(data){
                             clone.querySelector(".channel-name").textContent = channelData.channel_name;
                             clone.querySelector(".spectator-number").textContent = `조회수 ${viewsUnit(el.views)}회`;
                             clone.querySelector(".uploaded-time").textContent = timeCalculator(el.created_dt);
-                            clone.querySelector(".btn-icon").src = public_url + 'threedotsvertical.svg';
+                            clone.querySelector(".btn-icon").src = public_url + 'threeDotsVertical.svg';
                             clone.querySelector(".menu-toggle-btn").dataset.videoId = el.id;
                             clone.querySelectorAll(".video-link").forEach(link => {
                                 link.href = `/html/video.html?video_id=${el.id}`;

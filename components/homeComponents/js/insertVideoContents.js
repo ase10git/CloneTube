@@ -43,7 +43,6 @@ async function insert_video_content(video_info){
             clone.querySelector(".upload-time").textContent = timeCalculator(el.created_dt);
             clone.querySelector(".channel-name").textContent = el.channel_name;
             clone.querySelector(".avatar-img").src = el.channel_profile;
-            clone.querySelector(".btn-icon").src = public_url + "threedotsvertical.svg";
             clone.querySelector(".btn-icon").alt = "dot-three-icon-video-menu";
             clone.querySelector(".video-link").href = `/html/video.html?video_id=${el.id}`;
             clone.querySelector(".menu-toggle-btn").dataset.videoId = el.id;
