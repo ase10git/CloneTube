@@ -24,22 +24,13 @@ fetch("../../components/scrollMenu/html/scrollMenuTemplate.html")
     .then(data => {
         temp_div.innerHTML = data;
 
-        // 템플릿
         const template = temp_div.querySelector("#scroll-menu").content;
-
-        // 스크롤 메뉴 전체 박스
         const scroll_wrap = template.querySelector(".scroll-menu-wrap");
-
-        // video.html에서 메뉴 목록을 넣을 위치
         const target = document.querySelectorAll(".related-container");
-
-        // 템플릿에서 목록 아이템을 넣을 위치
         const menu_list = scroll_wrap.querySelector(".menu-list");
 
         video_menu.forEach(el => {
-            // 리스트 아이템
             const item = document.createElement("li");
-            // 버튼 태그
             const item_btn =  document.createElement("button");
             item_btn.textContent = el.name_ko;
             item.classList.add("menu-item-btn");
@@ -47,11 +38,8 @@ fetch("../../components/scrollMenu/html/scrollMenuTemplate.html")
             menu_list.appendChild(item);
         });
 
-        // primary와 secondary div에 스크롤 메뉴 추가
         target.forEach(el=>{
-            // 스크롤 메뉴 클론
             const menu_node = scroll_wrap.cloneNode(true);
-            // 스크롤 이벤트 추가
             addScrollEvent(menu_node);
             el.prepend(menu_node);
         });

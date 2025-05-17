@@ -10,35 +10,27 @@
     <link href="../css/topheader.css" rel="stylesheet">
 </head>
 <body>
-    <!-- 상단 메뉴바 자리 -->
     <header id="top-header"></header>
 
     <main id="channel-main">
-        <!-- 상단 -->
         <header id="channel-header">
             <img src="" alt="채널페이지 이미지" id="channel-cover-img">
-            <!--채널 프로필-->
             <div id="channel-profile">
                 <div id="channel-id">
                     <div id="channel-profile-box">
                         <img src="" alt="프로필 이미지" id="channel-profile-img">
                     </div>
                     <div id="channel-name-box">
-                        <div id="channel-name"></div>
+                        <h1 id="channel-name"></h1>
                         <div id="subscribers"></div>
                     </div>
                 </div>
                 <button id="button-subscribe">구독</button>
             </div>
 
-            <!--채널 네비게이션
-            insertChannelScrollMenu.js로 메뉴 추가
-            -->
             <nav id="channel-nav"></nav>
         </header>
-        <!-- 하단 -->
         <section id="channel-section">
-            <!-- 메인영상 -->
             <div id="main-video">
                 <div class="main-video-box">
                     <video autoplay muted controls poster="#" class="video-player">
@@ -56,19 +48,16 @@
                         </div>
                     </div>
                 </div>
-                <!-- 구분선 -->
                 <div class="divider"></div>
             </div>
 
-            <!-- 메인 콘텐츠 영역 -->
             <div class="main-content" id="playlist-main">
-                <!-- 첫 번째 섹션 -->
                 <div class="playlist-section">
                     <div class="video-scroll-wrapper">
                         <div class="section-header">
                             <div class="section-title"></div>
                             <button class="play-all">
-                            <img class="play-icon" src="../images/Group.svg" alt="플레이아이콘">
+                            <img class="play-icon" src="../images/icon/group.svg" alt="플레이아이콘">
                             모두 재생
                             </button>
                         </div>
@@ -82,16 +71,14 @@
                     </div>
                 </div>
 
-                <!-- 구분선 -->
                 <div class="divider"></div>
 
-                <!-- 두 번째 섹션 -->
                 <div class="playlist-section">
                     <div class="video-scroll-wrapper">
                         <div class="section-header">
                             <div class="section-title"></div>
                             <button class="play-all">
-                            <img class="play-icon" src="../images/Group.svg" alt="플레이아이콘">
+                            <img class="play-icon" src="../images/icon/group.svg" alt="플레이아이콘">
                             모두 재생
                             </button>
                         </div>
@@ -107,7 +94,6 @@
             </div>
         </section>
 
-        <!-- 채널 전체 동영상 -->
         <section id="video-section">
             <div class="video-sort-btn-wrap">
                 <button class="video-sort">최신순</button>
@@ -118,7 +104,6 @@
         </section>
     </main>
 
-    <!-- 로딩중 박스 -->
     <div class="loading">
         <div class="loading-content">
             <span class="loader"></span>

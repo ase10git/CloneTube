@@ -9,17 +9,14 @@
     <link href="../css/topheader.css" rel="stylesheet">
 </head>
 <body id="search-body">
-    <!-- 상단 메뉴바 자리 -->
     <header id="top-header"></header>
 
     <main>
+        <h1 class="title" hidden>YouTube-검색</h1>
         <div id="search-header">
-            <!-- 상단 버튼 UI 
-            insertHomeScrollMenu.js로 버튼이 들어갈 자리
-            -->
             <header id="btn-header"></header>
             <div id=search-filter>
-                <button>필터 <span><img src="../images/filter-left.svg" alt="filter-img" id="filter-img"></span></button>
+                <button>필터 <span><img src="../images/icon/filterleft.svg" alt="filter-img" id="filter-img"></span></button>
                 <div id="filter-dropdown">
                     <div id="search-filter-title">검색 필터</div>
                     <div id= "dropdown-menu">
@@ -44,14 +41,10 @@
             </div>
 
         </div>
-        
-        <!-- 비디오 목록이 들어가는 자리 
-        search/search.js
-        -->
+
         <div id="contents"></div>
     </main>
 
-    <!-- 로딩중 박스 -->
     <div class="loading">
         <div class="loading-content">
             <span class="loader"></span>

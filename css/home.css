@@ -1,11 +1,8 @@
-/* 전체 영역 */
 body {
     background-color: var(--bg); 
     overflow-x: hidden;
 }
 
-/* 메인 영역 */
-/* 사이드바 열렸을 때 */
 #home-body main {
     margin-left: 240px;
     margin-top: 56px; 
@@ -15,19 +12,16 @@ body {
     transition: margin 0.3s ease;
 }
 
-/* 사이드바 닫혔을 때 */
 #home-body.sidebar-close main{
     margin-left: var(--mini-nav-width);
 }
 
-/* viewport 791px 이하에서 마진 제거 */
 @media (max-width: 791px) {
     #home-body.sidebar-close main{
         margin-left: 0;
     }
 }
 
-/* 상단 버튼 영역 */
 #btn-header {
     visibility: hidden;
     margin-top: 56px;
@@ -36,12 +30,10 @@ body {
     background-color: var(--bg);
 }
 
-/* 로딩 끝나기 전까지 숨김*/
 #btn-header.visible {
     visibility: visible;
 }
 
-/* 상단 버튼 래퍼 */
 .scroll-menu-wrap {
     height: 100%;
     padding: 0 24px; 
@@ -51,7 +43,6 @@ body {
     position: relative;
 }
 
-/* 좌우 이동 버튼 */
 .left-btn-wrap, .right-btn-wrap {
     width: 48px; 
     height: 100%;
@@ -62,19 +53,16 @@ body {
     background-color: var(--bg);
 }
 
-/* 왼쪽 버튼 위치 */
 .left-btn-wrap {
     top: 0;
     left: 0;
 }
 
-/* 오른쪽 버튼 위치 */
 .right-btn-wrap {
     top: 0;
     right: 0;
 }
 
-/* 좌우 버튼 공통 스타일 */
 .nav-btn-wrap button {
     width: 40px;
     height: 40px;
@@ -92,7 +80,6 @@ body {
     background-color: var(--bt-border-d);
 }
 
-/* 버튼 뒤에 흐릿한 배경 추가 */
 .left-btn-wrap::after {
     width: 20px; height: 100%;
     position: absolute; right: -20px;
@@ -107,13 +94,11 @@ body {
     background: linear-gradient(to left, var(--bg) 0%, var(--bg) 40%, transparent 100%);
 }
 
-/* 버튼 안 아이콘 */
 .nav-btn-wrap button svg {
     width: 16px;
     height: 16px;
 }
 
-/* 버튼 리스트 전체 */
 #btn-tab {
     width: 100%;
     display: flex;
@@ -124,7 +109,6 @@ body {
 .scroll-menu-box{overflow-x:auto;}
 .scroll-menu-box::-webkit-scrollbar{display: none;}
 
-/* 버튼 리스트 ul */
 .scroll-menu-wrap .menu-list {
     width: 100%;
     height: 100%;
@@ -135,13 +119,11 @@ body {
     scroll-behavior: smooth; 
 }
 
-/* 버튼 아이템 */
 .scroll-menu-wrap .menu-list li {
     margin: 12px 12px 12px 0;
     white-space: nowrap;
 }
 
-/* 태그 버튼 */
 .scroll-menu-wrap .menu-list li button{
     width: 100%; height: 100%;
     padding: 0 12px;
@@ -155,22 +137,19 @@ body {
     cursor: pointer;
 }
 
-/* 버튼 호버 효과 */
 .scroll-menu-wrap .menu-list li button:hover {
     background-color: #444;
 }
 
-/* 선택된 버튼 스타일 */
 .scroll-menu-wrap .menu-list li button.selected {
     background-color: var(--bt-border);
     color: var(--bg);
 }
 
-/* 비디오 콘텐츠 전체 */
 #contents {
     visibility: hidden;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* 반응형 그리드 */
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 20px;
     padding: 20px;
     position: relative;
@@ -180,7 +159,6 @@ body {
     visibility: visible
 }
 
-/* 비디오 개별 카드 */
 .content {
     width: 100%;
     background-color: var(--bg-item);
@@ -189,7 +167,6 @@ body {
     flex-direction: column;
 }
 
-/* 썸네일 박스 */
 .thumbnail-box {
     width: 100%;
     position: relative;
@@ -197,12 +174,10 @@ body {
     border-radius: 10px;
 }
 
-/* 썸네일 이미지 박스 */
 .thumbnail {
     width: 100%; height: 100%;
 }
 
-/* 썸네일 이미지 */
 .thumbnail-img {
     width: 100%;
     height: auto;
@@ -210,7 +185,6 @@ body {
     display: block;
 }
 
-/* 썸네일 오버레이 */
 .hover-overlay-wrap, .overlay-wrap{
     position: absolute;
     top:0; right: 0;
@@ -268,7 +242,6 @@ body {
     object-fit: contain;
 }
 
-/* 동영상 재생 아이콘 및 재생 시간 */
 .overlay-wrap {
     width: 100%; height: 100%;
     z-index: 50;
@@ -299,7 +272,6 @@ body {
     font-weight: 500;
 }
 
-/* 비디오 정보(제목, 채널명 등) */
 .details {
     color: var(--font);
     display: flex;
@@ -309,21 +281,18 @@ body {
     position: relative;
 }
 
-/* 아바타 이미지 박스 */
 .profile-box .channel-link{
     display: block;
     width: 36px; height: 36px;
     margin-top: 12px; margin-right: 12px;
 }
 
-/* 아바타 이미지 */
 .avatar-img {
     width: 100%; height: 100%;
     border-radius: 50%;
     cursor: pointer;
 }
 
-/* 비디오 정보 박스 */
 .meta {
     padding-right: 24px;
     display: flex;
@@ -333,7 +302,6 @@ body {
     overflow-x: hidden;
 }
 
-/* 비디오 정보 */
 .metadata {
     width: 100%;
     display: flex;
@@ -342,13 +310,11 @@ body {
     align-items: flex-start
 }
 
-/* 제목 컨테이너 */
 .video-title-box {
     display: flex;
     align-items: center;
 }
 
-/* 비디오 제목 */
 .video-title {
     margin: 12px 0 4px 0;
     font-size: 16px;
@@ -362,13 +328,11 @@ body {
     -webkit-box-orient: vertical;
 }
 
-/* 채널명 */
 .channel-name {
     font-size: 14px;
     color: var(--font-gr);
 }
 
-/* 비디오 조회수, 업로드 시간 박스 */
 .video-meta {
     display: flex;
     justify-content: flex-start;
@@ -383,7 +347,6 @@ body {
     font-weight: 400;
 }
 
-/* 비디오 메뉴 */
 .video-menu {
     position: absolute;
     top:12px; right: 0;
@@ -434,7 +397,6 @@ body {
     border: 1px solid var(--bt-border);
 }
 
-/* 비디오 메뉴 리스트 */
 #contents .menu-list { 
     visibility: hidden;
     position: absolute;

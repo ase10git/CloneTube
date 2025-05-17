@@ -1,29 +1,26 @@
 @scope (#channel-main) {
-    font-family: Arial, sans-serif; /* 글꼴 설정 */
+    font-family: Arial, sans-serif;
 }
 
 /* 페이지 전체 기본 레이아웃 설정 */
 body {
-    background-color: var(--bg); /* 배경색 검정 */
-    color: var(--font); /* 텍스트 기본 색상 흰색 */
-    display: flex; /* 플렉스 컨테이너로 설정 */
-    flex-direction: column; /* 수직 방향 정렬 */
-    height: 100vh; /* 전체 뷰포트 높이 채움 */
+    background-color: var(--bg);
+    color: var(--font);
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
 }
 
-/* 사이드바 열려있을 때 기본 */
 #contents, #channel-main{
     margin-left: 240px;
     transition: margin 0.3s ease;
 }
 
-/* 사이드바 닫혔을 때 */
 body.sidebar-close #contents,
 body.sidebar-close #channel-main {
     margin-left: var(--mini-nav-width);
 }
 
-/* viewport 791px 이하에서 마진 제거 */
 @media (max-width: 791px) {
     body.sidebar-close #contents,
     body.sidebar-close #channel-main {
@@ -40,12 +37,10 @@ body.sidebar-close #channel-main {
     align-items: center;
 }
 
-/* 데이터 로딩 전까진 숨김 처리 */
 #channel-header.visible{
     visibility: visible;
 }
 
-/* 채널 헤더 */
 #channel-header {
     width: 100%;
     visibility: hidden;
@@ -57,13 +52,11 @@ body.sidebar-close #channel-main {
     background-color: var(--ch-profile);
 }
 
-/* 채널 배경 사진 */
 #channel-cover-img{
     width: 100%; max-height: 200px;
     object-fit: cover;
 }
 
-/* 채널 프로필 사진 */
 #channel-profile {
     width: 100%;
     display: flex;
@@ -93,7 +86,6 @@ body.sidebar-close #channel-main {
     object-fit: fill;
 }
 
-/* 채널 이름 */
 #channel-id {
     display: flex;
     gap: 24px;
@@ -124,7 +116,6 @@ body.sidebar-close #channel-main {
     #button-subscribe { width: 100%; }
 }
 
-/* 채널 메뉴 탭 */
 #channel-nav {
     width: 100%;
     display: flex;
@@ -134,7 +125,6 @@ body.sidebar-close #channel-main {
     position: relative;
 }
 
-/* 상단 버튼 래퍼 */
 .scroll-menu-wrap {
     width: 100%;
     height: 100%;
@@ -144,7 +134,6 @@ body.sidebar-close #channel-main {
     position: relative;
 }
 
-/* 메뉴 버튼 랩 */
 #channel-nav .nav-btn-wrap {
     width: 56px; height: 100%;
     display: flex; justify-content: center; align-items: center;
@@ -153,12 +142,9 @@ body.sidebar-close #channel-main {
     z-index: 1;
 }
 
-/* 메뉴 이동 버튼 영역 */
 .left-btn-wrap{top:0; left:0;}
-
 .right-btn-wrap{top:0; right:0;}
 
-/* 메뉴 버튼 */
 #channel-nav .nav-btn-wrap button {
     width: 40px; height: 40px;
     border: none;
@@ -176,14 +162,12 @@ body.sidebar-close #channel-main {
     color: var(--font-gr);
 }
 
-/* 메뉴 스크롤 영역 */
 #channel-nav .scroll-menu-box {
     overflow-x: auto;
 }
 
 #channel-nav .scroll-menu-box::-webkit-scrollbar{display: none;}
 
-/* 메뉴 스크롤 */
 #channel-nav .menu-list {
     width: 100%;
     height: 100%;
@@ -231,12 +215,10 @@ body.sidebar-close #channel-main {
     background-color: var(--bt-highlight);
 }
 
-/* 채널 검색 영역 */
 #channel-nav .menu-list .form_li {
     padding: 0;
 }
 
-/* 검색 폼만 밑줄 효과 제거 */
 #channel-nav .menu-list .form_li::after,
 #channel-nav .menu-list .form_li:hover::after,
 #channel-nav .menu-list .form_li.select::after{
@@ -258,7 +240,6 @@ body.sidebar-close #channel-main {
     cursor: pointer;
 }
 
-/* 검색 아이콘 클릭 시 애니메이션 */
 #search-icon.clicked{
     animation: search-icon-blink forwards 0.5s ease-in-out 1;
 }
@@ -274,7 +255,6 @@ body.sidebar-close #channel-main {
     }
 }
 
-/* 검색 입력 창 */
 #channel-search input {
     height: 20px;
     background-color: transparent;
@@ -290,7 +270,6 @@ body.sidebar-close #channel-main {
     caret-color : var(--font-gr);
 }
 
-/* 자동 완성시 스타일 변경 */
 #channel-search input:-webkit-autofill, 
 #channel-search input:-webkit-autofill:hover, 
 #channel-search input:-webkit-autofill:focus,
@@ -312,7 +291,6 @@ body.sidebar-close #channel-main {
     transition: background-color 5000s ease-in-out 0s;
 }
 
-/* 검색 input 박스*/
 #channel-search .search-input-box{
     display:none;
 }
@@ -321,7 +299,6 @@ body.sidebar-close #channel-main {
     display: block;
 }
 
-/* 검색 input 하단 언더바 */
 .search-underbar{
     width: 100%; height: 1px;
     position: relative;
@@ -332,7 +309,6 @@ body.sidebar-close #channel-main {
     display: block;
 }
 
-/* 언더바 일반 상태 */
 .search-underbar.visible .unfocus-underbar {
     width: 100%; height: 100%;
     display: block;
@@ -340,7 +316,6 @@ body.sidebar-close #channel-main {
     opacity: 0.8;
 }
 
-/* 언더바 포커스 상태 */
 .search-underbar.visible .focus-underbar {
     width: 0; height: 1.5px;
     position: absolute;
@@ -349,7 +324,6 @@ body.sidebar-close #channel-main {
     background-color: var(--font);
 }
 
-/* 포커스 시 언더바 배경 애니메이션 지정 */
 .search-underbar.visible .focus-underbar.clicked{
     animation: input_underline_blink forwards 0.4s ease-in-out 1;
 }
@@ -361,7 +335,6 @@ body.sidebar-close #channel-main {
     }
 }
 
-/* 비디오 영역 */
 #channel-section {
     width: 100%;
     max-width: 1284px;
@@ -371,12 +344,10 @@ body.sidebar-close #channel-main {
     align-items: center;
 }
 
-/* 로딩 끝나기 전까지 숨김 */
 #channel-section.visible{
     visibility: visible;
 }
 
-/* 메인 비디오 */
 #main-video {
     margin: 24px 0 0 0;
     width: 100%;
@@ -399,7 +370,6 @@ body.sidebar-close #channel-main {
     gap: 24px;
 }
 
-/* 876px 이하에서 flex 방향 전환 */
 @media (width <= 876px) {
     .main-video-box { flex-direction: column; gap:0;}
 }
@@ -432,7 +402,6 @@ body.sidebar-close #channel-main {
     justify-content: center;
 }
 
-/* 비디오 플레이어 */
 .video-player { width: 448px; height: 238px; }
 
 #video-info-box {
@@ -444,7 +413,6 @@ body.sidebar-close #channel-main {
     gap: 20px;
 }
 
-/* 비디오 제목 */
 #video-title {
     display: block;
     margin-bottom: 20px;
@@ -464,7 +432,6 @@ body.sidebar-close #channel-main {
 
 #spectators { margin-right: 5px; }
 
-/* 비디오 설명 */
 #video-desc-box {
     width: 100%;
     display: flex;
@@ -484,7 +451,6 @@ body.sidebar-close #channel-main {
     -webkit-line-clamp: 7;
     -webkit-box-orient: vertical;
     word-wrap: break-word;
-    /* white-space : pre-wrap; 공백 포함 입력 내용 그대로 출력 */
 }
 
 #video-show-more {
