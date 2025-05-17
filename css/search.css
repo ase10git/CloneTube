@@ -1,15 +1,12 @@
-/* 전체 영역 */
 body {
     background-color: var(--bg);
     overflow-x: hidden;
 }
 
-/* 검색 페이지 폰트 지정 */
 #search-body{
     font-family: "Roboto","Arial",sans-serif;
 }
 
-/* 메인 영역 */
 #search-body main {
     margin-left: 240px;
     display: flex;
@@ -20,19 +17,16 @@ body {
     transition: margin 0.3s ease;
 }
 
-/* 사이드바 닫혔을 때 */
 #search-body.sidebar-close main{
     margin-left: var(--mini-nav-width);
 }
 
-/* viewport 791px 이하에서 마진 제거 */
 @media (max-width: 791px) {
     #search-body.sidebar-close main{
         margin-left: 0;
     }
 }
 
-/* 상단 버튼 헤더 */
 #search-header {
     visibility: hidden;
     display: flex;
@@ -44,17 +38,14 @@ body {
     background-color: var(--bg);
 }
 
-/* 데이터 로딩 전까지 숨기기 */
 #search-header.visible {
     visibility: visible;
 }
 
-/* 상단 버튼 영역 */
 #btn-header {
     width: calc(100% - 105.77px);
 }
 
-/* 상단 버튼 래퍼 */
 .scroll-menu-wrap {
     height: 100%;
     padding-left: 24px; 
@@ -64,7 +55,6 @@ body {
     position: relative;
 }
 
-/* 좌우 이동 버튼 */
 .left-btn-wrap, .right-btn-wrap {
     width: 56px; 
     height: 100%;
@@ -74,19 +64,16 @@ body {
     position: absolute;
 }
 
-/* 왼쪽 버튼 위치 */
 .left-btn-wrap {
     top: 0;
     left: 0;
 }
 
-/* 오른쪽 버튼 위치 */
 .right-btn-wrap {
     top: 0;
     right: 0;
 }
 
-/* 좌우 버튼 공통 스타일 */
 .nav-btn-wrap button {
     width: 40px;
     height: 40px;
@@ -104,7 +91,6 @@ body {
     background-color: var(--bt-border-d);
 }
 
-/* 버튼 뒤에 흐릿한 배경 추가 */
 .left-btn-wrap {
     background: linear-gradient(to right, var(--bg) 0%, var(--bg) 50%, transparent 100%);
 }
@@ -112,13 +98,11 @@ body {
     background: linear-gradient(to left, var(--bg) 0%, var(--bg) 50%, transparent 100%);
 }
 
-/* 버튼 안 아이콘 */
 .nav-btn-wrap button svg {
     width: 16px;
     height: 16px;
 }
 
-/* 버튼 리스트 전체 */
 #btn-tab {
     width: 100%;
     display: flex;
@@ -129,7 +113,6 @@ body {
 .scroll-menu-box{overflow-x: auto;}
 .scroll-menu-box::-webkit-scrollbar{display: none;}
 
-/* 버튼 리스트 ul */
 .scroll-menu-wrap .menu-list {
     width: 100%;
     height: 100%;
@@ -140,13 +123,11 @@ body {
     scroll-behavior: smooth; 
 }
 
-/* 버튼 아이템 */
 .scroll-menu-wrap .menu-list li {
     margin: 12px 12px 12px 0;
     white-space: nowrap;
 }
 
-/* 태그 버튼 */
 .scroll-menu-wrap .menu-list li button{
     width: 100%; height: 100%;
     padding: 0 12px;
@@ -160,18 +141,15 @@ body {
     cursor: pointer;
 }
 
-/* 버튼 호버 효과 */
 .scroll-menu-wrap .menu-list li button:hover {
     background-color: #444;
 }
 
-/* 선택된 버튼 스타일 */
 .scroll-menu-wrap .menu-list li button.selected {
     background-color: var(--bt-border);
     color: var(--bg);
 }
 
-/* 필터 영역 */
 #search-filter {
     position: relative;
 }
@@ -254,7 +232,6 @@ body {
     margin: 0 8px;
 }
 
-/* 동영상 리스트 영역 */
 #contents {
     visibility: hidden;
     width: 100%;
@@ -268,12 +245,10 @@ body {
     gap: 20px;
 }
 
-/* 데이터 로딩 전까지 숨기기 */
 #contents.visible {
     visibility: visible;
 }
 
-/* 검색 결과가 없을 때 처리 박스 */
 .no-search-result {
     padding-top: 140px;
     width: 100%;
@@ -300,7 +275,6 @@ body {
     font-size: 14px;
 }
 
-/* 동영상 카드 */
 .content {
     width: 100%;
     display: flex;
@@ -309,7 +283,6 @@ body {
     gap: 16px;
 }
 
-/* 썸네일 */
 .thumbnail-box{
     width: 100%;
     min-width: 240px;
@@ -317,7 +290,6 @@ body {
     position: relative;
 }
 
-/* 썸네일 오버레이 */
 .hover-overlay-wrap, .overlay-wrap{
     position: absolute;
     top:0; right: 0;
@@ -327,7 +299,6 @@ body {
     width: 100%; height: 100%;
 }
 
-/* 썸네일 이미지 */
 .thumbnail-img{
     width: 100%; height: 100%;
     border-radius: 10px;
@@ -386,7 +357,6 @@ body {
     object-fit: contain;
 }
 
-/* 동영상 재생 아이콘 및 재생 시간 */
 .overlay-wrap {
     width: 100%; height: 100%;
     z-index: 1;
@@ -436,7 +406,6 @@ body {
     font-weight: 500;
 }
 
-/* 비디오 정보와 메뉴 영역 */
 .details {
     display: flex;
     justify-content: flex-start;
@@ -445,7 +414,6 @@ body {
     position: relative;
 }
 
-/* 비디오 메타데이터 영역 */
 .meta {
     padding-right: 24px;
     display: flex;
@@ -459,7 +427,6 @@ body {
     cursor: pointer;
 }
 
-/* 비디오 제목 */
 .video-header-box {
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -474,7 +441,6 @@ body {
     color: var(--font);
 }
 
-/* 비디오 정보 */
 .video-meta{
     margin-top: 5px;
     display: flex;
@@ -488,7 +454,6 @@ body {
     color: var(--font);
 }
 
-/* 채널 메타 정보 */
 .channel-meta {
     display: flex;
     justify-content: flex-start;
@@ -517,7 +482,6 @@ body {
     color: var(--font);
 }
 
-/* 채널 인증 마크 */
 .channel-badge-box {
     display: none;
 }
@@ -531,7 +495,6 @@ body {
     color: var(--font);
 }
 
-/* 영상 설명 */
 .video-desc-box{ 
     overflow: hidden; 
     cursor: pointer;
@@ -545,7 +508,6 @@ body {
     word-wrap: break-word;
 }
 
-/* 동영상 메뉴 */
 .video-menu {
     position: absolute;
     top: 0; right: 0;
@@ -568,7 +530,6 @@ body {
     filter: invert();
 }
 
-/* 동영상 메뉴 토글 버튼 */
 .video-menu .menu-toggle-btn {
     padding: 5px;
     border-radius: 100%;
@@ -596,7 +557,6 @@ body {
     border: 1px solid var(--bt-border);
 }
 
-/* 비디오 메뉴 리스트 */
 #contents .menu-list { 
     visibility: hidden;
     position: absolute;

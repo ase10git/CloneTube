@@ -43,7 +43,7 @@ function commentInsert() {
 
         // 정렬 버튼 스타일 유지
         document.querySelectorAll('.sort-options button').forEach(btn => {
-            btn.classList.remove('selected'); // 일단 제거..
+            btn.classList.remove('selected');
         });
 
         if (localStorage.getItem("comment_sort") === "latest") {
@@ -72,7 +72,6 @@ function commentInsert() {
             clone.querySelector(".comment-body").textContent = comment.body;
             clone.querySelector(".comment-liked-number").textContent = comment.liked;
 
-            // 답글 버튼
             const replyBtn = clone.querySelector(".reply-btn");
             const commentBox = clone.querySelector(".comment-box");
             const replyDiv = document.createElement("div");
@@ -185,24 +184,19 @@ function commentInsert() {
     const buttons = document.querySelectorAll(".comment-icon-box");
     buttons.forEach(button => {
         button.addEventListener("click", function (e) {
-            // 현재 버튼의 다음 형제 요소 (comment-dropdown)
             const button = e.currentTarget;
             const dropdown = button.nextElementSibling;
 
-            // 드롭다운이 없으면 중단
             if (!dropdown || !dropdown.classList.contains("comment-dropdown")) {
                 console.error("comment-dropdown이 없음");
                 return;
             }
-            // 지금 클릭한 드롭다운이 열려 있었는지 확인
             const isAlreadyOpen = dropdown.classList.contains("visible");
 
-            // 모든 드롭다운 닫기
             document.querySelectorAll(".comment-dropdown").forEach(el => {
                 el.classList.remove("visible");
             });
         
-            // 지금 클릭한 드롭다운이 이전에 닫혀 있었다면 열기
             if (!isAlreadyOpen) {
                 dropdown.classList.add("visible");
             }

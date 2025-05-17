@@ -25,14 +25,10 @@ fetch("../../components/scrollMenu/html/scrollMenuTemplate.html")
     })
     .then(data => {
         temp_div.innerHTML = data;
-
-        // 템플릿 안의 <template> 요소 선택
         const template = temp_div.querySelector("#scroll-menu").content;
-
-        // 템플릿 내부 요소들 선택
         const scroll_wrap = template.querySelector(".scroll-menu-wrap");
         const menu_list = scroll_wrap.querySelector(".menu-list");
-        const target = document.querySelector("#channel-nav"); // 삽입 대상
+        const target = document.querySelector("#channel-nav");
 
         // 메뉴 항목 생성
         channel_menu.forEach(el => {
@@ -51,18 +47,11 @@ fetch("../../components/scrollMenu/html/scrollMenuTemplate.html")
             el.addEventListener("click", (e) => {
                 e.preventDefault();
 
-                // 클릭된 메뉴에 스타일 적용
                 item_btns.forEach(item => item.classList.remove("select"));
                 el.classList.add("select");
-
-                // 클릭된 메뉴 ID 추출
                 const clickedMenuId = el.querySelector("a").getAttribute("href").substring(1);
-
-                // 현재 채널 ID 추출
                 const urlParams = new URLSearchParams(window.location.search);
                 const channelId = urlParams.get('channel_id');
-
-                // URL에 해시 포함해 새로고침
                 const newUrl = `channel.html?channel_id=${channelId}#${clickedMenuId}`;
                 window.location.href = newUrl;
             });
@@ -78,10 +67,8 @@ fetch("../../components/scrollMenu/html/scrollMenuTemplate.html")
         scroll_wrap.querySelector(".menu-list").appendChild(search_form_li);
         target.appendChild(scroll_wrap);
 
-        // 스크롤 이벤트 연결
         addScrollEvent(scroll_wrap);
 
-        // 현재 해시를 기준으로 메뉴 탭 스타일 설정
         handleSelectedMenu();
         window.addEventListener("load", handleSelectedMenu);
         window.addEventListener("hashchange", handleSelectedMenu);
@@ -135,7 +122,6 @@ function build_search_form() {
     const search_underbar = search_form.querySelector(".search-underbar");
     const search_underbar_focus = search_underbar.querySelector(".focus-underbar");
 
-    // 검색 아이콘 클릭 → 입력창 활성화
     search_icon.addEventListener("click", function () {
         search_icon.classList.remove("clicked");
         void search_icon.offsetWidth;
@@ -157,7 +143,6 @@ function build_search_form() {
         const left_scroll_btn = document.querySelector(".nav-left-btn");
 
         if (!search_form.contains(e.target)) {
-            // 스크롤 버튼은 예외처리
             if (right_scroll_btn.contains(e.target) || left_scroll_btn.contains(e.target)) return;
             search_input_box.classList.remove("active");
             search_input.classList.remove("active");
@@ -174,7 +159,6 @@ function build_search_form() {
         const channelId = urlParams.get('channel_id');
 
         if (!channelId) build_network_error(404);
-
         window.location.href = `channel.html?channel_id=${channelId}&query=${encodeURIComponent(query)}`;
     });
 

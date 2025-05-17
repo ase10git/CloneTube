@@ -2,12 +2,6 @@ const saved = localStorage.getItem('similarityMap_local');
 const saved_tag = localStorage.getItem('tags_local');
 const allvideo_tags = saved ? JSON.parse(saved_tag) : [];
 const similarityMap = saved ? new Map(Object.entries(JSON.parse(saved))) : new Map();
-// const similarityMap = new Map();
-// localStorage.setItem('similarityMap_local', JSON.stringify(Object.fromEntries(similarityMap)));
-// const allvideo_tags = [];
-// localStorage.setItem('tags_local', JSON.stringify(allvideo_tags));
-
-//console.log(similarityMap);
 
 //비디오 태그 정보 가져오기
 async function video_tags_info () {
@@ -16,7 +10,6 @@ async function video_tags_info () {
         const videoData = await response.json();
         const videoData_tags = videoData.map(video => video.tags);
         
-        // 평탄화 (2차원 배열 → 1차원 배열) 및 Set을 이용해 중복 제거
         const VideoTags = [...new Set(videoData_tags.flat())];
         return VideoTags;
     } catch(error) {
@@ -46,11 +39,8 @@ async function similarity_tag(firstWord, secondWord, retryCount = 0) {
     const key = makeKey(firstWord, secondWord);
 
     if (similarityMap.has(key)) {
-        //console.log("similarity-이미 있음");
         return similarityMap.get(key);
-        // 이미 저장된 유사도 사용
     } else {
-        // fetch로 API 요청해서 유사도 받기
         const requestJson = {
             'argument': {
                 'first_word': firstWord,
@@ -58,8 +48,7 @@ async function similarity_tag(firstWord, secondWord, retryCount = 0) {
             }
         };
         try {
-            //console.log("similarity-없음");
-            await delayRequest(10);  // 0.01초 대기, 너무 빠르면 오류(Too Many Request)
+            await delayRequest(10);
             const response = await fetch(openApiURL, {
                 method: 'POST',
                 headers: {
@@ -70,11 +59,10 @@ async function similarity_tag(firstWord, secondWord, retryCount = 0) {
             });
 
             const result = await response.json();
-            // 동시에 너무 많은 요청 받아 처리 못할 경우
             if (result.result === -1 && result.reason === 'Concurrent Limit Exceeded') {
                 if (retryCount < 5) {
                     console.warn(`요청 제한 초과, 재시도 중... (${retryCount + 1})`);
-                    await delayRequest(100); // 0.1초 대기 후 재시도
+                    await delayRequest(100);
                     return similarity_tag(firstWord, secondWord, retryCount + 1);
                 } else {
                     console.error("재시도 횟수 초과: ", key);
@@ -124,15 +112,13 @@ function new_tags(arr1, arr2) {
 
 // 전체 태그 두개씩 유사도 가져와서 Map에 저장하기 - 여러 개 동시 처리
 async function similarity_save() {
-    let tags = await video_tags_info(); // 비동기 함수에서 값을 기다림
-    // 이미 비디오 태그 값 다 비교했을 경우
+    let tags = await video_tags_info();
     if (Sametags(tags, allvideo_tags)) {
-        localStorage.setItem('similarityMap_ready', 'true'); // 저장 완료 표시
+        localStorage.setItem('similarityMap_ready', 'true');
         return 0;
     }
-    // 새로운 비디오 들어왔을경우, 그 태그만 비교해서 넣기
     tags = new_tags(tags, allvideo_tags);
-    const maxConcurrentRequests = 20; // 최대 동시 요청 수
+    const maxConcurrentRequests = 20;
     const promises = [];
 
     for (let i = 0; i < tags.length; i++) {
@@ -140,23 +126,20 @@ async function similarity_save() {
             promises.push(similarity_tag(tags[i], tags[j]));
 
             if (promises.length >= maxConcurrentRequests) {
-                // 최대 동시 요청 수가 되면 실행 후 대기
                 await processBatch(promises);
-                promises.length = 0;  // 배열 초기화
-                await delayRequest(100); // 0.1초 대기 후 다시 요청
+                promises.length = 0;
+                await delayRequest(100);
             }
         }
     }
 
-    // 남아있는 요청 처리 (남은 요청이 있을 수 있음)
     if (promises.length > 0) {
         await processBatch(promises);
     }
 
-    // 로컬 저장소에 결과 저장
     localStorage.setItem('tags_local', JSON.stringify(tags));
     localStorage.setItem('similarityMap_local', JSON.stringify(Object.fromEntries(similarityMap)));
-    localStorage.setItem('similarityMap_ready', 'true'); // 저장 완료 표시
+    localStorage.setItem('similarityMap_ready', 'true');
 }
 
 // 병렬로 처리할 배치 처리 함수
@@ -165,10 +148,6 @@ async function processBatch(promises) {
 }
 
 async function initSimilarity() {
-    // // 먼저 준비 완료 플래그 초기화
-    // localStorage.setItem('similarityMap_ready', 'false');
-    // // localStorage 초기화 완료 후
-    // await similarity_save();
     if (typeof ai_api_key !== "undefined") {
         localStorage.setItem('similarityMap_ready', 'false');
         access_key = ai_api_key;
@@ -179,24 +158,3 @@ async function initSimilarity() {
     }
 }
 initSimilarity();
-
-
-//+++++여러 처리에서 문제 생겼을경우 아래 처리로++++++//
-// 전체 태그 두개씩 유사도 가져와서 Map에 저장하기 - 하나씩 처리
-// async function similarity_save() {
-//     const tags = await video_tags_info(); // 비동기 함수에서 값을 기다림
-//     //이미 비디오 태그 값 다 비교했을 경우
-//         if (Sametags(tags, video_tags)) {
-//             localStorage.setItem('similarityMap_ready', 'true'); // 저장 완료 표시
-//             return 0;
-//         }
-
-//     for (let i = 0; i < tags.length; i++) {
-//         for (let j = i + 1; j < tags.length; j++) {
-//             await similarity_tag(tags[i], tags[j]);
-//         }
-//     }
-//     localStorage.setItem('local_tag', JSON.stringify(tags));
-//     localStorage.setItem('similarityMap_local', JSON.stringify(Object.fromEntries(similarityMap)));
-//     localStorage.setItem('similarityMap_ready', 'true'); // 저장 완료 표시
-// }

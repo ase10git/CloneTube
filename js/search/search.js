@@ -6,24 +6,14 @@ import add_scroll_menu from "../../components/homeComponents/js/insertHomeScroll
 import { build_error_message, build_network_error } from "../errorHandling/buildErrorMessage.js";
 
 // 검색어
-// 한글 검색을 위한 URI decoding 처리
 const params = new URLSearchParams(window.location.search);
 const query = decodeURIComponent(params.get("query") || "");
 
-// 문서 title 변경
 document.title = `${query} - YouTube`;
-
-// 가져온 전체 비디오 내용
 let video_total_list = [];
-
-// 비디오 내의 태그 목록
 let video_tags = [];
-// 기본 태그 목록
 const default_tag_menu = ['전체'];
-
-// 검색 결과 비디오 카드
 let video_content_div;
-// 검색 결과 없을 때 표시용 div
 let no_result_div;
 
 // sanitizer
@@ -42,33 +32,22 @@ function escape_HTML(str) {
 
 // 비디오 전체 목록 가져오기
 async function get_video_list() {
-    // api 요청
     fetch("https://www.techfree-oreumi-api.ai.kr/video/getVideoList")
         .then(res => {
             if (!res.ok) build_network_error(res.status);
             return res.json();
         })
         .then(async data => {
-            // 검색 키워드 가공
             const normalized_query = normalize_for_search(query);
             document.querySelector("h1").textContent = `${escape_HTML(query)} 검색 결과`;
 
-            // 검색어가 있을 때만 검색 요청 처리
             if (query) {
-                // 비디오와 채널 정보를 담은 배열
-                // 비디오 제목 검색 + 비디오 태그 검색 결과
-                // 전역 변수에 비디오 목록 저장
                 video_total_list = await get_video_query(data, normalized_query);
-
-                // 비디오 전체의 태그 목록을 변수에 저장
                 const tags_set = new Set(data.map(video => video.tags).flat());
                 video_tags = [default_tag_menu[0], ...Array.from(tags_set)];
-
-                // 스크롤 메뉴 생성
                 await add_scroll_menu(video_tags);
             }
 
-            // 표시할 결과 생성
             const {video_content, no_result} = await insert_search_results(query, video_total_list);
             video_content_div = video_content;
             no_result_div = no_result;
@@ -84,49 +63,32 @@ async function get_video_list() {
 
 // 비디오 제목과 태그 검색
 async function get_video_query(data, normalized_query) {
-    // 비디오 제목에 검색어를 포함하는 경우만 추출    
     const video_title_query = data.filter(video => {
-        // 비디오 제목의 공백 무시, 소문자 치환, 부분 문자열 검사 준비
         const normalized_title = normalize_for_search(video.title);
         return normalized_title.includes(normalized_query);
     });
 
-    // 비디오 태그에 검색어를 포함하는 경우만 추출
     const video_tag_query = data.filter(video => {
-        // 조건(테스트 함수)를 만족하는 요소가 있는지 찾음
         return video.tags.some(tag => {
             const normalized_tag = normalize_for_search(tag);
             return normalized_tag.includes(normalized_query);
         });
     });
 
-    // 검색 결과 배열을 Set로 생성 - 합칠 때 중복 제거용
     const title_query_set = new Set(video_title_query);
     const tag_query_set = new Set(video_tag_query);
-
-    // 검색 결과 합치기
     const total_query = Array.from(title_query_set.union(tag_query_set));
-
-    // 각 비디오의 채널 정보 가져오기
     const channel_ids = new Set(total_query.map(video => video.channel_id));
-
-    // 채널 id로 채널 정보 가져오기
     const channel_info = await Promise.all(
         Array.from(channel_ids).map(async id => {
             return await get_channel_list(id);
         })
     );
 
-    // 비디오 정보와 채널 정보를 담은 새 배열 생성
-    // 채널 정보를 가져오는 비동기 함수의 모든 결과가 나왔을 때 제대로 된 데이터 출력
     const total_info = total_query.map(video => {
-        // 비디오 정보의 채널 id와 채널 정보의 채널 id가 같은 채널 정보 찾기
         let channel_data = channel_info.find(channel => channel.id == video.channel_id);
-        // id = channel.id, 그 외에는 각 대응되는 변수 이름에 저장
         const {id, ...rest_channel_data} = channel_data || {};
-        // 채널 데이터의 key를 가공한 새 채널 데이터 객체 생성
         const renamed_channel_data = {channel_id: id, ...rest_channel_data};
-        // 비디오 정보와 채널 데이터를 합친 객체 생성
         return {...video, ...renamed_channel_data};
     });
 
@@ -135,7 +97,6 @@ async function get_video_query(data, normalized_query) {
 
 // 채널 정보 가져오기
 async function get_channel_list(channel_id) {
-    // api 요청
     return fetch(`https://www.techfree-oreumi-api.ai.kr/channel/getChannelInfo?id=${channel_id}`)
         .then(res => {
             if (!res.ok) build_network_error(res.status);
@@ -156,7 +117,6 @@ window.addEventListener('DOMContentLoaded', async function() {
     try {
         await get_video_list();
 
-        // 검색 작업 완료 시 메인 표시, 로딩중 숨김
         document.querySelector("#search-header").classList.add("visible");
         document.querySelector("#contents").classList.add("visible");
         
@@ -171,44 +131,35 @@ window.addEventListener('DOMContentLoaded', async function() {
     }
 });
 
-// ---------- 검색 결과 태그 필터링 동작 ---------- //
 // 검색 결과 리스트에서 태그 필터링
 async function filter_tags() {
-    // 버튼으로 설정된 태그 가져오기
     const tag_filter = getTag();
-    
-    // 검색 결과에서 태그를 포함하는 동영상의 id만 추출
     const filtered_video_list = video_total_list.filter(
         video => video.tags.some(tag => tag.includes(tag_filter))
     ).map(video => video.id);
 
-    // 표시할 결과 생성
     filtered_video_display(filtered_video_list);
 }
 
 // 태그 필터에 걸린 항목만 표시
 function filtered_video_display(video_list) {
-    //부모 div
     const container = document.getElementById("contents");
 
-    // 태그 필터에 해당하는 항목이 없을 때의 표시
     if (video_list.length === 0) {
         video_content_div.forEach(content => {
             content.style.display = "none";
         });
         no_result_div.style.display = "flex";
     } else {
-        // 태그 필터에 해당하는 항목이 1개 이상일 때 표시
         no_result_div.style.display = "none";
 
         video_list.forEach(id => {
-            const content = Array.from(video_content_div).find(div => Number(div.dataset.videoId) === id);  //배열로 바꿔야 find가능
+            const content = Array.from(video_content_div).find(div => Number(div.dataset.videoId) === id);
             if (content) {
                 content.style.display = "flex";
-                container.appendChild(content);  // DOM 위치를 이동시킴 (정렬 순서 반영)
+                container.appendChild(content);
             }
         });
-        //나머지는 숨김
         video_content_div.forEach(content => {
             const video_id = Number(content.dataset.videoId);
             if (!video_list.includes(video_id)) {
@@ -220,9 +171,7 @@ function filtered_video_display(video_list) {
 
 // 필터 없을 때 전체 표시
 function display_all_video() {
-    // 필터 결과 없을 때 출력하는 div 숨기기
     no_result_div.style.display = "none";
-    // 비디오 카드 전체 표시
     video_content_div.forEach(content => {
         content.style.display = "flex";
     });
@@ -234,18 +183,15 @@ document.addEventListener('tagChanged', function () {
     if (tag_filter && tag_filter !== '전체') { 
         filter_tags();
     } else {
-        // 표시할 결과 생성
         display_all_video();
     }
 });
 
-// ---------- 날짜 필터링 동작 ---------- //
 // 클릭 시 필터 조건 나타나게
 const filter_btn = document.getElementById("search-filter");
 const filter_dropdown = document.getElementById("filter-dropdown");
 
 filter_btn.addEventListener("click", function () {
-
     if (filter_dropdown.style.display == "flex") {
         filter_dropdown.style.display = "none";
     } else {
@@ -255,12 +201,10 @@ filter_btn.addEventListener("click", function () {
 
 // 검색,태그 결과 리스트에서 필터링
 async function detail_filter_tags(date) {
-    // 버튼으로 설정된 타겟 날짜 가져오기
     const tag_filter = getTag();
     const target = date;
     let video_list = [];
 
-    //태그 유무에 따른 비디오 리스트 설정
     if (tag_filter && tag_filter !== '전체') { 
         video_list = video_total_list.filter(
             video => video.tags.some(tag => tag.includes(tag_filter))
@@ -269,13 +213,11 @@ async function detail_filter_tags(date) {
         video_list = video_total_list;
     }
 
-    //날짜 필터에 따른 비디오 리스트 설정
     const filtered_video_list = video_list.filter(video => {
         const videoDate = new Date(video.created_dt);
         return videoDate >= target;
         }).map(video => video.id);
 
-    // 표시할 결과 생성
     filtered_video_display(filtered_video_list);
 };
 
@@ -327,7 +269,6 @@ sort_dropdown.addEventListener('click', function (e) {
 });
 
 function video_sort(filter_type) {
-
     let video_list = [];
     let sorted_list = [];
     video_content_div.forEach(content => {
@@ -352,12 +293,9 @@ function video_sort(filter_type) {
         default:
             break;
     }
-
     const sorted_ids = sorted_list.map(video => video.id);
     filtered_video_display(sorted_ids);
-
 };
-
 
 // 썸네일 이미지 비율 고정(240px일 경우)
 function thumbnail_height() {

@@ -8,16 +8,12 @@
     <link rel="stylesheet" href="../css/video.css">
     <link href="../css/topheader.css" rel="stylesheet">
     <script src="../components/videoComponents/js/similarityVideo.js"></script>
-    <!---"Authorization" : "" -->
 </head>
 <body id="video-body">
-    <!-- 상단 메뉴바 자리 -->
     <header id="top-header"></header>
 
     <main id="video-main">
-        <!-- 동영상, 댓글 등 -->
         <section id="primary">
-            <!-- 동영상 플레이어 -->
             <div class="primary-top">
                 <div id="video-container">
                     <video id="video-player" src="" muted autoplay></video>
@@ -25,17 +21,13 @@
                 </div>
                 </div>
             </div>
-            <!-- 비디오 정보 -->
             <div class="primary-bottom">
                 <div id="video-meta">
                     <div class="video-title-box">
                         <h1 id="videopage-title"></h1>
                     </div>
                     <div class="top-row">
-                        <div class="video-info-box">
-                            
-                        </div>
-                        <!-- videoComponents\js\insertVideoFeedbackMenu 에서 메뉴 추가 -->
+                        <div class="video-info-box"></div>
                         <div id="video-menu"></div>
                     </div>
                     <div class="bottom-row">
@@ -73,12 +65,9 @@
                     </div>
                 </div>
 
-                <!-- viewport 1015px 미만이면 표시-->
                 <div class="first">
                     <div class="related-container">
-                        <div class="recommend-box">
-                            <!-- 추천 동영상 목록이 추가되는 자리 -->
-                        </div>
+                        <div class="recommend-box"></div>
                     </div>
                 </div>
                 
@@ -118,28 +107,18 @@
                             </form>
                         </div>
                     </div>
-                    <!-- 
-                    videoComponents/js/insertComments
-                    댓글이 들어가는 자리 
-                    -->
                     <div id="comments-list"></div>
                 </div>
             </div>
         </section>
-        
-        <!-- 추천영상 목록 -->
-        <!-- viewport 1015px 미만이면 표시 제거-->
+
         <aside id="secondary">
             <div class="related-container">
-                <!-- 메뉴 스크롤이 들어갈 자리-->
-                <div class="recommend-box">
-                    <!-- 추천 동영상 목록이 추가되는 자리 -->
-                </div>
+                <div class="recommend-box"></div>
             </div>
         </aside>
     </main>
 
-    <!-- 로딩중 박스 -->
     <div class="loading">
         <div class="loading-content">
             <span class="loader"></span>

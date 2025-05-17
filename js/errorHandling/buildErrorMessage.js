@@ -18,7 +18,6 @@ function build_network_error(error_code) {
 
 // 에러 메시지 생성 함수
 function build_error_message(message, parent_node) {
-    // 에러 메시지 넣을 위치에 자식 요소 모두 제거
     parent_node.replaceChildren();
 
     const error_div = document.createElement("div");
