@@ -199,7 +199,7 @@ document.addEventListener("DOMContentLoaded", () => {
             video.muted = false;
 
             video.addEventListener("play", () => {
-                playIcon.src="../../images/icon/pauseicon.svg";
+                playIcon.src="../../images/icon/pauseIcon.svg";
             });
             video.addEventListener("pause", () => {
                 playIcon.src="../../images/icon/play.svg";
