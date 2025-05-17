@@ -6,7 +6,7 @@ const videoId = urlParams.get("video_id");
 let comments = JSON.parse(localStorage.getItem(`comments_${videoId}`)) || [
     {
     author: "kim",
-    profile: "../../../images/marcus.svg",
+    profile: "../../../images/profile/marcusProfile.svg",
     commented_at: "1년 전",
     body: "댓글 추가했습니다",
     liked: 100,
@@ -17,7 +17,7 @@ let comments = JSON.parse(localStorage.getItem(`comments_${videoId}`)) || [
     },
     {
     author: "park",
-    profile: "../../../images/marcus.svg",
+    profile: "../../../images/profile/marcusProfile.svg",
     commented_at: "2달 전",
     body: "영상 잘 봤습니다",
     liked: 1,
@@ -43,7 +43,7 @@ function commentInsert() {
 
         // 정렬 버튼 스타일 유지
         document.querySelectorAll('.sort-options button').forEach(btn => {
-            btn.classList.remove('selected'); // 일단 제거..
+            btn.classList.remove('selected');
         });
 
         if (localStorage.getItem("comment_sort") === "latest") {
@@ -72,13 +72,12 @@ function commentInsert() {
             clone.querySelector(".comment-body").textContent = comment.body;
             clone.querySelector(".comment-liked-number").textContent = comment.liked;
 
-            // 답글 버튼
             const replyBtn = clone.querySelector(".reply-btn");
             const commentBox = clone.querySelector(".comment-box");
             const replyDiv = document.createElement("div");
             replyDiv.classList.add("reply-input-box");
             replyDiv.innerHTML = `
-                <img src="../../../images/icon4.svg" alt="my-profile" style="width: 36px; height: 36px; border-radius: 50%;">
+                <img src="../../../images/profile/userprofile.svg" alt="my-profile" style="width: 36px; height: 36px; border-radius: 50%;">
                 <input type="text" class="reply-input" placeholder="답글을 입력하세요" />
                 <div class="reply-action-buttons">
                     <button class="reply-cancel-btn">취소</button>
@@ -94,7 +93,7 @@ function commentInsert() {
                 const replyDiv = document.createElement("div");
                 replyDiv.classList.add("reply-input-box");
                 replyDiv.innerHTML = `
-                    <img src="../../../images/icon4.svg" alt="my-profile" style="width: 36px; height: 36px; border-radius: 50%;">
+                    <img src="../../../images/profile/userprofile.svg" alt="my-profile" style="width: 36px; height: 36px; border-radius: 50%;">
                     <input type="text" class="reply-input" />
                     <div class="reply-action-buttons">
                         <button class="reply-cancel-btn">취소</button>
@@ -134,7 +133,7 @@ function commentInsert() {
                 const replyEl = document.createElement("div");
                 replyEl.className = "reply-item";
                 replyEl.innerHTML = `
-                    <img src="../../../images/icon4.svg" alt="reply-profile">
+                    <img src="../../../images/profile/userprofile.svg" alt="reply-profile">
                     <div class="reply-body">
                         <div class="reply-author">${reply.author} <span class="reply-date">${reply.commented_at}</span></div>
                         <div class="reply-text">${reply.body}</div>
@@ -185,24 +184,19 @@ function commentInsert() {
     const buttons = document.querySelectorAll(".comment-icon-box");
     buttons.forEach(button => {
         button.addEventListener("click", function (e) {
-            // 현재 버튼의 다음 형제 요소 (comment-dropdown)
             const button = e.currentTarget;
             const dropdown = button.nextElementSibling;
 
-            // 드롭다운이 없으면 중단
             if (!dropdown || !dropdown.classList.contains("comment-dropdown")) {
                 console.error("comment-dropdown이 없음");
                 return;
             }
-            // 지금 클릭한 드롭다운이 열려 있었는지 확인
             const isAlreadyOpen = dropdown.classList.contains("visible");
 
-            // 모든 드롭다운 닫기
             document.querySelectorAll(".comment-dropdown").forEach(el => {
                 el.classList.remove("visible");
             });
         
-            // 지금 클릭한 드롭다운이 이전에 닫혀 있었다면 열기
             if (!isAlreadyOpen) {
                 dropdown.classList.add("visible");
             }

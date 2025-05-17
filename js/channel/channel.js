@@ -13,24 +13,18 @@ let video_tags = {};
 
 const urlParams = new URLSearchParams(window.location.search);
 const channelId = urlParams.get('channel_id');
-const query = urlParams.get('query')?.toLowerCase(); // 검색어 소문자 처리
+const query = urlParams.get('query')?.toLowerCase();
 
 document.addEventListener("DOMContentLoaded", async function () {
     try {
-        //console.log("DOM fully loaded and parsed");
-        // setupSubscribeButton(); // 구독 버튼
+        await fetchChannelInfo();
+        fetchVideosAndRender();
 
-        // 채널 정보를 가져온 뒤 동영상 정보 가져오기
-        await fetchChannelInfo(); // 채널 정보
-        fetchVideosAndRender(); // 영상 목록
-
-        // 채널 정보 작업 완료 시 메인 표시, 로딩중 숨김
         document.querySelector("#channel-header").classList.add("visible");
         document.querySelector("#channel-section").classList.add("visible");
 
-        // 해시(#)와 검색(?query) 따라 탭에 맞는 출력 조절
         function handleSectionDisplay() {
-            const hash = window.location.hash.substring(1); // URL 해시 가져오기
+            const hash = window.location.hash.substring(1);
 
             const video_section = document.querySelector("#video-section");
             const main_video = document.querySelector("#main-video");
@@ -64,9 +58,6 @@ document.addEventListener("DOMContentLoaded", async function () {
                 playlist_main.classList.remove("playlist-tab");
             }
         }
-
-
-        // 이벤트 등록
         window.addEventListener("load", handleSectionDisplay);
         window.addEventListener("hashchange", handleSectionDisplay);
     } catch (error) {
@@ -83,20 +74,16 @@ document.addEventListener("DOMContentLoaded", async function () {
 let isSubscribed = false;
 
 // 구독 버튼
-// function setupSubscribeButton() {
-    const subscribeButton = document.getElementById('button-subscribe');
-    subscribeButton.addEventListener('click', () => {
-        if (isSubscribed) {
-            // subscriberCount -= 1;
-            subscribeButton.textContent = "구독";
-            isSubscribed = false;
-        } else {
-            // subscriberCount += 1;
-            subscribeButton.textContent = "구독중";
-            isSubscribed = true;
-        }
-    });
-// }
+const subscribeButton = document.getElementById('button-subscribe');
+subscribeButton.addEventListener('click', () => {
+    if (isSubscribed) {
+        subscribeButton.textContent = "구독";
+        isSubscribed = false;
+    } else {
+        subscribeButton.textContent = "구독중";
+        isSubscribed = true;
+    }
+});
 
 // 채널 정보
 async function fetchChannelInfo() {
@@ -118,9 +105,6 @@ async function fetchChannelInfo() {
         document.getElementById('subscribers').textContent = `구독자 ${subscribersUnit(subscriberCount)}명`;
         document.getElementById('channel-cover-img').src = channelData.channel_banner;
         document.getElementById('channel-profile-img').src = channelData.channel_profile;
-        // setupSubscribeButton();
-    
-        // 문서 title을 채널 이름으로 변경
         document.title = channelData.channel_name;
     })
     .catch(error=>{
@@ -138,16 +122,12 @@ function renderMainVideo(video) {
         console.warn("표시할 메인 비디오가 없습니다.");
         return;
     }
-
-    // 영상 소스 삽입
     const source = document.querySelector('#main-video video source');
     source.src = `https://storage.googleapis.com/youtube-clone-video/${video.id}.mp4`;
 
-    // video 태그 재로드 (src 변경 시 필요)
     const videoElement = document.querySelector('#main-video video');
     videoElement.load();
 
-    // 텍스트 정보 삽입
     document.getElementById('video-title').textContent = video.title;
     document.getElementById('video-title').href = `video.html?video_id=${video.id}`;
     document.getElementById('spectators').textContent = `조회수 ${viewsUnit(video.views)}회`;
@@ -167,18 +147,13 @@ function fetchVideosAndRender() {
             return response.json();
         })
         .then(data => {
-            // 메인 비디오는 최신
             const sortedVideos = data.sort((a, b) => new Date(b.created_dt) - new Date(a.created_dt));
             const latestVideo = sortedVideos[0];
             renderMainVideo(latestVideo);
 
-            // 동영상 목록 저장 - 최신순
             video_list = sortedVideos;
-
-            // 태그 빈도 계산
             const best_tags = getFrequentTag(data);
 
-            //  검색어가 있다면 title, description, tags 기준으로 필터링
             const filteredVideos = query
                 ? data.filter(video => {
                     const title = video.title?.toLowerCase() || '';
@@ -189,19 +164,13 @@ function fetchVideosAndRender() {
                 : data;
 
             filtered_list = filteredVideos;
-
-            // 태그를 포함하는 동영상들 목록 생성
             const tag_videos_first = video_list.filter(el=>el.tags.some(tag=> tag === best_tags[0].value));
             const tag_videos_second = video_list.filter(el=>el.tags.some(tag=> tag === best_tags[1].value));
 
             renderVideos('section1', best_tags[0].value, tag_videos_first);
             renderVideos('section2', best_tags[1].value, tag_videos_second);
             renderVideos('all-video-section', '', (query ? filteredVideos : sortedVideos));
-
-            // 비디오 메뉴와 이벤트 등록
             insert_video_menu();
-            
-            // 정렬 기능 추가
             sort_video_query();
         })
         .catch(error => {
@@ -232,11 +201,6 @@ function renderVideos(sectionId, playlistName, videoList) {
         const uploadText = timeCalculator(video.created_dt);
         const viewsFormatted = viewsUnit(video.views);
 
-        // 아이콘 이미지 경로
-        const menu_toggle_img = "../../../images/three-dots-vertical.svg";
-        const clock_img = "../../../images/clock.svg";
-        const playlist_img = "../../../images/list-play.svg";
-
         videoCard.innerHTML = `
         <div class="video-thumbnail">
             <img src="${thumbnailUrl}" alt="Video Thumbnail" />
@@ -244,13 +208,13 @@ function renderVideos(sectionId, playlistName, videoList) {
             <div class="hover-overlay-wrap">
                 <div class="hover-overlay-inner-wrap">
                     <div class="hover-overlay-box">
-                        <img src="${clock_img}" alt="clock-icon" class="hover-icon"></img>
+                        <img src="../../../images/icon/clock.svg" alt="clock-icon" class="hover-icon"></img>
                     </div>
                     <div class="hover-overlay-text-box">나중에 보기</div>
                 </div>
                 <div class="hover-overlay-inner-wrap">
                     <div class="hover-overlay-box">
-                        <img src="${playlist_img}" alt="list-play-icon" class="hover-icon"></img>
+                        <img src="../../images/icon/play.svg" alt="list-play-icon" class="hover-icon"></img>
                     </div>
                     <div class="hover-overlay-text-box">재생목록에 추가</div>
                 </div>
@@ -263,23 +227,20 @@ function renderVideos(sectionId, playlistName, videoList) {
             </div>
             <div class="video-menu">
                 <button class="menu-toggle-btn" data-video-id="${video.id}">
-                    <img src="${menu_toggle_img}" alt="three-dot-icon" class="btn-icon">
+                    <img src="../../../images/icon/threedotsvertical.svg" alt="three-dot-icon" class="btn-icon">
                 </button>
             </div>
         </div>
         `;
 
-        // 썸네일과 비디오 정보를 누르면 비디오 페이지 이동
         videoCard.querySelector(".video-thumbnail").addEventListener('click', () => {
             move_to_video_page(video)
         });
         videoCard.querySelector(".video-details").addEventListener('click', () => {
             move_to_video_page(video)
         });
-
         container.appendChild(videoCard);
 
-        // 비디오 목록 스크롤 이벤트 추가
         const video_playlist = document.querySelectorAll(".video-playlist");
         video_playlist.forEach(playlist => {
             insert_video_scroll(playlist);
@@ -289,10 +250,8 @@ function renderVideos(sectionId, playlistName, videoList) {
 
 // 태그 빈도수 계산
 function getFrequentTag(data) {
-    // 비디오 태그와 빈도 수 저장
     data.forEach(el=>{
         el.tags.forEach(tag=>{
-            // 해당 속성값이 있으면 1을 더하고, 없으면 새로 0을 추가
             video_tags[tag] = ((video_tags[tag]) || 0) + 1;
         });
     });

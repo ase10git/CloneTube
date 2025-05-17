@@ -8,7 +8,6 @@ document.addEventListener("DOMContentLoaded", async function () {
         await fetchVideoinfo();
         await fetchChannelinfo();
 
-        // 비디오 정보 작업 완료 시 메인 표시, 로딩중 숨김
         document.querySelector("#primary").classList.add("visible");
         document.querySelector("#secondary").classList.add("visible");
     } catch (error) {
@@ -44,8 +43,6 @@ async function fetchVideoinfo() {
             document.getElementById('description').textContent = videoData.description;
             document.querySelector('.like-count').textContent = viewsUnit(videoData.likes);
             document.querySelector('.like-count').dataset.likes = videoData.likes;
-
-            // 문서 title을 비디오 제목으로 설정
             document.title = videoData.title;
         })
         .catch(error => {
@@ -159,21 +156,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 toggleBtn.textContent = "더보기";
             }
         });
-
-        // 기본은 접힌 상태
         descriptionEl.classList.add("collapsed");
         descBox.classList.add("collapsed");
-        }
-        });
-
-
-let hideUITimer;
+    }
+});
 
 document.addEventListener("DOMContentLoaded", () => {
     fetchVideoinfo();
     fetchChannelinfo();
 
-    // 구독 버튼
     const subscribeBtn = document.getElementById("subscribe-btn");
     let subscribed = false;
     if (subscribeBtn) {
@@ -183,7 +174,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // UI 연결
     const observer = new MutationObserver(() => {
         const video = document.getElementById("video-player");
         const playToggle = document.getElementById("play-toggle");
@@ -205,19 +195,16 @@ document.addEventListener("DOMContentLoaded", () => {
         ) {
             observer.disconnect();
 
-            // 초기 상태 세팅
             video.volume = 1;
             video.muted = false;
 
-            // 아이콘 상태: play / pause 자동 반영
             video.addEventListener("play", () => {
-                playIcon.src = "/images/icon-pause.svg";
+                playIcon.src="../../images/icon/pauseicon.svg";
             });
             video.addEventListener("pause", () => {
-                playIcon.src = "/images/icon-play.svg";
+                playIcon.src="../../images/icon/play.svg";
             });
 
-            // 재생 / 일시정지
             playToggle.addEventListener("click", (e) => {
                 e.preventDefault();
                 if (video.paused) {
@@ -227,30 +214,25 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             });
 
-            // 볼륨 조절
             volumeBar.addEventListener("input", () => {
                 video.volume = volumeBar.value;
             });
 
-            // 볼륨 토글 확장
             volumeToggle.addEventListener("click", (e) => {
                 e.stopPropagation();
                 volumeWrapper.classList.toggle("active");
             });
 
-            // 외부 클릭 시 닫힘
             document.addEventListener("click", (e) => {
                 if (!volumeWrapper.contains(e.target)) {
                     volumeWrapper.classList.remove("active");
                 }
             });
 
-            // 전체화면
             fullscreenBtn.addEventListener("click", () => {
                 if (video.requestFullscreen) video.requestFullscreen();
             });
 
-            // 시간 표시
             video.addEventListener("loadedmetadata", () => {
                 timeTotal.textContent = formatTime(video.duration);
             });
@@ -260,7 +242,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 progressBar.style.width = `${percent}%`;
             });
 
-            // 영상 바 클릭 이동
             progressContainer.addEventListener("click", (e) => {
                 const rect = progressContainer.getBoundingClientRect();
                 const clickX = e.clientX - rect.left;

@@ -1,6 +1,5 @@
 // 커스텀 에러 클래스 정의
 function NetworkError(status, message) {
-    // 에러 인스턴스 생성
     const instance = new Error(message);
     instance.name = "NetworkError";
     instance.status = status;

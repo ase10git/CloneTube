@@ -1,4 +1,3 @@
-/* 전체 테마 색상 변수 설정 (다크 모드 스타일 기반) */
 :root{
     --mini-nav-width: 72px;
 }
@@ -17,10 +16,9 @@
         --bg-highlight: #606060;
         --subscribes: #cc0000;
         --ch-profile: #222222;
-        --bg-color: #0f0f0f; /* 누락된 변수 보완 */
+        --bg-color: #0f0f0f;
     }
 
-/* 기본 문서 스타일 */
 #header-nav-container {
     height: 100%;
     background-color: var(--bg);
@@ -33,29 +31,26 @@
     vertical-align: middle;
 }
 
-/* 상단 헤더바 스타일 */
 header {
     background-color: var(--bg-bar);
     padding: 1px 16px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    position: fixed; /* 수정: 헤더를 상단에 고정 */
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    height: 56px; /* 고정된 높이 설정 */
-    z-index: 1002; /* 사이드바보다 위에 배치 */
+    height: 56px;
+    z-index: 1002;
 }
 
-/* 좌측: 햄버거 + 로고 */
 .left-section {
     display: flex;
     align-items: center;
     gap: 16px;
 }
 
-/* 중앙: 검색창 + 음성 버튼 */
 .center-section {
     display: flex;
     align-items: center;
@@ -64,7 +59,6 @@ header {
     gap: 12px;
 }
 
-/* 우측: 업로드, 알림 등 */
 .right-section {
     display: flex;
     align-items: center;
@@ -75,12 +69,10 @@ header {
     cursor: pointer;
 }
 
-/* 햄버거 메뉴 버튼 */
 .side-button {
     cursor: pointer;
 }
 
-/* 검색창 영역 스타일 */
 .search-bar {
     display: flex;
     align-items: center;
@@ -91,7 +83,6 @@ header {
     width: 100%;
 }
 
-/* 검색창 입력 필드 */
 .search-bar input {
     background: none;
     border: none;
@@ -101,7 +92,6 @@ header {
     font-size: 14px;
 }
 
-/* input 자동완성 스타일 */
 .search-bar input:-webkit-autofill, 
 .search-bar input:-webkit-autofill:hover, 
 .search-bar input:-webkit-autofill:focus,
@@ -123,7 +113,6 @@ header {
     transition: background-color 5000s ease-in-out 0s;
 }
 
-/* 검색 버튼 */
 .search-btn-wrap {
     display: flex;
     justify-content: center;
@@ -137,7 +126,6 @@ header {
     cursor: pointer;
 }
 
-/* 검색어 초기화 버튼 */
 #search-button, .reset-button.visible{
     display: flex;
     justify-content: center;
@@ -159,12 +147,10 @@ header {
     color: white;
 }
 
-/* 음성 인식 버튼 */
 .voice-btn {
     cursor: pointer;
 }
 
-/* 사이드바 네비게이션 영역 */
 .side-bar {
     visibility: visible;
     display: block;
@@ -172,32 +158,27 @@ header {
     top: 0;
     left: 0;
     width: 240px;
-    margin-top: 56px; /* 헤더 높이만큼 밀어냄 */
+    margin-top: 56px;
     z-index: 1000;
-    height: calc(100vh - 56px); /* 헤더 제외한 높이로 설정 */
+    height: calc(100vh - 56px);
     background-color: var(--bg-color);
     overflow-y: auto;
     scrollbar-gutter: stable;
-    /* 스크롤바 숨기기용*/
     scrollbar-width: none;
 }
 
-/* 사이드바 hover시 스크롤바 보이게 */
 .side-bar:hover {
     scrollbar-width: thin;
 }
 
-/* topheader.css */
 .side-bar {
     scrollbar-color: var(--bg-highlight) transparent;
 }
 
-/* 사이드바가 안보일 때 */
 .side-bar.hidden {
     visibility: hidden;
 }
 
-/* 1312px 이하일 때 오버레이 */
 .side-bar.small_wide {
     transform: translateX(-100%);
     transition: transform 0.2s ease, visibility 0.2s ease;
@@ -209,26 +190,22 @@ header {
     transition: transform 0.2s ease, visibility 0.2s ease;
 }
 
-/* 사이드바 안의 각 섹션 간격 */
 .side-bar section {
     margin-bottom: 12px;
 }
 
-/* 사이드바 구분선 */
 .side-bar hr {
     border: none;
     border-top: 1px solid #333;
     margin: 12px 0;
 }
 
-/* 사이드바 리스트 기본 스타일 */
 .side-bar ul {
     list-style: none;
     padding: 0;
     margin: 0;
 }
 
-/* 각 항목 스타일 */
 .side-bar li {
     display: flex;
     align-items: center;
@@ -239,12 +216,10 @@ header {
     transition: background-color 0.2s ease;
 }
 
-/* hover 시 강조 */
 .side-bar li:hover {
     background-color: var(--bt-highlight);
 }
 
-/* 사이드바 각 섹션의 제목 */
 .side-bar .section-title {
     font-size: 16px;
     font-weight: 500;
@@ -258,7 +233,6 @@ header {
     background-color: transparent;
 }
 
-/* 링크 스타일 */
 .side-bar a {
     display: flex;
     align-items: center;
@@ -273,7 +247,6 @@ header {
     border-radius: 50%;
 }
 
-/* 섹션 타이틀 (SUBSCRIPTIONS 등) */
 #header-nav-container caption {
     display: block;
     padding: 8px 16px;
@@ -283,7 +256,6 @@ header {
     text-transform: uppercase;
 }
 
-/* 버튼 공통 스타일 */
 #header-nav-container button {
     background-color: var(--bg-highlight);
     border: 1px solid var(--bt-border);
@@ -297,31 +269,26 @@ header {
     background-color: var(--bt-highlight);
 }
 
-/* 구독 버튼 강조 */
 .subscribed {
     background-color: var(--subscribes);
     color: var(--font);
 }
 
-/* 선택된 항목 */
 #header-nav-container .selected {
     background-color: var(--bt-highlight);
     color: var(--bg);
 }
 
-/* 채널 프로필 영역 */
 #header-nav-container .profile {
     background-color: var(--ch-profile);
     padding: 20px;
     color: var(--font);
 }
 
-/* 흐릿한 글자 */
 #header-nav-container .text-muted {
     color: var(--font-gr);
 }
 
-/* 미니 사이드 바 */
 #mini-nav {
     padding: 0 4px;
     width: var(--mini-nav-width); height: 100vh;
@@ -335,7 +302,6 @@ header {
     z-index: 900;
 }
 
-/* viewport 791px 이하일 때 숨기기 */
 @media (max-width: 791px) {
     #mini-nav { display: none; }
 }
@@ -384,7 +350,6 @@ header {
     filter: invert();
 }
 
-/* footer */
 #about-section {
     width: 100%;
     padding: 10px 41px 10px 24px;
@@ -428,7 +393,6 @@ header {
 }
 }
 
-/* 1312px 이하일 때 side-bar 클릭 시 메인 영역 흐릿한 효과 */
 .nav-overlay {
     width:100%; height:100vh;
     position: fixed;
